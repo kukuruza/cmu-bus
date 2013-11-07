@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class CmuBusTracker_chooseBus extends Activity {
+public class Bustracker_chooseBus extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
