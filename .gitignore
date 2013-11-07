@@ -1,3 +1,6 @@
+# ignore eclipse bin files
+CmuBusTracker/bin/*
+
 # ignore all the videos, etc.
 data
 results
@@ -10,7 +13,6 @@ build
 # xcode files
 ##################
 *.xcodeproj
-*.1
 
 # Compiled source #
 ###################
