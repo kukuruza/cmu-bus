@@ -1,6 +1,6 @@
 package cmu18641.bustracker.entities;
 
-import cmu18641.bustracker.exceptions.TrackerException;
+import java.util.Locale;
 import android.location.Location;
 import android.text.format.Time;
 
@@ -10,6 +10,10 @@ import android.text.format.Time;
 
 
 public class StopAdapter extends Stop {
+	
+	final static private float MetersToMiles = (float) 0.000621371;
+	final static private String MilesStringFormat = "%.1f";
+	final static private float AvgSpeedMilesPerMin = (float)(3) / 60;
 	
 	public StopAdapter (Stop stop)
 	{
@@ -26,20 +30,21 @@ public class StopAdapter extends Stop {
 		return new String (getStreet1() + " & " + getStreet2());
 	}
 	
-	public float getDistance (Location here)
+	// in miles
+	protected float getDistance (Location here)
 	{
-	    return -1;
+	    return getLocation().distanceTo(here) * MetersToMiles;
 	}
 	
 	// return string in miles
 	public String getDistanceString (Location here)
 	{
-		return "";
+		return String.format (Locale.US, MilesStringFormat, getDistance(here));
 	}
 	
 	// return string in minutes
 	public String getWalkingTimeString (Location here, Time now)
 	{
-		return "";
+		return String.format (Locale.US, "%f.", getDistance(here) / AvgSpeedMilesPerMin);
 	}
 }

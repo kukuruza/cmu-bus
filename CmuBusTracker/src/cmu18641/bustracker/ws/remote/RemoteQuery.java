@@ -1,4 +1,4 @@
-package cmu18641.bustracker.remote;
+package cmu18641.bustracker.ws.remote;
 
 import java.util.ArrayList;
 
