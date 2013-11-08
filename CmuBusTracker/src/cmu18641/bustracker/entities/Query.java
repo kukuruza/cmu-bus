@@ -1,10 +1,11 @@
-package bustracker.entities;
+package cmu18641.bustracker.entities;
 
 import java.util.ArrayList;
+
+import cmu18641.bustracker.exceptions.*;
 import android.location.Location;
 import android.text.format.Time;
 
-import bustracker.exceptions.*;
 
 // Notes:
 //   - The success status and return value policy:

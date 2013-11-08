@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package cmu18641.cmubustracker;
+package cmu18641.bustracker;
 
 public final class R {
     public static final class attr {

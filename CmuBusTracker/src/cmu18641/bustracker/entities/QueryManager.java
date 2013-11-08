@@ -1,10 +1,11 @@
-package bustracker.entities;
+package cmu18641.bustracker.entities;
 
 import java.util.ArrayList;
 
+import cmu18641.bustracker.exceptions.TrackerException;
+
 import android.location.Location;
 import android.text.format.Time;
-import bustracker.exceptions.TrackerException;
 
 public class QueryManager implements Query {
 

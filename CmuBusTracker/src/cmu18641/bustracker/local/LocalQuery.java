@@ -1,11 +1,12 @@
-package bustracker.local;
+package cmu18641.bustracker.local;
 
 import java.util.ArrayList;
+
+import cmu18641.bustracker.entities.*;
+import cmu18641.bustracker.exceptions.TrackerException;
 import android.location.Location;
 import android.text.format.Time;
 
-import bustracker.entities.*;
-import bustracker.exceptions.TrackerException;
 
 
 public class LocalQuery implements Query {

@@ -1,6 +1,6 @@
-package bustracker;
+package cmu18641.bustracker;
 
-import cmu18641.cmubustracker.R;
+import cmu18641.bustracker.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

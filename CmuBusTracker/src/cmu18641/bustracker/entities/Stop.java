@@ -1,4 +1,4 @@
-package bustracker.entities;
+package cmu18641.bustracker.entities;
 
 import android.location.Location;
 

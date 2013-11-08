@@ -1,4 +1,4 @@
-package bustracker.exceptions;
+package cmu18641.bustracker.exceptions;
 
 public class TrackerException extends Throwable {
 	
