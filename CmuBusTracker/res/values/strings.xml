@@ -4,5 +4,11 @@
     <string name="app_name">CmuBusTracker</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_select_station_and_bus">Select Station and Bus</string>
+    <string name="title_activity_locate_station">Locate Station</string>
+    <string name="title_activity_search_station">Search Station</string>
+    <string name="title_activity_view_schedule">View Schedule</string>
+    <string name="Find_Next_Bus">Find Next Bus</string>
+    <string name="Find_Station">Find Station</string>
 
 </resources>
