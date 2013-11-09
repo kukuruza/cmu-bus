@@ -1,6 +1,10 @@
 package cmu18641.bustracker.ws.remote;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
+import cmu18641.bustracker.entities.*;
+import cmu18641.bustracker.exceptions.TrackerException;
+=======
 
 import org.json.JSONObject;
 
@@ -18,10 +22,19 @@ import android.content.Context;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+>>>>>>> remote_impl
 import android.text.format.Time;
 
 
 
+<<<<<<< HEAD
+public class RemoteQuery implements TimeQueryInterface {
+
+	@Override
+	public ArrayList<Time> getTimes(Stop stop, ArrayList<Bus> buses) throws TrackerException {
+		// TODO Auto-generated method stub
+		return null;
+=======
 public class RemoteQuery { //implements Query {
 
 	public ArrayList<Time> getTimes (Context context, Stop stop, ArrayList<Bus> buses) throws TrackerException 
@@ -48,5 +61,6 @@ public class RemoteQuery { //implements Query {
 		});
 		
 		queue.add(jsObjRequest);
+>>>>>>> remote_impl
 	}
 }
