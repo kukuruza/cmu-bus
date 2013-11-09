@@ -1,9 +1,8 @@
 package cmu18641.bustracker.entities;
 
-import java.util.ArrayList;
-
 import cmu18641.bustracker.exceptions.*;
-import android.location.Location;
+
+import java.util.ArrayList;
 import android.text.format.Time;
 
 
@@ -14,14 +13,7 @@ import android.text.format.Time;
 //   - GPS coordinates are managed by Location class in Android
 //
 
-public interface Query {
+public interface TimeQueryInterface {
 
-	ArrayList<Bus>    getBusesByStop (ArrayList<Stop> stops) throws TrackerException;
-	
-	ArrayList<Stop>   getStopsByCurrentLocation (Location here) throws TrackerException;
-	
-	ArrayList<Stop>   getStopByAddress (String street) throws TrackerException;
-	ArrayList<Stop>   getStopByAddress (String street1, String street2) throws TrackerException;
-	
 	ArrayList<Time>   getTimes (Stop stop, ArrayList<Bus> buses) throws TrackerException;
 }

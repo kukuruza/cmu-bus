@@ -1,14 +1,15 @@
-package cmu18641.bustracker.entities;
+package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
-
+import android.location.Location;
+import cmu18641.bustracker.entities.Bus;
+import cmu18641.bustracker.entities.RouteQueryInterface;
+import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 
-import android.location.Location;
-import android.text.format.Time;
 
-public class QueryManager implements Query {
-
+public class RouteQueryManager implements RouteQueryInterface {
+	
 	@Override
 	public ArrayList<Bus> getBusesByStop(ArrayList<Stop> stops)
 			throws TrackerException {
@@ -25,20 +26,6 @@ public class QueryManager implements Query {
 
 	@Override
 	public ArrayList<Stop> getStopByAddress(String street)
-			throws TrackerException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Stop> getStopByAddress(String street1, String street2)
-			throws TrackerException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Time> getTimes(Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
 		// TODO Auto-generated method stub
 		return null;
