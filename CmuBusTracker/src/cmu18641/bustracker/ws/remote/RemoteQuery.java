@@ -1,52 +1,57 @@
 package cmu18641.bustracker.ws.remote;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
-import org.json.JSONObject;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 import com.google.gson.Gson;
 
 import cmu18641.bustracker.entities.*;
 import cmu18641.bustracker.exceptions.TrackerException;
-import android.content.Context;
-import android.location.Location;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.text.format.Time;
 
 
+public class RemoteQuery implements TimeQueryInterface {
 
-public class RemoteQuery { //implements Query {
-
-	public ArrayList<Time> getTimes (Context context, Stop stop, ArrayList<Bus> buses) throws TrackerException 
+	private String formRequestString (String url, Stop stop, ArrayList<Bus> buses) 
 	{
-		RequestQueue queue = Volley.newRequestQueue (context);
+	    if (!url.endsWith("?"))
+	        url += "?";
+
+	    List<NameValuePair> params = new LinkedList<NameValuePair>();
+
+	    params.add(new BasicNameValuePair("stop", stop.getName()));
+        
+	    while (buses.iterator().hasNext())
+	    	params.add(new BasicNameValuePair("buses[]", buses.iterator().next().getName()));
+
+	    String paramString = URLEncodedUtils.format(params, "utf-8");
+
+	    url += paramString;
+	    return url;
+	}
+
+
+	@ Override
+	public ArrayList<Time> getTimes (Stop stop, ArrayList<Bus> buses) throws TrackerException 
+	{
+		// TODO: to be moved to configs
 		String url = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBmSXUzVZBKQv9FJkTpZXn0dObKgEQOIFU&cx=014099860786446192319:t5mr0xnusiy&q=AndroidDev&alt=json&searchType=image";
 		
-		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-	
-			@Override
-			public void onResponse(JSONObject response) {
-				Gson gson = new Gson();
-				ArrayList<Time> = gson.fromJson(response, ArrayList<Time>.class);
-				//txtDisplay.setText("Response => "+response.toString());
-				//findViewById(R.id.progressBar1).setVisibility(View.GONE);
-			}
-		}, new Response.ErrorListener() {
-	
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		// compose a request
+		String requestUrl = formRequestString (url, stop, buses);
 		
-		queue.add(jsObjRequest);
+		// get answer from server
+		String responseString = Networking.askServer (requestUrl);
+		
+		// parse json string into TimesMessage object
+		Gson gson = new Gson();
+		TimesMessage timesMessage = gson.fromJson (responseString, TimesMessage.class); 
+		
+		// parse this object into ArrayList<Time>
+		return timesMessage.getTimes();
 	}
 }

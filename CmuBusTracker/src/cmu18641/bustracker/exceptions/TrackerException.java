@@ -6,11 +6,17 @@ public class TrackerException extends Throwable {
 
     private int _errorNum;
     private String _srcTag;
+    
+    public static final int NO_INTERNET = 0;
+    public static final int NO_LOCATION = 1;
+    public static final int NO_SERVER_CONNECTION = 2;
+    public static final int BAD_REMOTE_RESULT = 3;
+    public static final int BAD_LOCAL_RESULT = 4;
+    
 	
     private static final String[] _type = {
         "Internet unavailable",
         "Cannot determine current location",
-        
         "There is internet, but the app server is unavailable",
         "Bad query result from the app server",
         "Bad query result from the local database",
