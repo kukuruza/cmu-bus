@@ -12,7 +12,7 @@ public class Stop {
 	private Location   _location;
 	
 	// getters
-	protected String   getName()     { return new String(_name); }
+	public String   getName()     { return new String(_name); }
 	protected String   getStreet1()  { return new String(_street1); }
 	protected String   getStreet2()  { return new String(_street2); }
 	protected Location getLocation() { return new Location(_location); }
