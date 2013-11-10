@@ -22,10 +22,13 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class SelectStationAndBus extends Activity {
 	
-	private int busSelections[]; 
+	public static final String BUS_ARRAY_ID = "rowarray_id";
+	public static final String STOP_ID = "row_id";
+	private ArrayList<Long> busSelections;
+	private long stopID;
 
-	Button findNextBusButton; 
-	Button findStationButton; 
+	private Button findNextBusButton; 
+	private Button findStationButton; 
 	
 	
 	@Override
@@ -33,11 +36,19 @@ public class SelectStationAndBus extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_station_and_bus);
 		
-		// check for non null bundle and grab stopId
-		// if bundle is null, query must be called 
-		// to find default station (closest to user)
+		busSelections = new ArrayList<Long>(); 
+		Bundle extras = getIntent().getExtras(); 
 		
-		// then the text in station button must be set accordingly
+		// grab selected stop if entering from LocateStation/SearchStation activity
+		if(extras != null) { 
+			stopID = extras.getLong(LocateStation.STOP_ID); 
+		}
+		else { 
+			// if bundle is null, query must be called 
+			// to find default station (closest to user)
+		}
+		
+		// set button text dynamically
 		findStationButton.setText(""); 
 		
 		// query must be called to find buses that pass thru the selected station
@@ -51,9 +62,10 @@ public class SelectStationAndBus extends Activity {
 		// Note: using this built in adapter will require Bus class
 		// to implement toString()
 		
-		// bind adapter
+		// bind adapter and listener
 		ListView busListView = (ListView) findViewById(R.id.busListView);
 		busListView.setAdapter(busAdapter);
+		busListView.setOnItemClickListener(selectBusListener);
 		
 		// listen for button presses
 		findNextBusButton = (Button) findViewById(R.id.findNextBusButton);
@@ -61,26 +73,31 @@ public class SelectStationAndBus extends Activity {
 	    
 	    findStationButton = (Button) findViewById(R.id.findStationButton);
         findStationButton.setOnClickListener(findStationButtonClicked); 
-        
-        // listen for bus items selected
-		busListView.setOnItemClickListener(selectBusListener);
+		
 	}
 
 	
-	// responds to event generated when user clicks the findNextBusButton
+	// user is taken to viewSchedule activity after selecting at least
+	// one bus and pressing findNextBusButton
 	OnClickListener findNextBusButtonClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent showSchedule = new Intent(SelectStationAndBus.this, ViewSchedule.class);
 			
-			// use bundle to with this intent to pass rowId of buses selected
-			SelectStationAndBus.this.startActivity(showSchedule);
+			if(!busSelections.isEmpty()) { 
+				Intent showSchedule = new Intent(SelectStationAndBus.this, ViewSchedule.class);
+				showSchedule.putExtra(BUS_ARRAY_ID, busSelections.toArray()); 
+				showSchedule.putExtra(STOP_ID, stopID);
+				SelectStationAndBus.this.startActivity(showSchedule);
+			}
+			else { 
+				// show dialog
+			}
 		}
 				
 	};
 		
 
-	// responds to event generated when user clicks the findStationButton
+	// user is taken to locateStation activity after pressing findStationButton
 	OnClickListener findStationButtonClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -91,12 +108,21 @@ public class SelectStationAndBus extends Activity {
 	};
 			
 	
-	// event listener that responds to the user touching a mortageCalc in list
+	// bus is added to selection list when pressed in list view
+	// bus is removed from selection list when pressed again in list view
 	OnItemClickListener selectBusListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		
-			// check the box and add rowId to array
+			
+			// pressed again -> deselect
+			if(busSelections.contains(arg3)) { 
+				busSelections.remove(arg3); 
+			}
+			// first press -> select
+			else { 
+				busSelections.add(arg3); 
+			}
+			
 		}
 		   
 	}; 

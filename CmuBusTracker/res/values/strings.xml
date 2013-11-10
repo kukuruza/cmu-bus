@@ -10,5 +10,6 @@
     <string name="title_activity_view_schedule">View Schedule</string>
     <string name="Find_Next_Bus">Find Next Bus</string>
     <string name="Find_Station">Find Station</string>
+    <string name="enterAddress">Enter Search Addresss</string>
 
 </resources>
