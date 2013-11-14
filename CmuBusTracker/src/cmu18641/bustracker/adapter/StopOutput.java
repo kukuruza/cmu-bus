@@ -1,21 +1,30 @@
-package cmu18641.bustracker.entities;
+package cmu18641.bustracker.adapter;
 
 import java.util.Locale;
+
+import cmu18641.bustracker.entities.Stop;
 import android.location.Location;
-import android.text.format.Time;
 
 
 // Note:
 //   This class is to be used for output of Stop at wireframes 3 - 5
 
 
-public class StopAdapter extends Stop {
+public class StopOutput extends Stop {
 	
 	final static private float MetersToMiles = (float) 0.000621371;
 	final static private String MilesStringFormat = "%.1f";
 	final static private float AvgSpeedMilesPerMin = (float)(3) / 60;
 	
-	public StopAdapter (Stop stop)
+	private Location _here = null;
+	
+	
+	public void setLocation (Location here)
+	{
+		_here = here;
+	}
+	
+	public StopOutput (Stop stop)
 	{
 		super (stop);
 	}
@@ -31,20 +40,20 @@ public class StopAdapter extends Stop {
 	}
 	
 	// in miles
-	protected float getDistance (Location here)
+	protected float getDistance ()
 	{
-	    return getLocation().distanceTo(here) * MetersToMiles;
+	    return getLocation().distanceTo(_here) * MetersToMiles;
 	}
 	
 	// return string in miles
-	public String getDistanceString (Location here)
+	public String getDistanceString ()
 	{
-		return String.format (Locale.US, MilesStringFormat, getDistance(here));
+		return String.format (Locale.US, MilesStringFormat, getDistance());
 	}
 	
 	// return string in minutes
-	public String getWalkingTimeString (Location here, Time now)
+	public String getWalkingTimeString ()
 	{
-		return String.format (Locale.US, "%f.", getDistance(here) / AvgSpeedMilesPerMin);
+		return String.format (Locale.US, "%f.", getDistance() / AvgSpeedMilesPerMin);
 	}
 }
