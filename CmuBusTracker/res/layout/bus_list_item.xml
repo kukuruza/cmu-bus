@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+     
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+		android:clickable="false"/>
+
+    <TextView
+        android:id="@+id/busname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/checkBox"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/checkBox"
+        android:text="busName"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/busdirection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/busname"
+        android:layout_alignBottom="@+id/busname"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/busname"
+        android:paddingLeft="10dp"
+        android:text="busDirecton"/>
+     
+</RelativeLayout>

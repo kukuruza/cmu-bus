@@ -12,7 +12,7 @@
         <ListView
             android:id="@+id/stopListView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:background="#ffffff"
             android:cacheColorHint="#ffffffff" >
         </ListView>

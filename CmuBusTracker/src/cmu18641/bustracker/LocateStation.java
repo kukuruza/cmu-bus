@@ -36,6 +36,7 @@ public class LocateStation extends Activity {
 		
 		// get references to editTexts
 		searchAddressEditText = (EditText) findViewById(R.id.enterAddressEditText);
+		searchStationButton = (Button) findViewById(R.id.searchAddressButton);
 				
 		// must first query for all stops, and sort by distance from user
 		
