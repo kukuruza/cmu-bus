@@ -2,6 +2,7 @@ package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
 import android.location.Location;
+import android.util.Log;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.RouteQueryInterface;
 import cmu18641.bustracker.entities.Stop;
@@ -19,17 +20,18 @@ public class RouteQueryManager implements RouteQueryInterface {
 		
 		// for testing 
 		// populate busList with test data
-		//String names[] = new String[50];
-		//
-		// for(int i = 0; i< 50; i++){
-		//	 names[i] = "BusName" + i; 
-		//	 Bus temp = new Bus(names[i], "West");		 
-		//	 busList.add(temp);       
-		// }
+		String names[] = new String[50];
+		ArrayList<Bus> busList = new ArrayList<Bus>(); 
+		
+		for(int i = 0; i< 50; i++){
+			 names[i] = "BusName" + i; 
+			 Bus temp = new Bus(names[i], "West");		 
+			 busList.add(temp);       
+		}
 		
 		
 		
-		return null;
+		return busList; 
 	}
 
 	@Override
@@ -42,7 +44,19 @@ public class RouteQueryManager implements RouteQueryInterface {
 		    // based on stops location and user location
 		// sort list by distance in stop class
 		
-		return null;
+		Log.v("RouteQueryManager", "getStopsByCurrentLocation"); 
+		
+		String names[] = new String[25];
+		ArrayList<Stop> stopList = new ArrayList<Stop>(); 
+		
+		// for testing
+		for(int i = 0; i < 25; i++){
+			 names[i] = "StopName" + i; 
+			 Stop temp = new Stop(names[i], "West Street", "East Street", new Location("loc"), 25);		 
+			 stopList.add(temp);       
+		}
+		
+		return stopList; 
 	}
 
 	@Override

@@ -14,6 +14,7 @@ public class TimeQueryManager implements TimeQueryInterface {
 	public Schedule getSchedule(Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

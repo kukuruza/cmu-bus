@@ -6,10 +6,12 @@ import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
@@ -36,6 +38,7 @@ public class SelectStationAndBus extends Activity {
 	private ArrayList<Bus> busList; 
 	private Stop selectedStop; 
 	private BusAdapter busAdapter; 
+	private String selectedStopName; 
 
 	private Button findNextBusButton; 
 	private Button findStationButton; 
@@ -52,16 +55,21 @@ public class SelectStationAndBus extends Activity {
 		busSelections = new ArrayList<Bus>(); 
 		
 		Intent intent = getIntent(); 
-		if(intent != null) { 
+		Bundle bundle = intent.getExtras(); 
+		if(bundle != null) { 
 			// grab selected stop if entering 
 			// from LocateStation/SearchStation activity
-			selectedStop = (Stop) intent.getSerializableExtra(LocateStation.STOP_SELECTED); 
+			Log.v("SelectStationAndBus", "Non-null Intent");
+			//selectedStopName = bundle.getString(LocateStation.STOP_SELECTED_NAME); 
+			//selectedStop = new Stop(selectedStopName, "", "", new Location("here"), 5); 
+			selectedStop = bundle.getParcelable(LocateStation.STOP_SELECTED_NAME);
 		}
 		else { 
 			// if intent is null, query must be called 
 			// to find default station (closest to user)
 			try { 
-				selectedStop = Connector.globalManager.getStopsByCurrentLocation().get(0); 
+				Log.v("SelectStationAndBus", "Null Intent");
+				selectedStop = Connector.globalManager.getStopsByCurrentLocation(SelectStationAndBus.this).get(0); 
 			} catch(TrackerException te) { 
 				
 			}
@@ -108,7 +116,7 @@ public class SelectStationAndBus extends Activity {
 			if(!busSelections.isEmpty()) { 
 				Intent showSchedule = new Intent(SelectStationAndBus.this, ViewSchedule.class);
 				showSchedule.putExtra(BUSES_SELECTED, busSelections); 
-				showSchedule.putExtra(LocateStation.STOP_SELECTED, selectedStop);
+				showSchedule.putExtra(LocateStation.STOP_SELECTED_NAME, selectedStop);
 				SelectStationAndBus.this.startActivity(showSchedule);
 			}
 			else { 
@@ -172,17 +180,6 @@ public class SelectStationAndBus extends Activity {
 		}
 		   
 	}; 
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.select_station_and_bus, menu);
-		return true;
-	}
-	
-	// return reference to global manager
-	//public GlobalManager getGlobalManager() { 
-	//	return globalManager; 
-	//}
+
 
 }

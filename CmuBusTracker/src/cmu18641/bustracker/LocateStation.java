@@ -1,9 +1,15 @@
 package cmu18641.bustracker;
 
 import java.util.ArrayList;
+import cmu18641.bustracker.adapter.StopAdapter;
+import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
+import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -12,7 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener; 
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -26,14 +31,17 @@ import android.view.GestureDetector;
  * or type an address to execute a search for a bus station.
  */
 
+// onFocuslistener for edit text
+
 public class LocateStation extends Activity {
 
-	public static final String STOP_SELECTED = "stop_selected";
+	public static final String STOP_SELECTED_NAME = "stop_selected";
 	public static final String SEARCH_QUERY_ID = "address_id";
 	private Button searchStationButton;
 	private EditText searchAddressEditText; 
 	
 	ArrayList<Stop> stationList; 
+	StopAdapter stopAdapter; 
 	
 	private GestureDetector mDetector; 
 	
@@ -41,6 +49,8 @@ public class LocateStation extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_locate_station);
+		
+		Log.v("LocateStation", "onCreate()");
 		
 		View view = findViewById(R.id.locatestationlayout);
 		
@@ -62,10 +72,16 @@ public class LocateStation extends Activity {
 				
 		// query must be called to find all stations
 		// should be sorted by distance from user
-		ArrayList<Stop> stationList = new ArrayList<Stop>(); 
+		try {
+			stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+		} catch (TrackerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 		
+	
 		// bus adapter is used to map those buses to the listview
-		ArrayAdapter<Stop> stopAdapter = new ArrayAdapter<Stop>(this, 
+		stopAdapter = new StopAdapter(this, 
 		        R.layout.activity_locate_station, stationList);
 		
 		// bind adapter and set listener
@@ -92,6 +108,21 @@ public class LocateStation extends Activity {
 				showSearchStation.putExtra(SEARCH_QUERY_ID, searchAddressQuery);
 				LocateStation.this.startActivity(showSearchStation);
 			}
+			else { 
+				Builder builder = new AlertDialog.Builder(LocateStation.this);
+			    builder.setMessage("Enter an address to search for a stop, or " +
+			    						"select a nearby stop from the list");
+			    builder.setCancelable(true); 
+			    builder.setPositiveButton(android.R.string.ok,
+			            new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int id) {
+			            dialog.cancel();
+			        }
+			    });
+			    
+			    AlertDialog dialog = builder.create();
+			    dialog.show();
+			}
 		}
 			
 	};
@@ -102,7 +133,9 @@ public class LocateStation extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View parent, int position, long id) {
 			Intent showSelectStationAndBus = new Intent(LocateStation.this, SelectStationAndBus.class);
-			showSelectStationAndBus.putExtra(STOP_SELECTED, stationList.get(position));
+			Bundle b = new Bundle();
+			//.putExtra(STOP_SELECTED, stationList.get(position));
+			showSelectStationAndBus.putExtra(STOP_SELECTED_NAME, stationList.get(position)); 
 			LocateStation.this.startActivity(showSelectStationAndBus);
 		}
 	   

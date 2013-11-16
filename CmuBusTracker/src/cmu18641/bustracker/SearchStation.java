@@ -2,6 +2,7 @@ package cmu18641.bustracker;
 
 import java.util.ArrayList;
 
+import cmu18641.bustracker.adapter.StopAdapter;
 import cmu18641.bustracker.entities.Stop;
 import android.os.Bundle;
 import android.app.Activity;
@@ -26,6 +27,7 @@ public class SearchStation extends Activity {
 	private String addressSearchQuery; 
 	
 	private ArrayList<Stop> stationList;  
+	private StopAdapter stopAdapter; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class SearchStation extends Activity {
 		stationList = new ArrayList<Stop>(); 
 				
 		// bus adapter is used to map those buses to the listview
-		ArrayAdapter<Stop> stopAdapter = new ArrayAdapter<Stop>(this, 
+		stopAdapter = new StopAdapter(this, 
 				      R.layout.activity_search_station, stationList);
 				
 		// Note: using this built in adapter will require Stop class
