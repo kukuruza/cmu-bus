@@ -3,6 +3,9 @@ package cmu18641.bustracker;
 import java.util.ArrayList;
 import cmu18641.bustracker.adapter.BusAdapter;
 import cmu18641.bustracker.entities.Bus;
+import cmu18641.bustracker.entities.Connector;
+import cmu18641.bustracker.entities.Stop;
+import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,11 +30,11 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class SelectStationAndBus extends Activity {
 	
-	public static final String BUS_ARRAY_ID = "rowarray_id";
-	public static final String STOP_ID = "row_id";
+	public static final String BUSES_SELECTED = "buses_selected";
 	
-	private ArrayList<Integer> busSelections;
-	private long stopID = -1; 
+	private ArrayList<Bus> busSelections;
+	private ArrayList<Bus> busList; 
+	private Stop selectedStop; 
 	private BusAdapter busAdapter; 
 
 	private Button findNextBusButton; 
@@ -43,38 +46,38 @@ public class SelectStationAndBus extends Activity {
 		setContentView(R.layout.activity_select_station_and_bus);
 		
 		Log.v("SelectStationAndBus", "OnCreate()");
-		
+
 		findNextBusButton = (Button) findViewById(R.id.findNextBusButton);
 		findStationButton = (Button) findViewById(R.id.findStationButton);
-		busSelections = new ArrayList<Integer>(); 
+		busSelections = new ArrayList<Bus>(); 
 		
-		// grab selected stop if entering from LocateStation/SearchStation activity
-		Bundle extras = getIntent().getExtras(); 
-		if(extras != null) { 
-			stopID = extras.getLong(LocateStation.STOP_ID); 
+		Intent intent = getIntent(); 
+		if(intent != null) { 
+			// grab selected stop if entering 
+			// from LocateStation/SearchStation activity
+			selectedStop = (Stop) intent.getSerializableExtra(LocateStation.STOP_SELECTED); 
 		}
 		else { 
-			// if bundle is null, query must be called 
+			// if intent is null, query must be called 
 			// to find default station (closest to user)
+			try { 
+				selectedStop = Connector.globalManager.getStopsByCurrentLocation().get(0); 
+			} catch(TrackerException te) { 
+				
+			}
 		}
 		
-		// set button text dynamically
-		findStationButton.setText("Default Station Goes Here"); 
+		// set button text based on selected stop 
+		findStationButton.setText(selectedStop.getName()); 
 		
 		// query must be called to find buses that pass thru the selected station
-		// returning an array list of buses 
-		ArrayList<Bus> busList = new ArrayList<Bus>(); 
+		try { 
+			busList = Connector.globalManager.getBusesByStop(selectedStop); 
+		} catch(TrackerException te) { 
+			// log and recover
+		}
 		
-		// populate busList with test data
-		String names[] = new String[50];
-		
-		 for(int i = 0; i< 50; i++){
-			 names[i] = "BusName" + i; 
-			 Bus temp = new Bus(names[i]);		 
-			 busList.add(temp);       
-		 }
-		
-		// bus adapter is used to map those buses to the listview
+		// bus adapter maps buses to the listview
 		busAdapter = new BusAdapter(this, 
 		        R.layout.activity_select_station_and_bus, busList);
 		
@@ -104,8 +107,8 @@ public class SelectStationAndBus extends Activity {
 			
 			if(!busSelections.isEmpty()) { 
 				Intent showSchedule = new Intent(SelectStationAndBus.this, ViewSchedule.class);
-				showSchedule.putExtra(BUS_ARRAY_ID, busSelections); 
-				showSchedule.putExtra(STOP_ID, stopID);
+				showSchedule.putExtra(BUSES_SELECTED, busSelections); 
+				showSchedule.putExtra(LocateStation.STOP_SELECTED, selectedStop);
 				SelectStationAndBus.this.startActivity(showSchedule);
 			}
 			else { 
@@ -135,7 +138,6 @@ public class SelectStationAndBus extends Activity {
 	OnClickListener findStationButtonClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			findStationButton.setText("Clicked"); 
 			Intent showLocateStation = new Intent(SelectStationAndBus.this, LocateStation.class);
 			SelectStationAndBus.this.startActivity(showLocateStation);
 			Log.v("SelectStationAndBus - findStationButtonClicked", "OnClick()");
@@ -151,16 +153,16 @@ public class SelectStationAndBus extends Activity {
 		public void onItemClick(AdapterView<?> arg0, View parent, int position, long id) {
 			CheckBox checkbox = (CheckBox) parent.findViewById(R.id.checkBox);
 
-			// pressed again -> deselect
-			if(busSelections.contains(position)) { 
-				busSelections.remove((Object)position); 
+			// pressed again -> remove from selected bus list
+			if(busSelections.contains(busList.get(position))) { 
+				busSelections.remove(busList.get(position)); 
 				checkbox.setChecked(false);   
 				busAdapter.setCheckBoxState(position, false);
 				
 			}
-			// first press -> select
+			// first press -> add to selected bus list
 			else { 
-				busSelections.add(position); 
+				busSelections.add(busList.get(position)); 
 				checkbox.setChecked(true); 
 				busAdapter.setCheckBoxState(position, true);
 			}
@@ -177,5 +179,10 @@ public class SelectStationAndBus extends Activity {
 		getMenuInflater().inflate(R.menu.select_station_and_bus, menu);
 		return true;
 	}
+	
+	// return reference to global manager
+	//public GlobalManager getGlobalManager() { 
+	//	return globalManager; 
+	//}
 
 }

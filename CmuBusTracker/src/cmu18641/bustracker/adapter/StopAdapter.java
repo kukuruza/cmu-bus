@@ -1,6 +1,8 @@
 package cmu18641.bustracker.adapter;
 
 import java.util.ArrayList;
+import java.util.Locale;
+
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.entities.Stop;
 import android.content.Context;
@@ -18,7 +20,11 @@ import android.widget.TextView;
  */
 
 public class StopAdapter extends ArrayAdapter<Stop> {
-
+	
+	final static private float MetersToMiles = (float) 0.000621371;
+	final static private String MilesStringFormat = "%.1f";
+	final static private float AvgSpeedMilesPerMin = (float)(3) / 60;
+	
 	Context context; 
 	ArrayList<Stop> stopList; 
 	
@@ -57,12 +63,21 @@ public class StopAdapter extends ArrayAdapter<Stop> {
 		TextView walkingDistanceTextView = (TextView) convertView.findViewById(R.id.walkingdistance); 
 		TextView distanceTextView = (TextView) convertView.findViewById(R.id.distance); 
 		
-	    //stopNameTextView.setText(stopList.get(position).getName());
-	    //stopAddressTextView.setText(stopList.get(position).getAddress());
-	    //walkingDistanceTextView.setText(stopList.get(position).getWalkingDistance());
-	    //distanceTextView.setText(stopList.get(position).getDistance()); 
+	    stopNameTextView.setText(stopList.get(position).getName());
+	    stopAddressTextView.setText(stopList.get(position).getAddress());
+	    walkingDistanceTextView.setText(getWalkingTimeString(stopList.get(position)));
+	    distanceTextView.setText(getDistanceString(stopList.get(position))); 
 		
 		return convertView;
+	}
+	
+	// utility methods to extract and convert stop distance
+	private String getDistanceString(Stop stop) { 
+		return String.format(Locale.US, MilesStringFormat, stop.getDistance());
+	}
+	
+	private String getWalkingTimeString(Stop stop) { 
+		return String.format (Locale.US, "%f.", stop.getDistance() / AvgSpeedMilesPerMin);
 	}
 
 } // end StopAdapter

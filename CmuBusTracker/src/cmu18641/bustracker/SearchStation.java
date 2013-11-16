@@ -22,8 +22,10 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class SearchStation extends Activity {
 	
-	public static final String STOP_ID = "stop_id";
+	public static final String STOP_SELECTED = "stop_selected";
 	private String addressSearchQuery; 
+	
+	private ArrayList<Stop> stationList;  
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class SearchStation extends Activity {
 		}
 		
 		// call query to return related stops
-		ArrayList<Stop> stationList = new ArrayList<Stop>(); 
+		// hook up to query manager
+		stationList = new ArrayList<Stop>(); 
 				
 		// bus adapter is used to map those buses to the listview
 		ArrayAdapter<Stop> stopAdapter = new ArrayAdapter<Stop>(this, 
@@ -60,9 +63,9 @@ public class SearchStation extends Activity {
 	// user is taken to selectionStationAndBus after touching a station in list
 	OnItemClickListener selectStopListener = new OnItemClickListener() {
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View parent, int position, long id) {
 			Intent showSelectStationAndBus = new Intent(SearchStation.this, SelectStationAndBus.class);
-			showSelectStationAndBus.putExtra(STOP_ID, arg3);
+			showSelectStationAndBus.putExtra(STOP_SELECTED, stationList.get(position));
 			SearchStation.this.startActivity(showSelectStationAndBus);
 		}
 		   

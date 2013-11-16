@@ -57,7 +57,7 @@ public class BusAdapter extends ArrayAdapter<Bus> {
 			
 		//set the data to be displayed
 		viewHolder.name.setText(busList.get(position).getName().toString());
-		//viewHolder.direction.setText(busList.get(position).getDirection().toString());	    
+		viewHolder.direction.setText(busList.get(position).getDirection().toString());	    
 		viewHolder.checkBox.setChecked(checkBoxState[position]);        
 
 		Log.v("BusAdapter - getView()", "position= " + position);
