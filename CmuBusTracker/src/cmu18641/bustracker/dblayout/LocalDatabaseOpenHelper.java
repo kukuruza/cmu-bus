@@ -34,7 +34,8 @@ public class LocalDatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String STOP_STREET2 = "stopstreet2";
     private static final String STOP_GPSLAT = "stopgpslat";
     private static final String STOP_GPSLONG = "stopgpslong";
- 
+    private static final String STOP_DISTANCE = "stopdistance"; 
+    
     // ROUTE table column names
     private static final String ROUTE_ID = "routeid";
     
@@ -51,7 +52,7 @@ public class LocalDatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_STOP = "CREATE TABLE " + TABLE_STOP
             + "(" + STOP_ID + " INTEGER PRIMARY KEY," + STOP_NAME + " TEXT,"
             + STOP_STREET1 + " TEXT," + STOP_STREET2 + " TEXT," + STOP_GPSLAT 
-            + " REAL," + STOP_GPSLONG + " REAL,"+ TIME_STAMP + " DATETIME" + ")";
+            + " REAL," + STOP_GPSLONG + " REAL,"+ STOP_DISTANCE + " REAL,"+ TIME_STAMP + " DATETIME" + ")";
  
     private static final String CREATE_TABLE_ROUTE = "CREATE TABLE "
             + TABLE_ROUTE + "(" + ROUTE_ID + " INTEGER PRIMARY KEY,"
