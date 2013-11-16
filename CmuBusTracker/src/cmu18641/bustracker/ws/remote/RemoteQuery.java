@@ -36,7 +36,7 @@ public class RemoteQuery implements TimeQueryInterface {
 
 
 	@ Override
-	public ArrayList<Time> getTimes (Stop stop, ArrayList<Bus> buses) throws TrackerException 
+	public Schedule getSchedule(Stop stop, ArrayList<Bus> buses) throws TrackerException
 	{
 		// TODO: to be moved to configs
 		String url = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBmSXUzVZBKQv9FJkTpZXn0dObKgEQOIFU&cx=014099860786446192319:t5mr0xnusiy&q=AndroidDev&alt=json&searchType=image";
@@ -52,6 +52,6 @@ public class RemoteQuery implements TimeQueryInterface {
 		TimesMessage timesMessage = gson.fromJson (responseString, TimesMessage.class); 
 		
 		// parse this object into ArrayList<Time>
-		return timesMessage.getTimes();
+		return null; //timesMessage.getTimes();
 	}
 }
