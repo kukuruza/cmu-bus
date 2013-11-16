@@ -56,7 +56,7 @@ public class LocateStation extends Activity {
 		
 		mDetector = new GestureDetector(this, new MyGestureListener());
 		
-		 view.setOnTouchListener(new OnTouchListener(){
+		view.setOnTouchListener(new OnTouchListener(){
 
 			   public boolean onTouch(View v, MotionEvent event) {
 				   Log.v("onTouch", "touched"); 

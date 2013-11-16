@@ -49,9 +49,9 @@ public class RemoteQuery implements TimeQueryInterface {
 		
 		// parse json string into TimesMessage object
 		Gson gson = new Gson();
-		TimesMessage timesMessage = gson.fromJson (responseString, TimesMessage.class); 
+		Schedule schedule = gson.fromJson (responseString, Schedule.class); 
 		
 		// parse this object into ArrayList<Time>
-		return null; //timesMessage.getTimes();
+		return schedule;
 	}
 }
