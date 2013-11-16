@@ -43,7 +43,7 @@ public class ViewSchedule extends Activity {
 		Intent intent = getIntent(); 
 		if(intent != null) { 
 			// grab station and selected buses from selectStationAndBus
-			selectedStop = (Stop) intent.getSerializableExtra(LocateStation.STOP_SELECTED); 
+			selectedStop = (Stop) intent.getSerializableExtra(LocateStation.STOP_SELECTED_NAME); 
 			selectedBuses = (ArrayList<Bus>) intent.getSerializableExtra(SelectStationAndBus.BUSES_SELECTED);
 		}
 		else { 

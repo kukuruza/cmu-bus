@@ -3,8 +3,11 @@ package cmu18641.bustracker.entities;
 import java.io.Serializable;
 
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
-public class Stop implements Serializable {
+public class Stop implements Parcelable {
 
 	private String     _name;
 	
@@ -40,5 +43,46 @@ public class Stop implements Serializable {
         _location = stop.getLocation();
         _distance = stop.getDistance(); 
 	}
+	
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		Log.v("StopParcel", "writeToParcel");
+	    dest.writeString(_name);
+	    dest.writeString(_street1);
+	    dest.writeString(_street2);
+	    dest.writeParcelable(_location,1); 
+	    dest.writeFloat(_distance);
+		
+	}
+	
+	
+	public static final Parcelable.Creator<Stop> CREATOR
+    		= new Parcelable.Creator<Stop>() {
+		public Stop createFromParcel(Parcel in) {
+			return new Stop(in);
+		}
+
+		public Stop[] newArray(int size) {
+		    return new Stop[size];
+		}
+	};
+	
+	  public Stop(Parcel source){
+          /*
+           * Reconstruct from the Parcel
+           */
+          Log.v("StopParcel", "ParcelData(Parcel source): time to put back parcel data");
+          _name = source.readString(); 
+          _street1 = source.readString(); 
+          _street2 = source.readString(); 
+          _distance = source.readFloat(); 
+          
+    }
 	
 }

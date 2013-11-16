@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
+import cmu18641.bustracker.SearchStation;
 import cmu18641.bustracker.SelectStationAndBus;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.ws.RouteQueryManager;
@@ -23,12 +25,11 @@ public class GlobalManager {
 	TimeQueryManager timeQueryManager; 
 	LocationService locationService; 
 	
-	Context context = null;
+	Context context;
 	
 	public GlobalManager() { 
 		routeQueryManager = new RouteQueryManager(); 
 		timeQueryManager = new TimeQueryManager(); 
-		locationService = new LocationService(context); 
 	}
 	
 	// returns list of buses associated with input stop 
@@ -37,15 +38,23 @@ public class GlobalManager {
 	}
 
 	// returns list of stops sorted by distance from user
-	public ArrayList<Stop> getStopsByCurrentLocation() throws TrackerException {    
+	public ArrayList<Stop> getStopsByCurrentLocation(Context context) throws TrackerException {    
+		locationService = new LocationService(context); 
 		Location userLocation = new Location("userLocation"); 
+		userLocation.setLatitude(5.0); 
+		userLocation.setLongitude(10.0);
 		
         if(locationService.canGetLocation()) {
-            userLocation = locationService.getLocation(); 
+            //userLocation = new Location(locationService.getLocation()); 
+            Log.v("Manager", "userLocation=" + locationService.getLatitude() + " " + locationService.getLongitude());
+            //Log.v("Manager", "userLocation=" + userLocation.getLatitude() + " " + userLocation.getLongitude());
+            
         }
         else {
             locationService.showSettingsAlert();
         }
+        
+        locationService.stopUsingLocation(); 
         
         if(userLocation.getLatitude() != 0.0 && userLocation.getLongitude() != 0.0)
         	return routeQueryManager.getStopsByCurrentLocation(userLocation); 

@@ -33,8 +33,7 @@ public class BusAdapter extends ArrayAdapter<Bus> {
 	}
 
 	@Override
-	public View getView(final int position, View convertView, 
-			ViewGroup viewGroup) {
+	public View getView(final int position, View convertView, ViewGroup viewGroup) {
 		
 		if(convertView == null) {
 			LayoutInflater inflater = 
@@ -71,7 +70,7 @@ public class BusAdapter extends ArrayAdapter<Bus> {
 		checkBoxState[position] = value; 
 	}
 	
-    //c lass for caching the views in a row  
+    // class for caching the views in a row  
 	private class ViewHolder {
 		TextView name;
 		TextView direction;
