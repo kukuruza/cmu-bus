@@ -31,7 +31,7 @@ build
 *.dmg
 *.gz
 *.iso
-*.jar
+# *.jar - jars are in the libs dir
 *.rar
 *.tar
 *.zip
