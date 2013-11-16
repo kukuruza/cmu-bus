@@ -15,5 +15,5 @@ import android.text.format.Time;
 
 public interface TimeQueryInterface {
 
-	ArrayList<Time>   getTimes (Stop stop, ArrayList<Bus> buses) throws TrackerException;
+	Schedule getSchedule (Stop stop, ArrayList<Bus> buses) throws TrackerException;
 }

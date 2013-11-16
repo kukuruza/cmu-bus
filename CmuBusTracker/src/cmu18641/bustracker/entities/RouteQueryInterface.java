@@ -14,7 +14,7 @@ import cmu18641.bustracker.exceptions.TrackerException;
 
 public interface RouteQueryInterface {
 
-	ArrayList<Bus>    getBusesByStop (ArrayList<Stop> stops) throws TrackerException;
+	ArrayList<Bus>    getBusesByStop (Stop stop) throws TrackerException;
 	
 	ArrayList<Stop>   getStopsByCurrentLocation (Location here) throws TrackerException;
 	

@@ -48,7 +48,7 @@ public class LocalDatabaseConnector {
 	
 	// selects a bus from BUS table
 	public Bus selectBus(Long busId) { 
-		Bus bus = new Bus(""); 
+		Bus bus = new Bus("",""); 
 		open(); 
 		// db operation
 		close(); 
