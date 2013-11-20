@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 
 import cmu18641.bustracker.entities.*;
 import cmu18641.bustracker.exceptions.TrackerException;
-import android.text.format.Time;
 
 
 public class RemoteQuery implements TimeQueryInterface {
