@@ -9,6 +9,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import com.google.gson.Gson;
 
+import cmu18641.bustracker.common.BaseSchedule;
 import cmu18641.bustracker.entities.*;
 import cmu18641.bustracker.exceptions.TrackerException;
 
@@ -35,10 +36,11 @@ public class RemoteQuery implements TimeQueryInterface {
 
 
 	@ Override
-	public Schedule getSchedule(Stop stop, ArrayList<Bus> buses) throws TrackerException
+	public Schedule getSchedule (Stop stop, ArrayList<Bus> buses) 
+			throws TrackerException
 	{
 		// TODO: to be moved to configs
-		String url = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBmSXUzVZBKQv9FJkTpZXn0dObKgEQOIFU&cx=014099860786446192319:t5mr0xnusiy&q=AndroidDev&alt=json&searchType=image";
+		String url = "http://localhost:8080/webserver/querymock";
 		
 		// compose a request
 		String requestUrl = formRequestString (url, stop, buses);
@@ -48,9 +50,9 @@ public class RemoteQuery implements TimeQueryInterface {
 		
 		// parse json string into TimesMessage object
 		Gson gson = new Gson();
-		Schedule schedule = gson.fromJson (responseString, Schedule.class); 
+		BaseSchedule baseSchedule = gson.fromJson (responseString, BaseSchedule.class); 
 		
-		// parse this object into ArrayList<Time>
+		Schedule schedule = FromBaseHelper.fromBase(baseSchedule);
 		return schedule;
 	}
 }

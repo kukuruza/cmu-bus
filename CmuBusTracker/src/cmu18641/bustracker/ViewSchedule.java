@@ -53,7 +53,7 @@ public class ViewSchedule extends Activity {
 		
 		// call query to return a schedule
 		try {
-			schedule = Connector.globalManager.getSchedule(selectedStop, selectedBuses);
+			schedule = Connector.globalManager.getSchedule(getApplicationContext(), selectedStop, selectedBuses);
 		} catch (TrackerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

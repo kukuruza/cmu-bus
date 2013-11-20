@@ -1,5 +1,7 @@
 package cmu18641.bustracker.ws.remote;
 
+import java.util.ArrayList;
+
 import android.location.Location;
 import android.text.format.Time;
 import cmu18641.bustracker.common.*;
@@ -10,11 +12,11 @@ import cmu18641.bustracker.entities.Stop;
 
 public class FromBaseHelper {
 
-	static Schedule fromRemote (BaseSchedule baseSchedule)
+	static Schedule fromBase (BaseSchedule baseSchedule)
 	{
 		Schedule schedule = new Schedule();
 
-		// reset stop
+		// set stop
 		Location loc = new Location ((String)null);
 		loc.setLatitude(baseSchedule.getStop().latitude);
 		loc.setLongitude(baseSchedule.getStop().longitude);
@@ -23,16 +25,24 @@ public class FromBaseHelper {
 				              baseStop.street2, loc, -1);
 		schedule.setStop(stop);
 		
-        // reset ScheduleItem-s
+        // set ScheduleItem-s
+		ArrayList<ScheduleItem> itemList = new ArrayList<ScheduleItem>();
 		for (BaseScheduleItem baseItem : baseSchedule.getScheduleItemList())
 		{
 		    ScheduleItem item = new ScheduleItem ();
+		    // set bus
 		    Bus bus = new Bus (item.getBus().getName(), item.getBus().getDirection());
 		    item.setBus(bus);
-		    item.setTime(new Time(baseItem.getTime()));
+		    // set time
+		    Time time = new Time();
+		    time.set(baseItem.getTime());
+		    item.setTime(time);
+		    // insert item
+		    itemList.add(item);
 		}
+		schedule.setScheduleItem(itemList);
 		
-	    return null;
+	    return schedule;
 	}
-	
+
 }

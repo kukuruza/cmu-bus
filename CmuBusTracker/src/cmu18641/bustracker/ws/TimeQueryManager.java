@@ -1,21 +1,38 @@
 package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
+
+import android.content.Context;
+import android.util.Log;
+
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.Stop;
-import cmu18641.bustracker.entities.TimeQueryInterface;
 import cmu18641.bustracker.exceptions.TrackerException;
-import android.text.format.Time;
+import cmu18641.bustracker.ws.remote.Networking;
+import cmu18641.bustracker.ws.remote.RemoteQuery;
 
-public class TimeQueryManager implements TimeQueryInterface {
 
-	@Override
-	public Schedule getSchedule(Stop stop, ArrayList<Bus> buses)
+/*
+ *  this class checks for network and redirects the query to remote or local
+ */
+
+public class TimeQueryManager {
+	private final String TAG = "TimeQueryManager"; 
+
+	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
-		// TODO Auto-generated method stub
 		
-		return null;
+		Schedule schedule = null;
+		if (Networking.isNetworkAvailable(context))
+		{
+			RemoteQuery remoteQuery = new RemoteQuery();
+			schedule = remoteQuery.getSchedule (stop, buses);
+		}
+		else
+			Log.i(TAG, "network is unavailble");
+		
+		return schedule;
 	}
 
 }
