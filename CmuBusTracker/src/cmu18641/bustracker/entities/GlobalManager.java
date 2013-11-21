@@ -25,7 +25,7 @@ public class GlobalManager {
 	TimeQueryManager timeQueryManager; 
 	LocationService locationService; 
 	
-	Context context;
+	//Context context;
 	
 	public GlobalManager() { 
 		routeQueryManager = new RouteQueryManager(); 
@@ -38,7 +38,8 @@ public class GlobalManager {
 	}
 
 	// returns list of stops sorted by distance from user
-	public ArrayList<Stop> getStopsByCurrentLocation(Context context) throws TrackerException {    
+	public ArrayList<Stop> getStopsByCurrentLocation(Context context) 
+			throws TrackerException {    
 		locationService = new LocationService(context); 
 		Location userLocation = new Location("userLocation"); 
 		userLocation.setLatitude(5.0); 
@@ -68,13 +69,13 @@ public class GlobalManager {
 		return routeQueryManager.getStopByAddress(street); 
 	}
 	
+	
 	// return schedule for a stop and buses
-	public Schedule getSchedule(Stop stop, ArrayList<Bus> buses) throws TrackerException {
-		// TODO 
-		// if there is network access
-			return timeQueryManager.getSchedule(stop, buses); 
-		// else throw error
-			
+	public Schedule getSchedule(Context context, Stop stop, ArrayList<Bus> buses) 
+			throws TrackerException 
+	{
+        // network is checked by timeQueryManager itself
+		return timeQueryManager.getSchedule(context, stop, buses); 
 	}
 	
 }

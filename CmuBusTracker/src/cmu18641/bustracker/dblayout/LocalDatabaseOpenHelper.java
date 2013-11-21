@@ -46,21 +46,21 @@ public class LocalDatabaseOpenHelper extends SQLiteOpenHelper {
     
     // table create Statements
     private static final String CREATE_TABLE_BUS = "CREATE TABLE "
-            + TABLE_BUS + "(" + BUS_ID + " INTEGER PRIMARY KEY," + BUS_NAME
+            + TABLE_BUS + "(" + BUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + BUS_NAME
             + " TEXT," + BUS_DIR + " TEXT," + TIME_STAMP + " DATETIME" + ")";
  
     private static final String CREATE_TABLE_STOP = "CREATE TABLE " + TABLE_STOP
-            + "(" + STOP_ID + " INTEGER PRIMARY KEY," + STOP_NAME + " TEXT,"
+            + "(" + STOP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + STOP_NAME + " TEXT,"
             + STOP_STREET1 + " TEXT," + STOP_STREET2 + " TEXT," + STOP_GPSLAT 
             + " REAL," + STOP_GPSLONG + " REAL,"+ STOP_DISTANCE + " REAL,"+ TIME_STAMP + " DATETIME" + ")";
  
     private static final String CREATE_TABLE_ROUTE = "CREATE TABLE "
-            + TABLE_ROUTE + "(" + ROUTE_ID + " INTEGER PRIMARY KEY,"
+            + TABLE_ROUTE + "(" + ROUTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + BUS_ID + " INTEGER," + STOP_ID + " INTEGER," + TIME_STAMP
             + " DATETIME" + ")";
     
     private static final String CREATE_TABLE_SCHEDULE = "CREATE TABLE "
-            + TABLE_SCHEDULE + "(" + SCHEDULE_ID + " INTEGER PRIMARY KEY,"
+            + TABLE_SCHEDULE + "(" + SCHEDULE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + ROUTE_ID + " INTEGER," + SCHEDULE_DAY + " INTEGER," 
             + SCHEDULE_TIME + " INTEGER," + TIME_STAMP + " DATETIME" + ")";
  

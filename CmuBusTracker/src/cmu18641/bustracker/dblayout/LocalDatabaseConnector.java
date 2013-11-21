@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.util.Log;
 
 /*
  * LocalDatabaseConnector.java
@@ -21,7 +22,10 @@ import android.location.Location;
  */
 
 public class LocalDatabaseConnector {
- 
+	
+	// Logcat tag
+    private static final String LOG = LocalDatabaseConnector.class.getName();
+    
     private static final String DATABASE_NAME = "busTracker";
     private static final int DATABASE_VERSION = 1;
 	private SQLiteDatabase database;
@@ -68,6 +72,8 @@ public class LocalDatabaseConnector {
 		
 		//sql command to select an item given an id
 		String selectQuery = "SELECT  * FROM buses WHERE busid = " + busId;
+		
+		Log.e(LOG, selectQuery);
 	 
 		open();
 	    Cursor busCursor = database.rawQuery(selectQuery, null);
@@ -96,6 +102,8 @@ public class LocalDatabaseConnector {
 		// sql commad to select all
 	    String selectQuery = "SELECT  * FROM buses";
 	    
+	    Log.e(LOG, selectQuery);
+	    
 	    open();
 	    Cursor busCursor = database.rawQuery(selectQuery, null);
 	    close();
@@ -118,6 +126,39 @@ public class LocalDatabaseConnector {
 		//return all the buses
 		return allBuses; 
 	}
+	
+		// selects all buses associated with a specific stop
+		public ArrayList<Bus> selectAllBusesByStop(Stop stop) { 
+			ArrayList<Bus> allBusesByStop = new ArrayList<Bus>();
+			String stopName = stop.getName(); 
+			
+			String selectQuery = "SELECT  * FROM buses tb, stops ts, routes tr WHERE ts.stopname = '" 
+					+ stopName + "' AND ts.stopid = tr.stopid AND tb.busid = tr.busid";
+		 
+		    Log.e(LOG, selectQuery);
+		 
+		    open();
+		    Cursor busCursor = database.rawQuery(selectQuery, null);
+		    close();
+		    
+		    // looping through all rows and adding to list
+		    if (busCursor.moveToFirst()) {
+		        do {
+		        	String busName = busCursor.getString(busCursor.getColumnIndex("busname")); 
+		    	    String busDir = busCursor.getString(busCursor.getColumnIndex("busdir"));
+		    	    Bus bus = new Bus(busName, busDir);
+		            
+		    	    // Adding bus to list
+		            allBusesByStop.add(bus);
+		        } while (busCursor.moveToNext());
+		    }
+			
+		    //close the cursor
+		    busCursor.close();
+		    
+			//return all the buses
+			return allBusesByStop; 
+		}
 	
 	// updates a bus in BUS table
 	public int updateBus(Bus bus, Long busId) { 
@@ -168,6 +209,8 @@ public class LocalDatabaseConnector {
 			
 			//sql command to select an item given an id
 			String selectQuery = "SELECT  * FROM stops WHERE stopid = " + stopId;
+			
+			Log.e(LOG, selectQuery);
 		 
 			open();
 		    Cursor stopCursor = database.rawQuery(selectQuery, null);
@@ -203,6 +246,8 @@ public class LocalDatabaseConnector {
 			// sql commad to select all
 		    String selectQuery = "SELECT  * FROM stops";
 		    
+		    Log.e(LOG, selectQuery);
+		    
 		    open();
 		    Cursor stopCursor = database.rawQuery(selectQuery, null);
 		    close();
@@ -232,6 +277,45 @@ public class LocalDatabaseConnector {
 			//return all the stops
 			return allStops; 
 		}
+		
+		// selects all buses associated with a specific stop
+				public ArrayList<Stop> selectAllStopsByStreet(String street) { 
+					ArrayList<Stop> allStopsByStreet = new ArrayList<Stop>();
+					
+					String selectQuery = "SELECT  * FROM stops ts, WHERE ts.stopstreet1 = '" 
+							+ street + "' OR ts.stopstreet2 = '" + street + "'";
+				 
+				    Log.e(LOG, selectQuery);
+				 
+				    open();
+				    Cursor stopCursor = database.rawQuery(selectQuery, null);
+				    close();
+				    
+				    // looping through all rows and adding to list
+				    if (stopCursor.moveToFirst()) {
+				        do {
+				        	String stopName = stopCursor.getString(stopCursor.getColumnIndex("stopname")); 
+						    String stopStreet1 = stopCursor.getString(stopCursor.getColumnIndex("stopstreet1"));
+						    String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex("stopstreet2"));
+						    double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslat"));
+						    double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslong"));
+						    float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
+						    Location stopLocation = new Location(stopName);
+						    stopLocation.setLatitude(stopGpsLat);
+						    stopLocation.setLongitude(stopGpsLong);
+						    Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation);
+				            
+				    	    // Adding stops to list
+				            allStopsByStreet.add(stop);
+				        } while (stopCursor.moveToNext());
+				    }
+				    
+				    //close the cursor
+				    stopCursor.close();
+				    
+				  //return all the stops
+					return allStopsByStreet;  
+				}
 		
 		// updates a stop in STOP table
 		public int updateStop(Stop stop, Long stopId) { 

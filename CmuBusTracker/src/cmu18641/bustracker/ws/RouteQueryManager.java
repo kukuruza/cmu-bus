@@ -5,6 +5,7 @@ import java.util.Random;
 
 import android.location.Location;
 import android.util.Log;
+import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.RouteQueryInterface;
 import cmu18641.bustracker.entities.Stop;
@@ -12,6 +13,8 @@ import cmu18641.bustracker.exceptions.TrackerException;
 
 
 public class RouteQueryManager implements RouteQueryInterface {
+	
+		
 	
 	@Override
 	// returns list of buses associated with input stop 
@@ -27,6 +30,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 
 		ArrayList<Bus> busList = new ArrayList<Bus>(); 
 		
+		
 		Random generator = new Random(); 
 		String direction; 
 		Bus temp; 
@@ -38,6 +42,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 		}
 		
 		return busList; 
+		
 	}
 
 	@Override
