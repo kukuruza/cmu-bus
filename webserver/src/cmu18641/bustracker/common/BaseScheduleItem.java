@@ -1,15 +1,14 @@
 package cmu18641.bustracker.common;
 
-import java.sql.Time;
-
 public class BaseScheduleItem { 
+	
 	private BaseBus _bus = null; 
-	private Time _time = null; 
+	private long _time = 0; 
 	
 	public BaseScheduleItem() { 
     }
 	
-	public BaseScheduleItem(BaseBus bus, Time time) { 
+	public BaseScheduleItem(BaseBus bus, long time) { 
 		_bus = new BaseBus(bus); 
 		_time = time; 
 	}
@@ -18,7 +17,7 @@ public class BaseScheduleItem {
 		return _bus; 
 	}
 	
-	public Time getTime() { 
+	public long getTime() { 
 		return _time; 
 	}
 }

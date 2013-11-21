@@ -2,7 +2,6 @@ package src.appsupport;
 
 
 import java.io.*; 
-import java.sql.Time;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -27,7 +26,9 @@ public class Querymock extends HttpServlet {
         BaseStop stop = new BaseStop ("testStop", "a", "b", 123, -234);
         schedule.setStop (stop);
         schedule.addItem (new BaseScheduleItem(new BaseBus("61c", "downtown"), 
-        		                               new Time(0)));
+        		                               0));
+        schedule.addItem (new BaseScheduleItem(new BaseBus("61c", "squirrel hill"), 
+                                               1000*60*60));
         
         Gson gson = new Gson();
         String json = gson.toJson(schedule); 
