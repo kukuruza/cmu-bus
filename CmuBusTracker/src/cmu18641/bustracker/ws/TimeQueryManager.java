@@ -82,7 +82,7 @@ public class TimeQueryManager {
 		}
 		
 		Schedule schedule = new Schedule(); 
-		schedule.setScheduleItem(scheduleItemList); 
+		schedule.setScheduleItemList(scheduleItemList); 
 	
 		
 		return schedule; 
