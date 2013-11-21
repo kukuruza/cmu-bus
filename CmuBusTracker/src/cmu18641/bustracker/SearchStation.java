@@ -8,7 +8,11 @@ import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -28,38 +32,50 @@ public class SearchStation extends Activity {
 	private ArrayList<Stop> stationList;  
 	private StopAdapter stopAdapter; 
 	
+	private GestureDetector gestureDetector;
+    private OnTouchListener gestureListener;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_station);
+		Log.d("SearchStationActivity", "onCreate()");
 		
 		Bundle data = getIntent().getExtras(); 
-		
-		// grab selected string query from locateStation activity
 		if(data != null) { 
+			// grab string query from locateStation activity
 			addressSearchQuery = data.getString(LocateStation.SEARCH_QUERY_ID); 
 		}
 		else { 
-			// if bundle is null, throw an error
+			// if bundle is null, return to previous activity
+			finish(); 
 		}
 		
-		// call query to return related stops
-		// hook up to query manager
 		try { 
 			stationList = Connector.globalManager.getStopByAddress(addressSearchQuery);
 		} catch (TrackerException te) { 
-			
+			// log and recover
+			te.printStackTrace();
 		}
 		
-		// stop adapter is used to map those buses to the listview
-		stopAdapter = new StopAdapter(this, 
-				      R.layout.activity_search_station, stationList);
+		// stop adapter is used to map stops to the listview
+		stopAdapter = new StopAdapter(this, R.layout.activity_search_station, stationList);
 			
 		// bind adapter and listener
 		ListView stationListView = (ListView) findViewById(R.id.searchStopListView);
 		stationListView.setAdapter(stopAdapter);
 		stationListView.setOnItemClickListener(selectStopListener);
 		
+		// listen for gestures
+        gestureDetector = new GestureDetector(this, new SwipeDetector(this));
+        gestureListener = new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+        
+        stationListView.setOnTouchListener(gestureListener);   
 	}
 
 	// user is taken to selectionStationAndBus after touching a station in list

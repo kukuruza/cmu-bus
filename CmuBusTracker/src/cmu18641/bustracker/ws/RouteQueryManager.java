@@ -11,10 +11,7 @@ import cmu18641.bustracker.entities.RouteQueryInterface;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 
-
 public class RouteQueryManager implements RouteQueryInterface {
-	
-		
 	
 	@Override
 	// returns list of buses associated with input stop 
@@ -70,6 +67,12 @@ public class RouteQueryManager implements RouteQueryInterface {
 		}
 		
 		return stopList; 
+	}
+	
+	// return complete list of stops
+	public ArrayList<Stop> getAllStops() { 
+		ArrayList<Stop> stops = new ArrayList<Stop>(); 
+		return stops; 
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class BusAdapter extends ArrayAdapter<Bus> {
 		viewHolder.direction.setText(busList.get(position).getDirection().toString());	    
 		viewHolder.checkBox.setChecked(checkBoxState[position]);        
 
-		Log.v("BusAdapter - getView()", "position= " + position);
+		Log.d("BusAdapter - getView()", "position= " + position);
 
 		//return the view to be displayed
 		return convertView;

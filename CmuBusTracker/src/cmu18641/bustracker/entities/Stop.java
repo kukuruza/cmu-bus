@@ -1,5 +1,7 @@
 package cmu18641.bustracker.entities;
 
+import java.util.Locale;
+
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,6 +9,10 @@ import android.util.Log;
 
 public class Stop implements Parcelable {
 
+	final static private double MetersToMiles = 1.0/1609.34;
+	final static private double AvgSpeedMilesPerMin = 3.0/60.0;
+	final static private String StringFormat = "%.1f";
+	
 	private String     _name;
 	private String     _street1;
 	private String     _street2;
@@ -45,6 +51,17 @@ public class Stop implements Parcelable {
 		_distance = distance; 
 	}
 	
+	
+	// utility methods to extract and convert stop distance
+	// returns distance in miles
+	public String getDistanceString() { 
+		return String.format(Locale.US, StringFormat, _distance*MetersToMiles);
+	}
+		
+	public String getWalkingTimeString() { 
+		return String.format (Locale.US, StringFormat, _distance / AvgSpeedMilesPerMin);
+	}
+	
 	@Override
 	public int describeContents() {
 		return 0;
@@ -52,7 +69,7 @@ public class Stop implements Parcelable {
 	
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		Log.v("StopParcel", "writeToParcel");
+		Log.i("StopParcel", "writeToParcel");
 	    dest.writeString(_name);
 	    dest.writeString(_street1);
 	    dest.writeString(_street2);
@@ -72,13 +89,13 @@ public class Stop implements Parcelable {
 		}
 	};
 	
-	  public Stop(Parcel source){
-          Log.v("StopParcel", "Assemble stop parcel data");
-          _name = source.readString(); 
-          _street1 = source.readString(); 
-          _street2 = source.readString();
-          _location = source.readParcelable(Location.class.getClassLoader()); 
-          _distance = source.readDouble(); 
+	public Stop(Parcel source) {
+		Log.i("StopParcel", "Assemble stop parcel data");
+        _name = source.readString(); 
+        _street1 = source.readString(); 
+        _street2 = source.readString();
+        _location = source.readParcelable(Location.class.getClassLoader()); 
+        _distance = source.readDouble(); 
     }
 	
 }

@@ -38,7 +38,7 @@ public class Bus implements Parcelable {
 	
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		Log.v("BusParcel", "writeToParcel");
+		Log.i("BusParcel", "writeToParcel");
 	    dest.writeString(_name);
 	    dest.writeString(_direction);
 	}
@@ -54,10 +54,10 @@ public class Bus implements Parcelable {
 		}
 	};
 	
-	  public Bus(Parcel source){
-          Log.v("BusParcel", "Assemble bus parcel data");
-          _name = source.readString(); 
-          _direction = source.readString(); 
+	public Bus(Parcel source){
+		Log.i("BusParcel", "Assemble bus parcel data");
+        _name = source.readString(); 
+        _direction = source.readString(); 
     }
 	
 }

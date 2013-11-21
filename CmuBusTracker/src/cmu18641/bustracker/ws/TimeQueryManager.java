@@ -1,10 +1,14 @@
 package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import android.content.Context;
+import android.text.format.Time;
 import android.util.Log;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
+import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.ws.remote.Networking;
@@ -27,9 +31,29 @@ public class TimeQueryManager {
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
 		
+		
+		// decide whether to go local or remote
+		
+		// return a a list of times
+		// get the current day, and cast into an integer
+		
+		// 1.  get stopId from stop table
+		// 2. get busid from bus table
+		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
+		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
+		
+		
+		// build array list of buses
+		
+		// build a scheduleitem array
+		
+		// build a schedule
+		
+		// return schedule
+		
 
 		// array of buses
-/*
+
 		String names[] = {"A Route Shuttle", "B Route Shuttle", "AB Route Shuttle", 
 				"Bakery Square Shuttle", "PTC Shuttle", "61A", "61B", "61C", "61D", "67", "83" };
 
@@ -44,7 +68,7 @@ public class TimeQueryManager {
 			 temp = new Bus(names[i], direction);		 
 			 busList.add(temp);       
 		}
-		*/
+		
 		
 		
 		// array of times 
@@ -52,7 +76,7 @@ public class TimeQueryManager {
 		
 		
 		// package
-		/*
+		
 		Schedule schedule = new Schedule(); 
 		ArrayList<ScheduleItem> scheduleItemList = new ArrayList<ScheduleItem>(); 
 		ScheduleItem scheduleItem = new ScheduleItem(); 
@@ -70,8 +94,10 @@ public class TimeQueryManager {
 		}
 		
 		schedule.setScheduleItem(scheduleItemList); 
-		*/
-
+		
+		return schedule; 
+		
+		/*
 		Schedule schedule = null;
 		if (Networking.isNetworkAvailable(context))
 		{
@@ -86,6 +112,7 @@ public class TimeQueryManager {
 		}
 		
 		return schedule;
+		*/
 	}
 
 }

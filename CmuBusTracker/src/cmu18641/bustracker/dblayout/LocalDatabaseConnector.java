@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Stop;
 import android.content.ContentValues;

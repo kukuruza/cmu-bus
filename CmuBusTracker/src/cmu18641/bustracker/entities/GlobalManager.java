@@ -1,12 +1,9 @@
 package cmu18641.bustracker.entities;
 
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-import cmu18641.bustracker.SearchStation;
-import cmu18641.bustracker.SelectStationAndBus;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.ws.RouteQueryManager;
 import cmu18641.bustracker.ws.TimeQueryManager;
@@ -25,8 +22,6 @@ public class GlobalManager {
 	TimeQueryManager timeQueryManager; 
 	LocationService locationService; 
 	
-	//Context context;
-	
 	public GlobalManager() { 
 		routeQueryManager = new RouteQueryManager(); 
 		timeQueryManager = new TimeQueryManager(); 
@@ -34,22 +29,20 @@ public class GlobalManager {
 	
 	// returns list of buses associated with input stop 
 	public ArrayList<Bus> getBusesByStop(Stop stop) throws TrackerException {
+		Log.i("GlobalManager", "getBusesByStop"); 
 		return routeQueryManager.getBusesByStop(stop); 
 	}
 
 	// returns list of stops sorted by distance from user
-	public ArrayList<Stop> getStopsByCurrentLocation(Context context) 
-			throws TrackerException {    
+	public ArrayList<Stop> getStopsByCurrentLocation(Context context) throws TrackerException {    
+		Log.i("GlobalManager", "getStopsByCurrentLocation"); 
 		locationService = new LocationService(context); 
-		Location userLocation = new Location("userLocation"); 
-		userLocation.setLatitude(5.0); 
-		userLocation.setLongitude(10.0);
+		Location userLocation = new Location("user"); 
 		
         if(locationService.canGetLocation()) {
-            //userLocation = new Location(locationService.getLocation()); 
-            Log.v("Manager", "userLocation=" + locationService.getLatitude() + " " + locationService.getLongitude());
-            //Log.v("Manager", "userLocation=" + userLocation.getLatitude() + " " + userLocation.getLongitude());
-            
+            userLocation = new Location(locationService.getLocation()); 
+            Log.d("Manager", "userLocation=" + locationService.getLatitude() + " " 
+            			+ locationService.getLongitude());
         }
         else {
             locationService.showSettingsAlert();
@@ -60,21 +53,20 @@ public class GlobalManager {
         if(userLocation.getLatitude() != 0.0 && userLocation.getLongitude() != 0.0)
         	return routeQueryManager.getStopsByCurrentLocation(userLocation); 
         else { 
-        	return null; //routeQueryManager.getStops(); 
+        	return routeQueryManager.getAllStops(); 
         }
 	}
 
 	// returns list of stops sorted by relevance to search words
 	public ArrayList<Stop> getStopByAddress(String street) throws TrackerException {
+		Log.i("GlobalManager", "getStopByAddress"); 
 		return routeQueryManager.getStopByAddress(street); 
 	}
 	
-	
-	// return schedule for a stop and buses
+	// returns schedule for a stop and list of buses
 	public Schedule getSchedule(Context context, Stop stop, ArrayList<Bus> buses) 
-			throws TrackerException 
-	{
-        // network is checked by timeQueryManager itself
+			throws TrackerException {
+		Log.i("GlobalManager", "getSchedule"); 
 		return timeQueryManager.getSchedule(context, stop, buses); 
 	}
 	
