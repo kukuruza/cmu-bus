@@ -1,6 +1,7 @@
 package cmu18641.bustracker;
 
 import java.util.ArrayList;
+import cmu18641.bustracker.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.StopAdapter;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
@@ -9,10 +10,14 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 /*
@@ -29,9 +35,6 @@ import android.widget.AdapterView.OnItemClickListener;
  * Activity to select a bus station from a list view, 
  * or type an address to execute a search for a bus station.
  */
-
-
-//TODO add on resume to refresh list 
 
 public class LocateStation extends Activity {
 
@@ -47,6 +50,10 @@ public class LocateStation extends Activity {
 	
 	private GestureDetector gestureDetector;
     private OnTouchListener gestureListener;
+    
+    private ShakeDetector shakeDetector;
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +93,60 @@ public class LocateStation extends Activity {
         };
         
         stationListView.setOnTouchListener(gestureListener);  
+        
+        // listen for shakes
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        shakeDetector = new ShakeDetector(shakeListener); 
 	}
 
+	// refresh data when shaken
+	OnShakeListener shakeListener = new OnShakeListener() { 
+		@Override
+        public void onShake() {
+			// update listview
+			try {
+	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+	   	  	} catch (TrackerException e) {
+	   		  // log and recover
+	   		  e.printStackTrace();
+	   	  	}
+			
+			stopAdapter.notifyDataSetChanged();
+			
+			Toast refresh = Toast.makeText(LocateStation.this, "Refreshing List", Toast.LENGTH_SHORT);
+			refresh.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 150);
+			refresh.show();
+        }
+	};
+	
+	// allow schedule to refresh 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		// register shake listener
+		sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+		
+		// update listview
+		try {
+   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+   	  	} catch (TrackerException e) {
+   		  // log and recover
+   		  e.printStackTrace();
+   	  	}
+		
+		stopAdapter.notifyDataSetChanged();
+		Log.d("ViewScheduleActivity", "onResume()");
+	}
+	
+	// unregister shake listener
+	@Override
+    protected void onPause() {
+        sensorManager.unregisterListener(shakeDetector); 
+        super.onPause();
+    }   
+	
 	// user is taken to searchStation activity after entering search text
 	// and pressing search button
 	OnClickListener findStationButtonClicked = new OnClickListener() {
