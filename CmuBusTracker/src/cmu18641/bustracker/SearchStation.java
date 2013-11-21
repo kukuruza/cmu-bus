@@ -1,16 +1,15 @@
 package cmu18641.bustracker;
 
 import java.util.ArrayList;
-
 import cmu18641.bustracker.adapter.StopAdapter;
+import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
+import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -34,11 +33,11 @@ public class SearchStation extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_station);
 		
-		Bundle extras = getIntent().getExtras(); 
+		Bundle data = getIntent().getExtras(); 
 		
 		// grab selected string query from locateStation activity
-		if(extras != null) { 
-			addressSearchQuery = extras.getString(LocateStation.SEARCH_QUERY_ID); 
+		if(data != null) { 
+			addressSearchQuery = data.getString(LocateStation.SEARCH_QUERY_ID); 
 		}
 		else { 
 			// if bundle is null, throw an error
@@ -46,14 +45,15 @@ public class SearchStation extends Activity {
 		
 		// call query to return related stops
 		// hook up to query manager
-		stationList = new ArrayList<Stop>(); 
-				
-		// bus adapter is used to map those buses to the listview
+		try { 
+			stationList = Connector.globalManager.getStopByAddress(addressSearchQuery);
+		} catch (TrackerException te) { 
+			
+		}
+		
+		// stop adapter is used to map those buses to the listview
 		stopAdapter = new StopAdapter(this, 
 				      R.layout.activity_search_station, stationList);
-				
-		// Note: using this built in adapter will require Stop class
-		// to implement toString()
 			
 		// bind adapter and listener
 		ListView stationListView = (ListView) findViewById(R.id.searchStopListView);
@@ -72,12 +72,5 @@ public class SearchStation extends Activity {
 		}
 		   
 	};
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.search_station, menu);
-		return true;
-	}
 
 }

@@ -1,6 +1,8 @@
 package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import android.location.Location;
 import android.util.Log;
 import cmu18641.bustracker.entities.Bus;
@@ -20,16 +22,20 @@ public class RouteQueryManager implements RouteQueryInterface {
 		
 		// for testing 
 		// populate busList with test data
-		String names[] = new String[50];
+		String names[] = {"A Route Shuttle", "B Route Shuttle", "AB Route Shuttle", 
+				"Bakery Square Shuttle", "PTC Shuttle", "61A", "61B", "61C", "61D", "67", "83" };
+
 		ArrayList<Bus> busList = new ArrayList<Bus>(); 
 		
-		for(int i = 0; i< 50; i++){
-			 names[i] = "BusName" + i; 
-			 Bus temp = new Bus(names[i], "West");		 
+		Random generator = new Random(); 
+		String direction; 
+		Bus temp; 
+		
+		for(int i = 0; i < names.length; i++){
+			 direction =  (generator.nextInt(2) != 0) ? "west": "east";
+			 temp = new Bus(names[i], direction);		 
 			 busList.add(temp);       
 		}
-		
-		
 		
 		return busList; 
 	}
@@ -46,13 +52,15 @@ public class RouteQueryManager implements RouteQueryInterface {
 		
 		Log.v("RouteQueryManager", "getStopsByCurrentLocation"); 
 		
-		String names[] = new String[25];
+		String names[] = {"Morewood and Forbes", "5th and Craig", "Forbes and Craig", 
+				"Mellwood and Fescher", "Bayard and Craig", "Gale and Smears", "Morewood and Bayard" };
+	
 		ArrayList<Stop> stopList = new ArrayList<Stop>(); 
+		Stop temp; 
 		
 		// for testing
-		for(int i = 0; i < 25; i++){
-			 names[i] = "StopName" + i; 
-			 Stop temp = new Stop(names[i], "West Street", "East Street", new Location("loc"), 25);		 
+		for(int i = 0; i < names.length; i++){
+			 temp = new Stop(names[i], "West Street", "East Street", new Location("loc"));		 
 			 stopList.add(temp);       
 		}
 		
@@ -63,9 +71,23 @@ public class RouteQueryManager implements RouteQueryInterface {
 	// returns list of stops sorted by relevance to search words
 	public ArrayList<Stop> getStopByAddress(String street)
 			throws TrackerException {
-		// TODO
-		// query for all stops matching string in STOPS table
-		return null;
+		
+		Log.v("RouteQueryManager", "getStopsByAddress");
+
+		String names[] = {"Morewood and Forbes", "5th and Craig", "Forbes and Craig", 
+				"Mellwood and Fescher", "Bayard and Craig", "Gale and Smears", "Morewood and Bayard" };
+	
+		ArrayList<Stop> stopList = new ArrayList<Stop>(); 
+		Stop temp; 
+		
+		// for testing
+		for(int i = 0; i < names.length; i++){
+			 temp = new Stop(names[i], "West Street", "East Street", new Location("loc"));		 
+			 stopList.add(temp);       
+		}
+		
+		return stopList; 
+	
 	}
 
 }

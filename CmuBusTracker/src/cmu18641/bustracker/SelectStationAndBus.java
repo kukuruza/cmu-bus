@@ -6,16 +6,14 @@ import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
-import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -38,7 +36,6 @@ public class SelectStationAndBus extends Activity {
 	private ArrayList<Bus> busList; 
 	private Stop selectedStop; 
 	private BusAdapter busAdapter; 
-	private String selectedStopName; 
 
 	private Button findNextBusButton; 
 	private Button findStationButton; 
@@ -54,24 +51,19 @@ public class SelectStationAndBus extends Activity {
 		findStationButton = (Button) findViewById(R.id.findStationButton);
 		busSelections = new ArrayList<Bus>(); 
 		
-		Intent intent = getIntent(); 
-		Bundle bundle = intent.getExtras(); 
-		if(bundle != null) { 
-			// grab selected stop if entering 
-			// from LocateStation/SearchStation activity
-			Log.v("SelectStationAndBus", "Non-null Intent");
-			//selectedStopName = bundle.getString(LocateStation.STOP_SELECTED_NAME); 
-			//selectedStop = new Stop(selectedStopName, "", "", new Location("here"), 5); 
-			selectedStop = bundle.getParcelable(LocateStation.STOP_SELECTED_NAME);
+		Bundle data = getIntent().getExtras(); 
+		if(data != null) { 
+			// grab selected stop if entering from LocateStation/SearchStation activity
+			Log.v("SelectStationAndBus", "Getting selected stop from bundle");
+			selectedStop = data.getParcelable(LocateStation.STOP_SELECTED);
 		}
 		else { 
-			// if intent is null, query must be called 
-			// to find default station (closest to user)
+			// query must be called to find default station (closest to user)
 			try { 
-				Log.v("SelectStationAndBus", "Null Intent");
+				Log.v("SelectStationAndBus", "Querying to find default station");
 				selectedStop = Connector.globalManager.getStopsByCurrentLocation(SelectStationAndBus.this).get(0); 
 			} catch(TrackerException te) { 
-				
+				// log and recover
 			}
 		}
 		
@@ -115,8 +107,8 @@ public class SelectStationAndBus extends Activity {
 			
 			if(!busSelections.isEmpty()) { 
 				Intent showSchedule = new Intent(SelectStationAndBus.this, ViewSchedule.class);
-				showSchedule.putExtra(BUSES_SELECTED, busSelections); 
-				showSchedule.putExtra(LocateStation.STOP_SELECTED_NAME, selectedStop);
+				showSchedule.putParcelableArrayListExtra(BUSES_SELECTED, (ArrayList<? extends Parcelable>) busSelections); 
+				showSchedule.putExtra(LocateStation.STOP_SELECTED, selectedStop);
 				SelectStationAndBus.this.startActivity(showSchedule);
 			}
 			else { 

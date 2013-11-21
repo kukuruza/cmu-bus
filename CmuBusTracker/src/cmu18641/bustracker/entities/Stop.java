@@ -1,7 +1,5 @@
 package cmu18641.bustracker.entities;
 
-import java.io.Serializable;
-
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,12 +8,10 @@ import android.util.Log;
 public class Stop implements Parcelable {
 
 	private String     _name;
-	
-	// where
 	private String     _street1;
 	private String     _street2;
 	private Location   _location;
-	private float 	   _distance; 
+	private double	   _distance; 
 	
 	// getters
 	public String   getName()     { return new String(_name); }
@@ -24,17 +20,18 @@ public class Stop implements Parcelable {
 	public String   getAddress()  { return new String (getStreet1() + 
 											" & " + getStreet2()); }
 	public Location getLocation() { return new Location(_location); }
-	public float    getDistance() { return _distance; }
+	public double   getDistance() { return _distance; }
 	
 	// constructor sets it all
-    public Stop (String name, String street1, String street2, Location location, float distance)
+    public Stop (String name, String street1, String street2, Location location)
     {
         _name = new String (name);
         _street1 = new String (street1);
         _street2 = new String (street2);
         _location = new Location (location);
-        _distance = distance; 
+        _distance = 0.0;
     }
+    
 	public Stop (Stop stop) 
 	{
         _name = stop.getName();
@@ -44,9 +41,12 @@ public class Stop implements Parcelable {
         _distance = stop.getDistance(); 
 	}
 	
+	public void setDistance(double distance) { 
+		_distance = distance; 
+	}
+	
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
@@ -56,11 +56,10 @@ public class Stop implements Parcelable {
 	    dest.writeString(_name);
 	    dest.writeString(_street1);
 	    dest.writeString(_street2);
-	    dest.writeParcelable(_location,1); 
-	    dest.writeFloat(_distance);
+	    dest.writeParcelable(_location, flags); 
+	    dest.writeDouble(_distance);
 		
 	}
-	
 	
 	public static final Parcelable.Creator<Stop> CREATOR
     		= new Parcelable.Creator<Stop>() {
@@ -74,15 +73,12 @@ public class Stop implements Parcelable {
 	};
 	
 	  public Stop(Parcel source){
-          /*
-           * Reconstruct from the Parcel
-           */
-          Log.v("StopParcel", "ParcelData(Parcel source): time to put back parcel data");
+          Log.v("StopParcel", "Assemble stop parcel data");
           _name = source.readString(); 
           _street1 = source.readString(); 
-          _street2 = source.readString(); 
-          _distance = source.readFloat(); 
-          
+          _street2 = source.readString();
+          _location = source.readParcelable(Location.class.getClassLoader()); 
+          _distance = source.readDouble(); 
     }
 	
 }

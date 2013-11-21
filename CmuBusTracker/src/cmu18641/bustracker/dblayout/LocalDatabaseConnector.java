@@ -182,11 +182,11 @@ public class LocalDatabaseConnector {
 		    String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex("stopstreet2"));
 		    double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslat"));
 		    double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslong"));
-		    float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
+		    //float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
 		    Location stopLocation = new Location(stopName);
 		    stopLocation.setLatitude(stopGpsLat);
 		    stopLocation.setLongitude(stopGpsLong);
-		    Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation, stopDistance); 
+		    Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation); 
 		    
 		    //close the cursor
 		    stopCursor.close();
@@ -215,11 +215,11 @@ public class LocalDatabaseConnector {
 				    String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex("stopstreet2"));
 				    double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslat"));
 				    double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslong"));
-				    float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
+				    //float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
 				    Location stopLocation = new Location(stopName);
 				    stopLocation.setLatitude(stopGpsLat);
 				    stopLocation.setLongitude(stopGpsLong);
-				    Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation, stopDistance);
+				    Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation);
 		            
 		    	    // Adding stops to list
 		            allStops.add(stop);
