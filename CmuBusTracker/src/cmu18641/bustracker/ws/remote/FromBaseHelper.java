@@ -22,7 +22,7 @@ public class FromBaseHelper {
 		loc.setLongitude(baseSchedule.getStop().longitude);
 		BaseStop baseStop = baseSchedule.getStop();
 		Stop stop = new Stop (baseStop.getName(), baseStop.street1, 
-				              baseStop.street2, loc, -1);
+				              baseStop.street2, loc );
 		schedule.setStop(stop);
 		
         // set ScheduleItem-s

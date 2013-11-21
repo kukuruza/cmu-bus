@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.entities.ScheduleItem;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> {
 	
 	Context context; 
 	ArrayList<ScheduleItem> scheduleItemList; 
+	ViewHolder viewHolder; 
 	
 	public ScheduleAdapter(Context context, int resource, ArrayList<ScheduleItem> scheduleItemList) {
 		super(context, resource, scheduleItemList );
@@ -28,38 +30,38 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> {
 	}
 
 	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ScheduleItem getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = 
+		
+		if(convertView == null) { 
+			LayoutInflater inflater = 
 				(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		convertView = inflater.inflate(R.layout.schedule_list_item, null);
+			convertView = inflater.inflate(R.layout.schedule_list_item, null);
+			viewHolder = new ViewHolder();
 		
-		TextView busNameTextView = (TextView) convertView.findViewById(R.id.scheduleitem_busname); 
-		TextView busDirectionTextView = (TextView) convertView.findViewById(R.id.scheduleitem_busdirection); 
-		TextView busArrivalTimeTextView = (TextView) convertView.findViewById(R.id.scheduleitem_busarrivaltime);
+			viewHolder.name = (TextView) convertView.findViewById(R.id.scheduleitem_busname); 
+			viewHolder.direction = (TextView) convertView.findViewById(R.id.scheduleitem_busdirection); 
+			viewHolder.arrivalTime = (TextView) convertView.findViewById(R.id.scheduleitem_busarrivaltime);
+			
+			// link the cached views to the convertView
+		    convertView.setTag(viewHolder);
+		}
+		else { 
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
 		
-		busNameTextView.setText(scheduleItemList.get(position).getBus().getName());
-		busDirectionTextView.setText(scheduleItemList.get(position).getBus().getDirection()); 
-		busArrivalTimeTextView.setText(scheduleItemList.get(position).getTime().format2445());
+		viewHolder.name.setText(scheduleItemList.get(position).getBus().getName());
+		viewHolder.direction.setText(scheduleItemList.get(position).getBus().getDirection()); 
+		viewHolder.arrivalTime.setText(scheduleItemList.get(position).getTime().format2445());
 		
+		Log.v("ScheduleAdapter - getView()", "position= " + position);
+			
 		return convertView;
+	}
+	
+	private class ViewHolder { 
+		TextView name; 
+		TextView direction; 
+		TextView arrivalTime; 
 	}
 
 }

@@ -1,7 +1,7 @@
 package cmu18641.bustracker;
 
-
 import java.util.ArrayList;
+import cmu18641.bustracker.adapter.ScheduleAdapter;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Schedule;
@@ -11,7 +11,6 @@ import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +25,8 @@ public class ViewSchedule extends Activity {
 	private Schedule schedule; 
 	private Stop selectedStop; 
 	private ArrayList<Bus> selectedBuses; 
+	private ScheduleAdapter scheduleAdapter; 
+	ArrayList<ScheduleItem> scheduleItemList;
 	
 	private TextView stopNameTextView; 
 	private TextView stopDistanceTextView;
@@ -41,10 +42,11 @@ public class ViewSchedule extends Activity {
 		stopWalkingDistanceTextView = (TextView) findViewById(R.id.viewschedule_walkingDistanceTextView);
 		
 		Intent intent = getIntent(); 
-		if(intent != null) { 
+		Bundle data = getIntent().getExtras(); 
+		if(data != null) { 
 			// grab station and selected buses from selectStationAndBus
-			selectedStop = (Stop) intent.getSerializableExtra(LocateStation.STOP_SELECTED_NAME); 
-			selectedBuses = (ArrayList<Bus>) intent.getSerializableExtra(SelectStationAndBus.BUSES_SELECTED);
+			selectedStop = data.getParcelable(LocateStation.STOP_SELECTED); 
+			selectedBuses = intent.getParcelableArrayListExtra(SelectStationAndBus.BUSES_SELECTED);
 		}
 		else { 
 			// if intent is null, throw an error
@@ -59,15 +61,15 @@ public class ViewSchedule extends Activity {
 			e.printStackTrace();
 		}
 		
-		ArrayList<ScheduleItem> scheduleItemList = schedule.getScheduleItemList(); 
+		scheduleItemList = schedule.getScheduleItemList(); 
 		
 		// set header textViews
 		stopNameTextView.setText(selectedStop.getName()); 
-		stopDistanceTextView.setText(""); 
-		stopWalkingDistanceTextView.setText(""); 
+		stopDistanceTextView.setText("5 miles"); 
+		stopWalkingDistanceTextView.setText("10 minutes"); 
 				
 		// schedule adapter is used to map the scheduleitems to the listview
-		ArrayAdapter<ScheduleItem> scheduleAdapter = new ArrayAdapter<ScheduleItem>(this, 
+		scheduleAdapter = new ScheduleAdapter(this, 
 				     R.layout.activity_select_station_and_bus, scheduleItemList);
 				
 		// bind adapter and listener
