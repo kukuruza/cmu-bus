@@ -30,6 +30,9 @@ import android.widget.AdapterView.OnItemClickListener;
  * or type an address to execute a search for a bus station.
  */
 
+
+//TODO add on resume to refresh list 
+
 public class LocateStation extends Activity {
 
 	public static final String STOP_SELECTED = "stop_selected";
