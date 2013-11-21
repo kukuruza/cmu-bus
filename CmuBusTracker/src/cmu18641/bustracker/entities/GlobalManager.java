@@ -1,12 +1,9 @@
 package cmu18641.bustracker.entities;
 
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-import cmu18641.bustracker.SearchStation;
-import cmu18641.bustracker.SelectStationAndBus;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.ws.RouteQueryManager;
 import cmu18641.bustracker.ws.TimeQueryManager;
@@ -24,8 +21,6 @@ public class GlobalManager {
 	RouteQueryManager routeQueryManager; 
 	TimeQueryManager timeQueryManager; 
 	LocationService locationService; 
-	
-	//Context context;
 	
 	public GlobalManager() { 
 		routeQueryManager = new RouteQueryManager(); 

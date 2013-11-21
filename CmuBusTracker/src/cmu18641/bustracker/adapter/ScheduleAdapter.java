@@ -53,7 +53,7 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> {
 		viewHolder.direction.setText(scheduleItemList.get(position).getBus().getDirection()); 
 		viewHolder.arrivalTime.setText(scheduleItemList.get(position).getTime().format2445());
 		
-		Log.v("ScheduleAdapter - getView()", "position= " + position);
+		Log.d("ScheduleAdapter - getView()", "position= " + position);
 			
 		return convertView;
 	}

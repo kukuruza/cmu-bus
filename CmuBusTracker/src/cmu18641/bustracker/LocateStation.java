@@ -16,6 +16,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,60 +34,55 @@ public class LocateStation extends Activity {
 
 	public static final String STOP_SELECTED = "stop_selected";
 	public static final String SEARCH_QUERY_ID = "address_id";
+	
 	private Button searchStationButton;
 	private EditText searchAddressEditText; 
+	private ListView stationListView; 
 	
 	private ArrayList<Stop> stationList; 
 	private StopAdapter stopAdapter; 
 	
 	private GestureDetector gestureDetector;
-    private View.OnTouchListener gestureListener;
+    private OnTouchListener gestureListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_locate_station);
+		Log.d("LocateStationActivity", "onCreate()");
 		
-
-        gestureDetector = new GestureDetector(this, new SwipeDetector());
-        gestureListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-       };
-		
-		// set listener for all views 
-		
-		Log.v("LocateStation", "onCreate()");
-		
-		// get references to editTexts
+		// get references to views
 		searchAddressEditText = (EditText) findViewById(R.id.enterAddressEditText);
 		searchStationButton = (Button) findViewById(R.id.searchAddressButton);
-				
-		// query must be called to find all stations
+		stationListView = (ListView) findViewById(R.id.stopListView);
+		
 		try {
-			stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
-		} catch (TrackerException e) {
-			// log and recover
-			e.printStackTrace();
-		};
-	
-		// bus adapter is used to map those buses to the listview
-		stopAdapter = new StopAdapter(this, 
-		        R.layout.activity_locate_station, stationList);
+   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+   	  	} catch (TrackerException e) {
+   		  // log and recover
+   		  e.printStackTrace();
+   	  	}
+		
+		// bus adapter is used to map buses to the listview
+		stopAdapter = new StopAdapter(this, R.layout.activity_locate_station, stationList);
 		
 		// bind adapter and set listener
-		ListView stationListView = (ListView) findViewById(R.id.stopListView);
 		stationListView.setAdapter(stopAdapter);
 		stationListView.setOnItemClickListener(selectStopListener);
 		
 		// listen for button presses
-	    searchStationButton = (Button) findViewById(R.id.searchAddressButton);
 	    searchStationButton.setOnClickListener(findStationButtonClicked); 
 	    
-	    stationListView.setOnTouchListener(gestureListener); 
-	    
+	    // listen for gestures
+        gestureDetector = new GestureDetector(this, new SwipeDetector(this));
+        gestureListener = new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+        
+        stationListView.setOnTouchListener(gestureListener);  
 	}
 
 	// user is taken to searchStation activity after entering search text
@@ -107,8 +103,7 @@ public class LocateStation extends Activity {
 			    builder.setMessage("Enter an address to search for a stop, or " +
 			    						"select a nearby stop from the list");
 			    builder.setCancelable(true); 
-			    builder.setPositiveButton(android.R.string.ok,
-			            new DialogInterface.OnClickListener() {
+			    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int id) {
 			            dialog.cancel();
 			        }

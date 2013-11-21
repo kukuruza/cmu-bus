@@ -44,8 +44,7 @@ public class SelectStationAndBus extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_station_and_bus);
-		
-		Log.v("SelectStationAndBus", "OnCreate()");
+		Log.d("SelectStationAndBusActivity", "OnCreate()");
 
 		findNextBusButton = (Button) findViewById(R.id.findNextBusButton);
 		findStationButton = (Button) findViewById(R.id.findStationButton);
@@ -54,16 +53,17 @@ public class SelectStationAndBus extends Activity {
 		Bundle data = getIntent().getExtras(); 
 		if(data != null) { 
 			// grab selected stop if entering from LocateStation/SearchStation activity
-			Log.v("SelectStationAndBus", "Getting selected stop from bundle");
+			Log.d("SelectStationAndBusActivity", "Getting selected stop from bundle");
 			selectedStop = data.getParcelable(LocateStation.STOP_SELECTED);
 		}
 		else { 
 			// query must be called to find default station (closest to user)
 			try { 
-				Log.v("SelectStationAndBus", "Querying to find default station");
+				Log.d("SelectStationAndBusActivity", "Querying to find default station");
 				selectedStop = Connector.globalManager.getStopsByCurrentLocation(SelectStationAndBus.this).get(0); 
 			} catch(TrackerException te) { 
 				// log and recover
+				te.printStackTrace(); 
 			}
 		}
 		
@@ -75,11 +75,11 @@ public class SelectStationAndBus extends Activity {
 			busList = Connector.globalManager.getBusesByStop(selectedStop); 
 		} catch(TrackerException te) { 
 			// log and recover
+			te.printStackTrace();
 		}
 		
 		// bus adapter maps buses to the listview
-		busAdapter = new BusAdapter(this, 
-		        R.layout.activity_select_station_and_bus, busList);
+		busAdapter = new BusAdapter(this, R.layout.activity_select_station_and_bus, busList);
 		
 		// bind adapter and listener
 		ListView busListView = (ListView) findViewById(R.id.busListView);
@@ -89,14 +89,11 @@ public class SelectStationAndBus extends Activity {
 		// listen for button presses
 	    findNextBusButton.setOnClickListener(findNextBusButtonClicked); 
         findStationButton.setOnClickListener(findStationButtonClicked); 
-		
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume(); 
-		
-		
 	}
 	
 	// user is taken to viewSchedule activity after selecting at least
@@ -126,7 +123,7 @@ public class SelectStationAndBus extends Activity {
 			    dialog.show();
 			}
 			
-			Log.v("SelectStationAndBus - findNextBusButtonClicked", "OnClick()");
+			Log.d("SelectStationAndBusActivity - findNextBusButtonClicked", "OnClick()");
 			
 			
 		}
@@ -140,7 +137,7 @@ public class SelectStationAndBus extends Activity {
 		public void onClick(View v) {
 			Intent showLocateStation = new Intent(SelectStationAndBus.this, LocateStation.class);
 			SelectStationAndBus.this.startActivity(showLocateStation);
-			Log.v("SelectStationAndBus - findStationButtonClicked", "OnClick()");
+			Log.d("SelectStationAndBusActivity - findStationButtonClicked", "OnClick()");
 		}
 					
 	};
@@ -167,7 +164,7 @@ public class SelectStationAndBus extends Activity {
 				busAdapter.setCheckBoxState(position, true);
 			}
 			
-			Log.v("onItemClick", busSelections.toString()); 
+			Log.d("SelectStationAndBusActivity", busSelections.toString()); 
 
 		}
 		   
