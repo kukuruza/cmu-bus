@@ -42,6 +42,8 @@ public class RemoteQuery implements TimeQueryInterface {
 		// TODO: to be moved to configs
 		String url = "http://localhost:8080/webserver/querymock";
 		
+		return new Schedule();
+		/*
 		// compose a request
 		String requestUrl = formRequestString (url, stop, buses);
 		
@@ -54,5 +56,6 @@ public class RemoteQuery implements TimeQueryInterface {
 		
 		Schedule schedule = FromBaseHelper.fromBase(baseSchedule);
 		return schedule;
+		*/
 	}
 }

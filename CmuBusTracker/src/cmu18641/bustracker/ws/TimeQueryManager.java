@@ -18,6 +18,12 @@ import cmu18641.bustracker.ws.remote.RemoteQuery;
 public class TimeQueryManager {
 	private final String TAG = "TimeQueryManager"; 
 
+	public static Schedule getScheduleSubset (Schedule inSchedule, int numOut)
+	{
+		// TODO: return only 5 closest times
+	    return inSchedule;
+	}
+
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
 		
