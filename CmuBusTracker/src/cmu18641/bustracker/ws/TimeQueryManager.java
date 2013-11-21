@@ -96,7 +96,11 @@ public class TimeQueryManager {
 			schedule = remoteQuery.getSchedule (stop, buses);
 		}
 		else
+		{
 			Log.i(TAG, "network is unavailble");
+		
+			// put call to localQuery here
+		}
 		
 		return schedule;
 		*/

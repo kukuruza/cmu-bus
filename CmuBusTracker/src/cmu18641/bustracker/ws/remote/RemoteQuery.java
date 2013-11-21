@@ -7,6 +7,9 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
+
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import cmu18641.bustracker.common.BaseSchedule;
@@ -15,6 +18,7 @@ import cmu18641.bustracker.exceptions.TrackerException;
 
 
 public class RemoteQuery implements TimeQueryInterface {
+	private final String TAG = "RemoteQuery";
 
 	private String formRequestString (String url, Stop stop, ArrayList<Bus> buses) 
 	{
@@ -25,12 +29,13 @@ public class RemoteQuery implements TimeQueryInterface {
 
 	    params.add(new BasicNameValuePair("stop", stop.getName()));
         
-	    while (buses.iterator().hasNext())
-	    	params.add(new BasicNameValuePair("buses[]", buses.iterator().next().getName()));
+	    for (Bus bus : buses)
+	    	params.add(new BasicNameValuePair("buses[]", bus.getName()));
 
-	    String paramString = URLEncodedUtils.format(params, "utf-8");
-
+	    String paramString = URLEncodedUtils.format(params, "utf-8");	    
 	    url += paramString;
+	    
+	    Log.i(TAG, "url=" + url);
 	    return url;
 	}
 
@@ -42,8 +47,6 @@ public class RemoteQuery implements TimeQueryInterface {
 		// TODO: to be moved to configs
 		String url = "http://localhost:8080/webserver/querymock";
 		
-		return new Schedule();
-		/*
 		// compose a request
 		String requestUrl = formRequestString (url, stop, buses);
 		
@@ -55,7 +58,7 @@ public class RemoteQuery implements TimeQueryInterface {
 		BaseSchedule baseSchedule = gson.fromJson (responseString, BaseSchedule.class); 
 		
 		Schedule schedule = FromBaseHelper.fromBase(baseSchedule);
+		schedule.log(TAG);
 		return schedule;
-		*/
 	}
 }

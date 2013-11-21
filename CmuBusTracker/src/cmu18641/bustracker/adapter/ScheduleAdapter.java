@@ -63,5 +63,4 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> {
 		TextView direction; 
 		TextView arrivalTime; 
 	}
-
 }
