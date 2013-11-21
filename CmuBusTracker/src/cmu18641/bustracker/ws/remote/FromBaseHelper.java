@@ -40,7 +40,7 @@ public class FromBaseHelper {
 		    // insert item
 		    itemList.add(item);
 		}
-		schedule.setScheduleItem(itemList);
+		schedule.setScheduleItemList(itemList);
 		
 	    return schedule;
 	}

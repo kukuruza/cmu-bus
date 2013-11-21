@@ -1,0 +1,19 @@
+stop_id,name,street1,street2,latitude,longitude
+1,Downtown - 5TH AVE & WOOD ST,Fifth,Wood,40.440488,-79.999637
+2,Uptown - 5TH AVE & ROSS ST,Fifth,Ross,40.438998,-79.995372
+3,Oakland - FORBES AVE & ATWOOD ST,Forbes,Atwood,40.440942,-79.957751
+4,Oakland - FORBES AVE OPP CRAIG ST,Forbes,Craig,40.444408,-79.948733
+5,Squirrel Hill - FORBES AVE & MURRAY AVE,Forbes,Murray,40.43812,-79.923601
+6,Squirrel Hill - FORBES AVE & SHADY AVE,Forbes,Shady,40.438031,-79.919455
+7,Wilkinsburg - FORBES AVE & EAST END AVE,Forbes,East End,40.439627,-79.89658
+8,Wilkinsburg - ROWLAND CONNECTOR & PENNWOOD,Rowland,Pennwood,40.440517,-79.886946
+9,Wilkinsburg - SWISSVALE AVE & COAL,Swissvale,Coal,40.434774,-79.882872
+10,Swissvale - NOBLE ST & WASHINGTON ST,Noble,Washington,40.421193,-79.886117
+11,Swissvale - WOODSTOCK AVE & SWISSVALE STATION STEPS,Woodstock,Swissvale,40.41571,-79.878685
+12,Braddock - LIBRARY ST & BRADDOCK AVE FS,Library,Braddock,40.401299,-79.865617
+13,Wilkinsburg - COAL ST & WALNUT FS,Coal,Walnut,40.436369,-79.882419
+14,Wilkinsburg - KELLY AVE & PITT ST,Kelly,Pitt,40.440454,-79.889701
+15,Wilkinsburg - FORBES AVE & BRADDOCK FS,Forbes,Braddock,40.439739,-79.897543
+16,Squirrel Hill - FORBES AVE BTW DENNISTON & SHADY,Forbes,Shady,40.438057,-79.918931
+17,Oakland - 5TH AVE OPP ATWOOD ST,Fifth,Atwood,40.441819,-79.958507
+18,Uptown - 6TH AVE & 5TH AVE FS,Sixth,Fifth,40.43926,-79.994616
