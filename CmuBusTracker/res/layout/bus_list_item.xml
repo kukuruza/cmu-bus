@@ -7,14 +7,18 @@
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:gravity="center_vertical"
 		android:clickable="false"/>
 
     <TextView
         android:id="@+id/busname"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:layout_alignBaseline="@+id/checkBox"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/checkBox"
@@ -24,7 +28,7 @@
     <TextView
         android:id="@+id/busdirection"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:layout_alignBaseline="@+id/busname"
         android:layout_alignBottom="@+id/busname"
         android:layout_marginLeft="14dp"

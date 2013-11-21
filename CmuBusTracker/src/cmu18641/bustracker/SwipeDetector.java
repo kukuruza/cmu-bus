@@ -2,6 +2,7 @@ package cmu18641.bustracker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -34,6 +35,8 @@ public class SwipeDetector extends SimpleOnGestureListener {
          // left to right swipe detected
          else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
              Log.v("gesture", "Fling right event");
+             MediaPlayer mediaPlayer = MediaPlayer.create(currentContext, R.raw.swipe);
+             mediaPlayer.start();
  			 ((Activity)currentContext).finish();
              flingStatus = true;
          }

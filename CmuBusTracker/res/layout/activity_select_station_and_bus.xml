@@ -2,27 +2,30 @@
 <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@android:color/black"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
+            android:layout_height="75dip"
             android:background="#efefef"
             android:orientation="horizontal" >
 
             <Button
                 android:id="@+id/findStationButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:textSize="25sp"
                 android:text="@string/Find_Station" />
         </LinearLayout>
 
@@ -31,6 +34,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:background="#ffffff"
+            android:paddingBottom="78dip"
             android:cacheColorHint="#ffffffff" >
 
         </ListView>
@@ -39,17 +43,19 @@
 
    <LinearLayout
        android:layout_width="fill_parent"
-       android:layout_height="50dip"
+       android:layout_height="75dip"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
+       android:layout_marginLeft="3dp"
+       android:layout_marginRight="3dp"
        android:background="#efefef"
        android:orientation="horizontal" >
 
        <Button
            android:id="@+id/findNextBusButton"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginBottom="5dp"
+           android:layout_height="match_parent"
+           android:textSize="25sp"
 		   android:layout_marginLeft="20dp"
            android:layout_marginRight="20dp"
            android:text="@string/Find_Next_Bus" />

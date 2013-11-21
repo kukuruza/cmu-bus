@@ -51,6 +51,9 @@ public class TimeQueryManager {
 		
 		// return schedule
 		
+		
+		//////////////test data
+		ArrayList<ScheduleItem> scheduleItemList = new ArrayList<ScheduleItem>(11); 
 
 		// array of buses
 
@@ -58,44 +61,32 @@ public class TimeQueryManager {
 				"Bakery Square Shuttle", "PTC Shuttle", "61A", "61B", "61C", "61D", "67", "83" };
 
 		ArrayList<Bus> busList = new ArrayList<Bus>(); 
-		
 		Random generator = new Random(); 
 		String direction; 
 		Bus temp; 
+		Time timeTemp = new Time(); 
 		
 		for(int i = 0; i < names.length; i++){
 			 direction =  (generator.nextInt(2) != 0) ? "west": "east";
+			 timeTemp.set(generator.nextInt(60), generator.nextInt(60), generator.nextInt(60),
+						generator.nextInt(30), generator.nextInt(12), 2013);
+			 
 			 temp = new Bus(names[i], direction);		 
-			 busList.add(temp);       
+			 
+			 ScheduleItem scheduleItem = new ScheduleItem(); 
+			 
+			 scheduleItem.setBus(temp); 
+			 scheduleItem.setTime(timeTemp); 
+			 
+			 scheduleItemList.add(scheduleItem);      
 		}
-		
-		
-		
-		// array of times 
-		//Time timelist[] = {new Time()};
-		
-		
-		// package
 		
 		Schedule schedule = new Schedule(); 
-		ArrayList<ScheduleItem> scheduleItemList = new ArrayList<ScheduleItem>(); 
-		ScheduleItem scheduleItem = new ScheduleItem(); 
-		schedule.setStop(stop); 
-		Time time = new Time();
-		
-		for(int i = 0; i < names.length; i++) {
-			time.set(generator.nextInt(60), generator.nextInt(60), generator.nextInt(60),
-					generator.nextInt(30), generator.nextInt(12), 2013);
-			
-			scheduleItem.setBus(busList.get(i));
-			scheduleItem.setTime(time);
-			
-			scheduleItemList.add(scheduleItem); 
-		}
-		
 		schedule.setScheduleItem(scheduleItemList); 
+	
 		
 		return schedule; 
+		///////////////end test data
 		
 		/*
 		Schedule schedule = null;

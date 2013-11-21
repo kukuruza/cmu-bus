@@ -1,8 +1,10 @@
 package cmu18641.bustracker;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 public class ShakeDetector implements SensorEventListener {
@@ -33,10 +35,13 @@ public class ShakeDetector implements SensorEventListener {
 
     // Counter for shake movements
     int moveCount = 0;
+    
+    Context currentContext; 
 
     // Constructor that sets the shake listener
-    public ShakeDetector(OnShakeListener shakeListener) {
+    public ShakeDetector(OnShakeListener shakeListener, Context context) {
         mShakeListener = shakeListener;
+        currentContext = context; 
     }
 
     @Override
@@ -72,6 +77,8 @@ public class ShakeDetector implements SensorEventListener {
                 if (moveCount > MIN_MOVEMENTS) {
                     // It's a shake! Notify the listener.
                 	Log.i("ShakeDetector", "onShake()"); 
+                	MediaPlayer mediaPlayer = MediaPlayer.create(currentContext, R.raw.shake);
+                    mediaPlayer.start();
                     mShakeListener.onShake();
 
                     // Reset for the next one!

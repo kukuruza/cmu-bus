@@ -94,7 +94,7 @@ public class ViewSchedule extends Activity {
         // listen for shakes
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        shakeDetector = new ShakeDetector(shakeListener); 
+        shakeDetector = new ShakeDetector(shakeListener, this); 
 	}
 	
 	// refresh data when shaking
