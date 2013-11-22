@@ -45,7 +45,7 @@ public class LocateStation extends Activity {
 	private EditText searchAddressEditText; 
 	private ListView stationListView; 
 	
-	private ArrayList<Stop> stationList; 
+	private ArrayList<Stop> stationList;
 	private StopAdapter stopAdapter; 
 	
 	private GestureDetector gestureDetector;
@@ -66,10 +66,11 @@ public class LocateStation extends Activity {
 		searchStationButton = (Button) findViewById(R.id.searchAddressButton);
 		stationListView = (ListView) findViewById(R.id.stopListView);
 		
+		//new GetStationsTask().execute(); 
 		try {
-   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+   		 	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
    	  	} catch (TrackerException e) {
-   		  // log and recover
+   		   //log and recover
    		  e.printStackTrace();
    	  	}
 		
@@ -100,11 +101,44 @@ public class LocateStation extends Activity {
         shakeDetector = new ShakeDetector(shakeListener, this); 
 	}
 
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+			
+		// register shake listener
+		sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+			
+		// update listview
+		//new GetStationsTask().execute(); 
+		
+		try {
+	   	  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+	   	} catch (TrackerException e) {
+	   	  // log and recover
+	   	  e.printStackTrace();
+	    }
+			
+		//stopAdapter.notifyDataSetChanged();
+		Log.d("LocateStationActivity", "onResume()");
+	}
+		
+
+	@Override
+	protected void onPause() {
+		// unregister shake listener
+	    sensorManager.unregisterListener(shakeDetector); 
+	    super.onPause();
+	}   	
+	
+	
 	// refresh data when shaken
 	OnShakeListener shakeListener = new OnShakeListener() { 
 		@Override
         public void onShake() {
 			// update listview
+			//new GetStationsTask().execute(); 
+			
 			try {
 	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
 	   	  	} catch (TrackerException e) {
@@ -120,32 +154,6 @@ public class LocateStation extends Activity {
         }
 	};
 	
-	// allow schedule to refresh 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		// register shake listener
-		sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
-		
-		// update listview
-		try {
-   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
-   	  	} catch (TrackerException e) {
-   		  // log and recover
-   		  e.printStackTrace();
-   	  	}
-		
-		stopAdapter.notifyDataSetChanged();
-		Log.d("ViewScheduleActivity", "onResume()");
-	}
-	
-	// unregister shake listener
-	@Override
-    protected void onPause() {
-        sensorManager.unregisterListener(shakeDetector); 
-        super.onPause();
-    }   
 	
 	// user is taken to searchStation activity after entering search text
 	// and pressing search button
@@ -189,5 +197,31 @@ public class LocateStation extends Activity {
 		}
 	   
 	};
+	
+	
+	// performs database query outside GUI thread
+	/*
+	private class GetStationsTask extends AsyncTask<Void, Void, ArrayList<Stop>> {
+		@Override
+	    protected ArrayList<Stop> doInBackground(Void... params) {
+			try {
+	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+	   	  	} catch (TrackerException e) {
+	   		  // log and recover
+	   		  e.printStackTrace();
+	   	  	}
+			return stationList;
+	    }
+
+	    @Override
+	    protected void onPostExecute(ArrayList<Stop> stationList) {
+	    	// bus adapter is used to map buses to the listview
+			stopAdapter = new StopAdapter(LocateStation.this, R.layout.activity_locate_station, stationList);
+			
+			// bind adapter and set listener
+			stationListView.setAdapter(stopAdapter);
+	    }
+	};
+	*/
 	
 }

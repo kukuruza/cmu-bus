@@ -67,13 +67,11 @@ public class LocationService extends Service implements LocationListener{
             Log.i("LocationService", "Network enabled");
             }
             else { 
-            	// no provider is enabled
-            	
-            	// 
+            	Log.i("LocationService", "No provider enabled"); 
             }
             
         } catch(Exception e) { 
-        	
+        	Log.e("LocationService", "error", e); 
         }
     }
      
