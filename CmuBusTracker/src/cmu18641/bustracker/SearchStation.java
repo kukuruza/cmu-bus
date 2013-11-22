@@ -52,7 +52,7 @@ public class SearchStation extends Activity {
 		}
 		
 		try { 
-			stationList = Connector.globalManager.getStopByAddress(addressSearchQuery);
+			stationList = Connector.globalManager.getStopByAddress(SearchStation.this, addressSearchQuery);
 		} catch (TrackerException te) { 
 			// log and recover
 			te.printStackTrace();

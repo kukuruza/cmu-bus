@@ -28,9 +28,9 @@ public class GlobalManager {
 	}
 	
 	// returns list of buses associated with input stop 
-	public ArrayList<Bus> getBusesByStop(Stop stop) throws TrackerException {
+	public ArrayList<Bus> getBusesByStop(Context context, Stop stop) throws TrackerException {
 		Log.i("GlobalManager", "getBusesByStop"); 
-		return routeQueryManager.getBusesByStop(stop); 
+		return routeQueryManager.getBusesByStop(context, stop); 
 	}
 
 	// returns list of stops sorted by distance from user
@@ -51,16 +51,16 @@ public class GlobalManager {
         locationService.stopUsingLocation(); 
         
         if(userLocation.getLatitude() != 0.0 && userLocation.getLongitude() != 0.0)
-        	return routeQueryManager.getStopsByCurrentLocation(userLocation); 
+        	return routeQueryManager.getStopsByCurrentLocation(context, userLocation); 
         else { 
-        	return routeQueryManager.getAllStops(); 
+        	return routeQueryManager.getAllStops(context); 
         }
 	}
 
 	// returns list of stops sorted by relevance to search words
-	public ArrayList<Stop> getStopByAddress(String street) throws TrackerException {
+	public ArrayList<Stop> getStopByAddress(Context context, String street) throws TrackerException {
 		Log.i("GlobalManager", "getStopByAddress"); 
-		return routeQueryManager.getStopByAddress(street); 
+		return routeQueryManager.getStopByAddress(context, street); 
 	}
 	
 	// returns schedule for a stop and list of buses

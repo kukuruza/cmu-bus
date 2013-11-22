@@ -1,6 +1,8 @@
 package cmu18641.bustracker.entities;
 
 import java.util.ArrayList;
+
+import android.content.Context;
 import android.location.Location;
 import cmu18641.bustracker.exceptions.TrackerException;
 
@@ -14,11 +16,11 @@ import cmu18641.bustracker.exceptions.TrackerException;
 
 public interface RouteQueryInterface {
 
-	ArrayList<Bus>    getBusesByStop (Stop stop) throws TrackerException;
+	ArrayList<Bus>    getBusesByStop (Context context, Stop stop) throws TrackerException;
 	
-	ArrayList<Stop>   getStopsByCurrentLocation (Location here) throws TrackerException;
+	ArrayList<Stop>   getStopsByCurrentLocation (Context context, Location here) throws TrackerException;
 	
-	ArrayList<Stop>   getStopByAddress (String street) throws TrackerException;
+	ArrayList<Stop>   getStopByAddress (Context context, String street) throws TrackerException;
 	//ArrayList<Stop>   getStopByAddress (String street1, String street2) throws TrackerException;
 
 }

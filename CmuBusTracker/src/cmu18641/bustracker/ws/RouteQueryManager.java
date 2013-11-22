@@ -1,8 +1,11 @@
 package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
+import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
@@ -15,11 +18,17 @@ public class RouteQueryManager implements RouteQueryInterface {
 	
 	@Override
 	// returns list of buses associated with input stop 
-	public ArrayList<Bus> getBusesByStop(Stop stop)
+	public ArrayList<Bus> getBusesByStop(Context context, Stop stop)
 			throws TrackerException {
 		// TODO
 		// query for all buses with a particular stop string in ROUTE table
+		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
 		
+		ArrayList<Bus> busList = db.selectAllBusesByStop(stop);
+		
+		return busList; 
+		
+		/*
 		// for testing 
 		// populate busList with test data
 		String names[] = {"A Route Shuttle", "B Route Shuttle", "AB Route Shuttle", 
@@ -38,13 +47,15 @@ public class RouteQueryManager implements RouteQueryInterface {
 			 busList.add(temp);       
 		}
 		
+		
 		return busList; 
+		*/
 		
 	}
 
 	@Override
 	// returns list of stops sorted by distance from user
-	public ArrayList<Stop> getStopsByCurrentLocation(Location here)
+	public ArrayList<Stop> getStopsByCurrentLocation(Context context, Location here)
 			throws TrackerException {
 		// TODO
 		// run query to get all stops in STOPS table
@@ -52,6 +63,27 @@ public class RouteQueryManager implements RouteQueryInterface {
 		    // based on stops location and user location
 		// sort list by distance in stop class
 		
+		//first retrieve all the stops from the database
+		ArrayList<Stop> stopList = getAllStops(context);
+		
+		
+		
+		//set the distance for each stop to the distance from user to stop
+		for(int i = 0; i < stopList.size(); i++) {
+			stopList.get(i).setDistance(here.distanceTo(stopList.get(i).getLocation()));
+		}
+		
+		//sort the stops by distance
+		Collections.sort(stopList, new Comparator<Stop>() {
+
+	        public int compare(Stop s1, Stop s2) {
+	            return (int)(s1.getDistance() - s2.getDistance());
+	        }
+	    });
+		
+		return stopList;
+		
+		/*
 		Log.v("RouteQueryManager", "getStopsByCurrentLocation"); 
 		
 		String names[] = {"Morewood and Forbes", "5th and Craig", "Forbes and Craig", 
@@ -67,19 +99,33 @@ public class RouteQueryManager implements RouteQueryInterface {
 		}
 		
 		return stopList; 
+		*/
 	}
 	
 	// return complete list of stops
-	public ArrayList<Stop> getAllStops() { 
-		ArrayList<Stop> stops = new ArrayList<Stop>(); 
+	public ArrayList<Stop> getAllStops(Context context) {
+		
+		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
+		
+		//retrieves all stops from database
+		ArrayList<Stop> stops = db.selectAllStops(); 
+		
 		return stops; 
 	}
 
 	@Override
 	// returns list of stops sorted by relevance to search words
-	public ArrayList<Stop> getStopByAddress(String street)
+	public ArrayList<Stop> getStopByAddress(Context context, String street)
 			throws TrackerException {
 		
+		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
+		
+		//retrieves all stops from the database that have a matching street
+		ArrayList<Stop> stopList = db.selectAllStopsByStreet(street);
+		
+		return stopList; 
+		
+		/*
 		Log.v("RouteQueryManager", "getStopsByAddress");
 
 		String names[] = {"Morewood and Forbes", "5th and Craig", "Forbes and Craig", 
@@ -95,6 +141,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 		}
 		
 		return stopList; 
+		*/
 	
 	}
 

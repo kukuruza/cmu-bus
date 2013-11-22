@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Stop;
 import android.content.ContentValues;
@@ -12,6 +15,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.text.format.Time;
 import android.util.Log;
 
 /*
@@ -20,7 +24,7 @@ import android.util.Log;
  * Provides implementation to query local SQLite database
  */
 
-public class LocalDatabaseConnector {
+public class LocalDatabaseConnector extends SQLiteAssetHelper{
 	
 	// Logcat tag
     private static final String LOG = LocalDatabaseConnector.class.getName();
@@ -28,25 +32,24 @@ public class LocalDatabaseConnector {
     private static final String DATABASE_NAME = "busTracker";
     private static final int DATABASE_VERSION = 1;
 	private SQLiteDatabase database;
-	private LocalDatabaseOpenHelper databaseOpenHelper;
+	//private LocalDatabaseOpenHelper databaseOpenHelper;
 
 	// constructor
 	public LocalDatabaseConnector(Context context) {
-		databaseOpenHelper = 
-			new LocalDatabaseOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	// open the database connection
 	private void open() throws SQLException {
-		database = databaseOpenHelper.getWritableDatabase();
+		database = getWritableDatabase();
 	}
 
 	// close the database connection
-	private void close() {
+	/*private void close() {
 		if(database != null && database.isOpen()) { 
 			database.close();
 		}
-	}
+	}*/
 	
 	// inserts a new bus in BUS table
 	public long insertBus(Bus bus, long[] stopIds) { 
@@ -189,7 +192,6 @@ public class LocalDatabaseConnector {
 			newStop.put("stopstreet2", stop.getStreet2());
 			newStop.put("stopgpslat", stop.getLocation().getLatitude());
 			newStop.put("stopgpslong", stop.getLocation().getLongitude());
-			newStop.put("stopdistance", stop.getDistance()); 
 			newStop.put("timestamp", getDateTime());
 			
 			open(); 
@@ -224,7 +226,6 @@ public class LocalDatabaseConnector {
 		    String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex("stopstreet2"));
 		    double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslat"));
 		    double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslong"));
-		    //float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
 		    Location stopLocation = new Location(stopName);
 		    stopLocation.setLatitude(stopGpsLat);
 		    stopLocation.setLongitude(stopGpsLong);
@@ -259,7 +260,6 @@ public class LocalDatabaseConnector {
 				    String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex("stopstreet2"));
 				    double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslat"));
 				    double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslong"));
-				    //float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
 				    Location stopLocation = new Location(stopName);
 				    stopLocation.setLatitude(stopGpsLat);
 				    stopLocation.setLongitude(stopGpsLong);
@@ -298,7 +298,6 @@ public class LocalDatabaseConnector {
 						    String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex("stopstreet2"));
 						    double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslat"));
 						    double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex("stopgpslong"));
-						    float stopDistance = stopCursor.getFloat(stopCursor.getColumnIndex("stopdistance"));
 						    Location stopLocation = new Location(stopName);
 						    stopLocation.setLatitude(stopGpsLat);
 						    stopLocation.setLongitude(stopGpsLong);
@@ -324,7 +323,6 @@ public class LocalDatabaseConnector {
 			updateStop.put("stopstreet2", stop.getStreet2());
 			updateStop.put("stopgpslat", stop.getLocation().getLatitude());
 			updateStop.put("stopgpslong", stop.getLocation().getLongitude());
-			updateStop.put("stopdistance", stop.getDistance());
 			
 			open(); 
 			int updateId = database.update("stops", updateStop, "stopid = ?",  new String[] { String.valueOf(stopId) });
@@ -394,6 +392,46 @@ public class LocalDatabaseConnector {
 			close(); 
 			
 			return insertId;
+		}
+		
+		//given a stop, bus, and the current day of the week, return all the associated times from schedule table
+		public ArrayList<Time> selectScheduleTimes(Stop stop, Bus bus, int currentDay) {
+			ArrayList<Time> times = new ArrayList<Time>();
+			
+			String stopName = stop.getName(); 
+			String busName = bus.getName(); 
+			
+			// 1.  get stopId from stop table
+			// 2. get busid from bus table
+			// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
+			// 4. select times from schedule table where schedule route_id = route_id, and day = current day
+			String selectQuery = "SELECT  * FROM buses tb, stops ts, routes tr, schedules tsc WHERE tb.stopname = '" 
+					+ busName + "' AND ts.stopname = '" + stopName + 
+					"' AND ts.stopid = tr.stopid AND tb.busid = tr.busid" + 
+					" AND tr.routeid = tsc.routeid AND tsc.scheduleday = '" +
+					currentDay + "'";
+		 
+		    Log.e(LOG, selectQuery);
+		 
+		    open();
+		    Cursor timesCursor = database.rawQuery(selectQuery, null);
+		    close();
+		    
+		    // looping through all rows and adding to list
+		    if (timesCursor.moveToFirst()) {
+		        do {
+		        	Time time = new Time();
+		            time.minute = timesCursor.getInt(timesCursor.getColumnIndex("scheduletime")); 
+		    	    
+		            // Adding times to list
+		            times.add(time);
+		        } while (timesCursor.moveToNext());
+		    }
+			
+		    //close the cursor
+		    timesCursor.close();
+			
+			return times; 
 		}
 		
 		

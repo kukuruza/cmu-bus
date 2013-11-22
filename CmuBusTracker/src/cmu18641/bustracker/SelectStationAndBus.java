@@ -72,7 +72,7 @@ public class SelectStationAndBus extends Activity {
 		
 		// query must be called to find buses that pass thru the selected station
 		try { 
-			busList = Connector.globalManager.getBusesByStop(selectedStop); 
+			busList = Connector.globalManager.getBusesByStop(SelectStationAndBus.this, selectedStop); 
 		} catch(TrackerException te) { 
 			// log and recover
 			te.printStackTrace();

@@ -1,11 +1,13 @@
 package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 import android.content.Context;
 import android.text.format.Time;
 import android.util.Log;
+import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
@@ -31,27 +33,51 @@ public class TimeQueryManager {
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
 		
+		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
+		int currentDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 		
+		//Our database represents a weekday as 0 
+		int currentDay = 0; 
+		
+		//Our database represents Sunday as 2
+		if(currentDayOfWeek == 1)
+			currentDay = 2;
+		//Our database represents Saturday as 1
+		else if(currentDayOfWeek == 7)
+			currentDay = 1; 
 		// decide whether to go local or remote
 		
 		// return a a list of times
 		// get the current day, and cast into an integer
 		
-		// 1.  get stopId from stop table
-		// 2. get busid from bus table
-		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
-		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
-		
 		
 		// build array list of buses
 		
 		// build a scheduleitem array
+		ArrayList<ScheduleItem> scheduleItems = new ArrayList<ScheduleItem>();
+		
+		for(int i = 0; i < buses.size(); i++) {
+			//build a list of times for each bus given associated with the stop 
+			ArrayList<Time> times = db.selectScheduleTimes(stop, buses.get(i), currentDay); 
+			
+			for(int j = 0; j < times.size(); j++) {
+				//build a list of ScheduleItems for all buses and times associated with the stop
+				ScheduleItem item = new ScheduleItem(); 
+				item.setBus(buses.get(i));
+				item.setTime(times.get(j)); 
+				scheduleItems.add(item);
+			}
+		}
 		
 		// build a schedule
+		Schedule schedule = new Schedule();
+		schedule.setScheduleItemList(scheduleItems);
+		schedule.setStop(stop);
 		
 		// return schedule
+		return schedule; 
 		
-		
+		/*
 		//////////////test data
 		ArrayList<ScheduleItem> scheduleItemList = new ArrayList<ScheduleItem>(11); 
 
@@ -87,7 +113,7 @@ public class TimeQueryManager {
 		
 		return schedule; 
 		///////////////end test data
-		
+		*/
 		/*
 		Schedule schedule = null;
 		if (Networking.isNetworkAvailable(context))
