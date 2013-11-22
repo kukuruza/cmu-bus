@@ -115,7 +115,7 @@ public class LocateStation extends Activity {
 			stopAdapter.notifyDataSetChanged();
 			
 			Toast refresh = Toast.makeText(LocateStation.this, "Refreshing List", Toast.LENGTH_SHORT);
-			refresh.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 150);
+			refresh.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 200);
 			refresh.show();
         }
 	};

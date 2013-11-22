@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="StopName"
+            android:text="@string/example_stop_name"
             android:textSize="25sp" />
 
         <TextView
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="stopaddress" />
+            android:text="@string/example_stop_address" />
     </LinearLayout>
 
     <RelativeLayout
@@ -37,7 +37,7 @@
 			android:layout_marginRight="120dp"
 			android:layout_alignParentRight="true"
 			android:gravity="center_vertical"
-        	android:text="8 minutes"
+        	android:text="@string/example_walkingdist_string"
         	android:textSize="15sp" />
 
    	 <TextView
@@ -47,7 +47,7 @@
         	android:layout_alignParentRight="true"
         	android:gravity="center_vertical"
         	android:layout_marginRight="5dp"
-        	android:text="0.5 miles"
+        	android:text="@string/example_mile_string"
         	android:textSize="15sp" />
    	 
     </RelativeLayout>

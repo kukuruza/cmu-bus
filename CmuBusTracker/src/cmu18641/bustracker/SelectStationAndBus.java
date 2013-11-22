@@ -68,7 +68,7 @@ public class SelectStationAndBus extends Activity {
 		}
 		
 		// set button text based on selected stop 
-		findStationButton.setText(selectedStop.getName()); 
+		findStationButton.setText("Stop: " + selectedStop.getName() + " (click to change)"); 
 		
 		// query must be called to find buses that pass thru the selected station
 		try { 
