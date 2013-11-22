@@ -1,0 +1,8 @@
+stop_id,stop_name,stop_street1,stop_street2,stop_gpslat,stop_gpslong
+1,Morewood Gardens ,Morewood Avenue,,40.445418,-79.942714
+2,Forbes and South Craig,Forbes Avenue,South Craig Street,40.444467,-79.948642
+3,South Dithridge at Wiinthrop Street,South Dithridge,Wiinthrop Street,40.445686,-79.95039
+4,North Dithridge at Fifth Avenue,North Dithridge,Fifth Avenue,40.446814,-79.950549
+5,Fifth Avenue at Wilkins Avenue,Fifth Avenue,Wilkins Avenue,40.447839,-79.937092
+6,Fifth Avenue at South Aiken Avenue,Fifth Avenue,South Aiken Avenue,40.448188,-79.934378
+7,Fifth Avenue at Bellefonte Street,Fifth Avenue,Bellefonte Street,40.448711,-79.932725
