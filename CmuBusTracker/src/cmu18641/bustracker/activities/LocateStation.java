@@ -1,7 +1,8 @@
-package cmu18641.bustracker;
+package cmu18641.bustracker.activities;
 
 import java.util.ArrayList;
-import cmu18641.bustracker.ShakeDetector.OnShakeListener;
+import cmu18641.bustracker.R;
+import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.StopAdapter;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;

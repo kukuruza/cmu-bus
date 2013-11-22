@@ -9,8 +9,8 @@ import android.util.Log;
 
 public class Stop implements Parcelable {
 
-	final static private double MetersToMiles = 1.0/1609.34;
-	final static private double AvgSpeedMilesPerMin = 3.0/60.0;
+	final static private double MetersToMiles = 0.0006213727;  // 1609.34 meters per mile
+	final static private double AvgSpeedMilesPerMin = 0.05; // 3 miles per hour
 	final static private String StringFormat = "%.1f";
 	
 	private String     _name;
@@ -59,7 +59,7 @@ public class Stop implements Parcelable {
 	}
 		
 	public String getWalkingTimeString() { 
-		return String.format (Locale.US, StringFormat, _distance / AvgSpeedMilesPerMin);
+		return String.format (Locale.US, StringFormat, _distance*MetersToMiles / AvgSpeedMilesPerMin);
 	}
 	
 	@Override

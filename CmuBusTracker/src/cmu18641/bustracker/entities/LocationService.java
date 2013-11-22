@@ -15,12 +15,13 @@ import android.util.Log;
 
 public class LocationService extends Service implements LocationListener{
 
+	private static final String TAG = "LocationService";
+	
     private final Context mContext;
  
     boolean isGPSEnabled = false;  // flag for GPS status
     boolean isNetworkEnabled = false;  // flag for network status
  
-    Location currentBestLocation;
     Location currentLocation; 
     double latitude; 
     double longitude; 
@@ -52,7 +53,7 @@ public class LocationService extends Service implements LocationListener{
                     longitude = currentLocation.getLongitude();
                 }
             
-                Log.i("LocationService", "GPS enabled");
+                Log.i(TAG, "GPS enabled");
             }
             else if(isNetworkEnabled) { 
             	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
@@ -64,14 +65,19 @@ public class LocationService extends Service implements LocationListener{
             		longitude = currentLocation.getLongitude();
             	}
         
-            Log.i("LocationService", "Network enabled");
+            Log.i(TAG, "Network enabled");
             }
             else { 
-            	Log.i("LocationService", "No provider enabled"); 
+            	Log.i(TAG, "No provider enabled"); 
+            	showSettingsAlert(); 
+            	currentLocation = null; 
             }
             
         } catch(Exception e) { 
-        	Log.e("LocationService", "error", e); 
+        	Log.e("LocationService", "exception", e); 
+        	if(!canGetLocation()) { 
+        		currentLocation = null; 
+        	}
         }
     }
      

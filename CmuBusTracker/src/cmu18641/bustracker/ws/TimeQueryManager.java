@@ -2,8 +2,6 @@ package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Random;
-
 import android.content.Context;
 import android.text.format.Time;
 import android.util.Log;
@@ -13,8 +11,6 @@ import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
-import cmu18641.bustracker.ws.remote.Networking;
-import cmu18641.bustracker.ws.remote.RemoteQuery;
 
 
 /*
@@ -24,16 +20,19 @@ import cmu18641.bustracker.ws.remote.RemoteQuery;
 public class TimeQueryManager {
 	private final String TAG = "TimeQueryManager"; 
 
-	public static Schedule getScheduleSubset (Schedule inSchedule, int numOut)
-	{
-		// TODO: return only 5 closest times
-	    return inSchedule;
-	}
+	public final int numOut = 10; 
+	
+	// seperate function not really needed
+	//public static Schedule getScheduleSubset (Schedule inSchedule, int numOut)
+	//{
+	//	// TODO: return only 5 closest times
+	//    return inSchedule;
+	//}
 
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
 		
-		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
+		// determine day of week for query 
 		int currentDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 		
 		//Our database represents a weekday as 0 
@@ -45,14 +44,14 @@ public class TimeQueryManager {
 		//Our database represents Saturday as 1
 		else if(currentDayOfWeek == 7)
 			currentDay = 1; 
+		
 		// decide whether to go local or remote
+		// if local 
+			LocalDatabaseConnector db = new LocalDatabaseConnector(context);
+		// else
+			// go remote
 		
-		// return a a list of times
-		// get the current day, and cast into an integer
-		
-		
-		// build array list of buses
-		
+
 		// build a scheduleitem array
 		ArrayList<ScheduleItem> scheduleItems = new ArrayList<ScheduleItem>();
 		
@@ -69,6 +68,11 @@ public class TimeQueryManager {
 			}
 		}
 		
+		Time currentTime = new Time();
+		currentTime.setToNow();
+		// SORT schedule items based on current time, return next 5-10 buses 
+	
+		
 		// build a schedule
 		Schedule schedule = new Schedule();
 		schedule.setScheduleItemList(scheduleItems);
@@ -76,6 +80,9 @@ public class TimeQueryManager {
 		
 		// return schedule
 		return schedule; 
+		
+		
+		
 		
 		/*
 		//////////////test data

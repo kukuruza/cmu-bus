@@ -36,19 +36,8 @@ public class GlobalManager {
 	// returns list of stops sorted by distance from user
 	public ArrayList<Stop> getStopsByCurrentLocation(Context context) throws TrackerException {    
 		Log.i("GlobalManager", "getStopsByCurrentLocation"); 
-		locationService = new LocationService(context); 
-		Location userLocation = new Location("user"); 
 		
-        if(locationService.canGetLocation()) {
-            userLocation = new Location(locationService.getLocation()); 
-            Log.d("Manager", "userLocation=" + locationService.getLatitude() + " " 
-            			+ locationService.getLongitude());
-        }
-        else {
-            locationService.showSettingsAlert();
-        }
-        
-        locationService.stopUsingLocation(); 
+		Location userLocation = fetchLocation(context); 
         
         if(userLocation.getLatitude() != 0.0 && userLocation.getLongitude() != 0.0)
         	return routeQueryManager.getStopsByCurrentLocation(context, userLocation); 
@@ -60,7 +49,19 @@ public class GlobalManager {
 	// returns list of stops sorted by relevance to search words
 	public ArrayList<Stop> getStopByAddress(Context context, String street) throws TrackerException {
 		Log.i("GlobalManager", "getStopByAddress"); 
-		return routeQueryManager.getStopByAddress(context, street); 
+		ArrayList<Stop> stopList = new ArrayList<Stop>(); 
+		
+		Location userLocation = fetchLocation(context); 
+        
+        if(userLocation.getLatitude() != 0.0 && userLocation.getLongitude() != 0.0)
+        	stopList = routeQueryManager.getStopByAddress(context, userLocation, street); 
+
+		if(stopList.isEmpty()) { 
+			return null; 
+		}
+		else { 
+			return stopList; 
+		}
 	}
 	
 	// returns schedule for a stop and list of buses
@@ -70,4 +71,21 @@ public class GlobalManager {
 		return timeQueryManager.getSchedule(context, stop, buses); 
 	}
 	
+	// fetch location from location service 
+	private Location fetchLocation(Context context) { 
+		
+		locationService = new LocationService(context); 
+		Location userLocation = new Location("user"); 
+		
+        if(locationService.canGetLocation() && locationService.getLocation() != null) {
+            userLocation = new Location(locationService.getLocation()); 
+            Log.d("Manager", "userLocation=" + locationService.getLatitude() + " " 
+            			+ locationService.getLongitude());
+        }
+ 
+        locationService.stopUsingLocation(); 
+        locationService = null; 
+		
+		return userLocation; 
+	}
 }

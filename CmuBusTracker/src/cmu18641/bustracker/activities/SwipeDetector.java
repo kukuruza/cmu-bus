@@ -1,5 +1,6 @@
-package cmu18641.bustracker;
+package cmu18641.bustracker.activities;
 
+import cmu18641.bustracker.R;
 import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
