@@ -22,7 +22,7 @@
         android:layout_alignBaseline="@+id/checkBox"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/checkBox"
-        android:text="busName"
+        android:text="@string/example_bus_name"
         android:textSize="25sp" />
 
     <TextView
@@ -34,6 +34,6 @@
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/busname"
         android:paddingLeft="10dp"
-        android:text="busDirecton"/>
+        android:text="@string/example_bus_direction"/>
      
 </RelativeLayout>

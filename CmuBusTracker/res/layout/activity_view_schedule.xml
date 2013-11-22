@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        	android:layout_alignParentTop="true"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-            
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical">
+  
          	<LinearLayout 
             	android:background="#efefef"
             	android:layout_width="fill_parent"
@@ -20,7 +16,7 @@
          			android:layout_height="wrap_content" 
          			android:textSize="25sp"
          			android:textStyle="bold"
-         			android:text="Forbes and Morewood"
+         			android:text="@string/example_stop_name"
          			android:gravity="right" 
          			android:paddingLeft="20dp"
          	    	android:paddingTop="5dp"/>
@@ -36,7 +32,7 @@
          				android:layout_height="wrap_content" 
          				android:textSize="15sp"
          				android:textStyle="normal"
-         				android:text="0.2 miles"
+         				android:text="@string/example_mile_string"
          				android:gravity="right" 
          				android:paddingLeft="20dp"
          				android:paddingTop="5dp"/>
@@ -46,7 +42,7 @@
          				android:layout_height="wrap_content" 
          				android:textSize="15sp"
          				android:textStyle="normal"
-         				android:text="3 minutes"
+         				android:text="@string/example_walkingdist_string"
          				android:gravity="right" 
          				android:paddingLeft="20dp"
          				android:paddingTop="5dp"/>
@@ -62,8 +58,6 @@
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent">
 
-            </ListView>
+             </ListView>
             
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

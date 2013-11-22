@@ -10,7 +10,7 @@
         android:layout_height="65dp"
         android:layout_marginLeft="15dp"
         android:gravity="center_vertical"
-        android:text="busName"
+        android:text="@string/example_bus_name"
         android:textSize="25sp" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@+id/scheduleitem_busname"
         android:paddingLeft="10dp"
-        android:text="busDirecton"/>
+        android:text="@string/example_bus_direction"/>
     
     <TextView
         android:id="@+id/scheduleitem_busarrivaltime"
@@ -33,6 +33,6 @@
         android:layout_marginRight="8dp"
         android:layout_alignParentRight="true"
 		android:paddingLeft="10dp"
-        android:text="arrivalTime"/>
+        android:text="@string/example_bus_direction"/>
      
 </RelativeLayout>

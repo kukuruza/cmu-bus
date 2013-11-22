@@ -94,7 +94,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 			 stopList.add(temp);       
 		}
 		
-		return stopList; 
+		return null;
 	
 	}
 

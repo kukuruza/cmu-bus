@@ -7,6 +7,9 @@ import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -58,14 +61,6 @@ public class SearchStation extends Activity {
 			te.printStackTrace();
 		}
 		
-		// stop adapter is used to map stops to the listview
-		stopAdapter = new StopAdapter(this, R.layout.activity_search_station, stationList);
-			
-		// bind adapter and listener
-		ListView stationListView = (ListView) findViewById(R.id.searchStopListView);
-		stationListView.setAdapter(stopAdapter);
-		stationListView.setOnItemClickListener(selectStopListener);
-		
 		// listen for gestures
         gestureDetector = new GestureDetector(this, new SwipeDetector(this));
         gestureListener = new OnTouchListener() {
@@ -74,8 +69,32 @@ public class SearchStation extends Activity {
                 return gestureDetector.onTouchEvent(event);
             }
         };
-        
-        stationListView.setOnTouchListener(gestureListener);   
+		
+		if(stationList != null) { 
+			// stop adapter is used to map stops to the listview
+			stopAdapter = new StopAdapter(this, R.layout.activity_search_station, stationList);
+			
+			// bind adapter and listener
+			ListView stationListView = (ListView) findViewById(R.id.searchStopListView);
+			stationListView.setAdapter(stopAdapter);
+			stationListView.setOnItemClickListener(selectStopListener);
+			
+			stationListView.setOnTouchListener(gestureListener);   
+		}
+		else { 
+			Builder builder = new AlertDialog.Builder(SearchStation.this);
+		    builder.setMessage("No buses found matching \"" + addressSearchQuery +"\"");
+		    builder.setCancelable(false); 
+		    builder.setPositiveButton(R.string.search_again,
+		            new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int id) {
+		            finish(); 
+		        }
+		    });
+		    
+		    AlertDialog dialog = builder.create();
+		    dialog.show();
+		}
 	}
 
 	// user is taken to selectionStationAndBus after touching a station in list
