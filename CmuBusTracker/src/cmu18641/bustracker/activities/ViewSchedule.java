@@ -140,9 +140,6 @@ public class ViewSchedule extends Activity {
 		
 		// update listview
 		fetchListViewData();  
-		if(scheduleAdapter != null) { 
-			scheduleAdapter.notifyDataSetChanged();
-		}
 		
 		Log.d("ViewScheduleActivity", "onResume()");
 	}
@@ -158,12 +155,17 @@ public class ViewSchedule extends Activity {
 	private void fetchListViewData() { 
 		try {
 			schedule = Connector.globalManager.getSchedule(getApplicationContext(), selectedStop, selectedBuses);
+			scheduleItemList = schedule.getScheduleItemList(); 
 		} catch (TrackerException e) {
 			// log and recover
 			e.printStackTrace();
 		}
-					
-		scheduleItemList = schedule.getScheduleItemList(); 
+		
+		if(scheduleAdapter != null) { 
+			scheduleAdapter.clear(); 
+			scheduleAdapter.addAll(scheduleItemList); 
+			scheduleAdapter.notifyDataSetChanged();
+		}
 					
 		// reset header textViews
 		stopNameTextView.setText(selectedStop.getName()); 

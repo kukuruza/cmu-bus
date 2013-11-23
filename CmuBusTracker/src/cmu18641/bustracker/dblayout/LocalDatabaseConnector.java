@@ -438,8 +438,6 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper{
 				Time time = new Time();
 				int numMinutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(SCHEDULE_TIME));
 				
-				Log.v("hey", String.format("%d", numMinutesSinceMidnight));
-				
 				int minutes = numMinutesSinceMidnight % 60; 
 				int hours = numMinutesSinceMidnight / 60; 
 				time.set(0, minutes, hours, 1, 1, Calendar.getInstance().get(Calendar.YEAR));
