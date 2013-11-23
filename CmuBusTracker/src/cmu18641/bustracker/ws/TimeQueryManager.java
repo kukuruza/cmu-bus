@@ -2,6 +2,10 @@ package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
 import android.content.Context;
 import android.text.format.Time;
 import android.util.Log;
@@ -20,15 +24,8 @@ import cmu18641.bustracker.exceptions.TrackerException;
 public class TimeQueryManager {
 	private final String TAG = "TimeQueryManager"; 
 
-	public final int numOut = 10; 
+	public final int numOut = 15; // number of schedule results to display 
 	
-	// seperate function not really needed
-	//public static Schedule getScheduleSubset (Schedule inSchedule, int numOut)
-	//{
-	//	// TODO: return only 5 closest times
-	//    return inSchedule;
-	//}
-
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
 		
@@ -57,7 +54,7 @@ public class TimeQueryManager {
 		
 		for(int i = 0; i < buses.size(); i++) {
 			//build a list of times for each bus given associated with the stop 
-			ArrayList<Time> times = db.selectScheduleTimes(stop, buses.get(i), currentDay); 
+			ArrayList<Time> times = db.selectScheduleTimes(stop, buses.get(i), currentDay);
 			
 			for(int j = 0; j < times.size(); j++) {
 				//build a list of ScheduleItems for all buses and times associated with the stop
@@ -68,14 +65,47 @@ public class TimeQueryManager {
 			}
 		}
 		
+		// get current time
 		Time currentTime = new Time();
 		currentTime.setToNow();
-		// SORT schedule items based on current time, return next 5-10 buses 
-	
+		
+		currentTime.second = 0; 
+		currentTime.monthDay = 1; 
+		currentTime.month = 1;
+		
+		// remove buses that have already passed stop
+		Iterator<ScheduleItem> it = scheduleItems.iterator();
+		while (it.hasNext()) {
+			ScheduleItem item = it.next(); 
+			
+			int diff = Time.compare(item.getTime(), currentTime); 
+			Log.v(TAG, String.format("%d", item.getTime().hour ));
+			
+		    if(diff <= 0) {
+		        it.remove();
+		    }
+		}
+		
+		// sort remaining buses by time
+		Collections.sort(scheduleItems, new Comparator<ScheduleItem>() {
+		       @Override public int compare(ScheduleItem s1, ScheduleItem s2) {
+		           return Time.compare(s1.getTime(), s2.getTime());
+		       }
+		});
+		
+
+		// return only top numOut results
+		ArrayList<ScheduleItem> subScheduleItem; 
+		if(scheduleItems.size() > numOut) { 
+			subScheduleItem = new ArrayList<ScheduleItem>(scheduleItems.subList(0, numOut)); 
+		}
+		else { 
+			subScheduleItem = scheduleItems; 
+		}
 		
 		// build a schedule
 		Schedule schedule = new Schedule();
-		schedule.setScheduleItemList(scheduleItems);
+		schedule.setScheduleItemList(subScheduleItem);
 		schedule.setStop(stop);
 		
 		// return schedule

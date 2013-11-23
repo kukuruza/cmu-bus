@@ -51,7 +51,23 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> {
 		
 		viewHolder.name.setText(scheduleItemList.get(position).getBus().getName());
 		viewHolder.direction.setText(scheduleItemList.get(position).getBus().getDirection()); 
-		viewHolder.arrivalTime.setText(scheduleItemList.get(position).getTime().format2445());
+		
+		// prepare arrival time string
+		int arrivalMinutes = scheduleItemList.get(position).getTime().minute; 
+		int arrivalHours = scheduleItemList.get(position).getTime().hour; 
+		String stamp = "AM";
+		
+		if(arrivalHours >= 12) { 
+			stamp = "PM"; 
+		}
+		
+		if(arrivalHours > 12) { 
+			arrivalHours = arrivalHours - 12; 
+		}
+		
+		
+		
+		viewHolder.arrivalTime.setText(String.format(arrivalHours + ":%02d " + stamp, arrivalMinutes));
 		
 		Log.d("ScheduleAdapter - getView()", "position= " + position);
 			

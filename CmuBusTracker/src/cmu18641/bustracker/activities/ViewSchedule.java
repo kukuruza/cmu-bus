@@ -12,7 +12,10 @@ import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.util.Log;
@@ -72,13 +75,7 @@ public class ViewSchedule extends Activity {
 		}
 		
 		fetchListViewData(); 
-				
-		// schedule adapter is used to map the scheduleitems to the listview
-		scheduleAdapter = new ScheduleAdapter(this, R.layout.activity_select_station_and_bus, scheduleItemList);
-				
-		// bind adapter and listener
-		ListView timeListView = (ListView) findViewById(R.id.scheduleListView);
-		timeListView.setAdapter(scheduleAdapter);
+		
 		
 		// listen for gestures
         gestureDetector = new GestureDetector(this, new SwipeDetector(this));
@@ -88,8 +85,31 @@ public class ViewSchedule extends Activity {
                 return gestureDetector.onTouchEvent(event);
             }
         };
-        
-        timeListView.setOnTouchListener(gestureListener);  
+		
+		if(!scheduleItemList.isEmpty()) { 
+				
+			// schedule adapter is used to map the scheduleitems to the listview
+			scheduleAdapter = new ScheduleAdapter(this, R.layout.activity_select_station_and_bus, scheduleItemList);
+				
+			// bind adapter and listener
+			ListView timeListView = (ListView) findViewById(R.id.scheduleListView);
+			timeListView.setAdapter(scheduleAdapter);
+			timeListView.setOnTouchListener(gestureListener);  
+		}
+		else { 
+			Builder builder = new AlertDialog.Builder(ViewSchedule.this);
+		    builder.setMessage("Sorry, no more buses for this stop are coming today. :(");
+		    builder.setCancelable(false); 
+		    builder.setPositiveButton(R.string.search_again,
+		            new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int id) {
+		            finish(); 
+		        }
+		    });
+		    
+		    AlertDialog dialog = builder.create();
+		    dialog.show();
+		}
         
         // listen for shakes
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -120,7 +140,9 @@ public class ViewSchedule extends Activity {
 		
 		// update listview
 		fetchListViewData();  
-		scheduleAdapter.notifyDataSetChanged();
+		if(scheduleAdapter != null) { 
+			scheduleAdapter.notifyDataSetChanged();
+		}
 		
 		Log.d("ViewScheduleActivity", "onResume()");
 	}

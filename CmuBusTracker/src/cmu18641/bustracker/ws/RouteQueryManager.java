@@ -99,6 +99,14 @@ public class RouteQueryManager implements RouteQueryInterface {
 	public ArrayList<Stop> getStopByAddress(Context context, Location here, String street)
 			throws TrackerException {
 		
+		//cleanup user street query entry
+		street = street.toLowerCase(); 
+		street = street.replace("and", ""); 
+		street = street.replace("street", "");
+		street = street.replace("avenue", ""); 
+		street = street.replace("road", ""); 
+		street = street.trim(); 
+
 		//retrieves all stops from the database that have a matching street
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
 		ArrayList<Stop> stopList = db.selectAllStopsByStreet(street);

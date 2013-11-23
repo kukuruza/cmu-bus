@@ -6,12 +6,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
 
 public class ShakeDetector implements SensorEventListener {
 
     // Minimum acceleration needed to count as a shake movement
-    private static final int MIN_SHAKE_ACCELERATION = 5;
+    private static final int MIN_SHAKE_ACCELERATION = 6;
 
     // Minimum number of movements to register a shake
     private static final int MIN_MOVEMENTS = 2;
@@ -76,11 +77,21 @@ public class ShakeDetector implements SensorEventListener {
 
                 // Check if enough movements have been made to qualify as a shake
                 if (moveCount > MIN_MOVEMENTS) {
-                    // It's a shake! Notify the listener.
+                   
                 	Log.i("ShakeDetector", "onShake()"); 
-                	MediaPlayer mediaPlayer = MediaPlayer.create(currentContext, R.raw.shake);
-                    mediaPlayer.start();
-                    mShakeListener.onShake();
+                	MediaPlayer mPlayer = MediaPlayer.create(currentContext, R.raw.shake);
+                    mPlayer.start();
+                    
+                    mPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+                        public void onCompletion(MediaPlayer mPlayer) {
+                            mPlayer.release();
+                            mPlayer = null; 
+                        }
+
+                    });
+                    
+                    mShakeListener.onShake(); // notify listener
 
                     // Reset for the next one!
                     resetShakeDetection();

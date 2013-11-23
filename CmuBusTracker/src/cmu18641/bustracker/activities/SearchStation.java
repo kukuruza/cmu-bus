@@ -71,7 +71,7 @@ public class SearchStation extends Activity {
             }
         };
 		
-		if(stationList != null) { 
+		if(!stationList.isEmpty()) { 
 			// stop adapter is used to map stops to the listview
 			stopAdapter = new StopAdapter(this, R.layout.activity_search_station, stationList);
 			

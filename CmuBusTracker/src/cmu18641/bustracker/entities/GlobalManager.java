@@ -55,13 +55,8 @@ public class GlobalManager {
         
         if(userLocation.getLatitude() != 0.0 && userLocation.getLongitude() != 0.0)
         	stopList = routeQueryManager.getStopByAddress(context, userLocation, street); 
-
-		if(stopList.isEmpty()) { 
-			return null; 
-		}
-		else { 
-			return stopList; 
-		}
+        
+		return stopList; 
 	}
 	
 	// returns schedule for a stop and list of buses
