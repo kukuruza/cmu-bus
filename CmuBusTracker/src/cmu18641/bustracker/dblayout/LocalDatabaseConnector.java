@@ -28,7 +28,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper{
     private static final String LOG = LocalDatabaseConnector.class.getName();
     
     private static final String DATABASE_NAME = "busTracker";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 	private SQLiteDatabase database;
 	
 	// table names
@@ -437,6 +437,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper{
 				// convert time db format to time object
 				Time time = new Time();
 				int numMinutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(SCHEDULE_TIME));
+				
+				Log.v("hey", String.format("%d", numMinutesSinceMidnight));
 				
 				int minutes = numMinutesSinceMidnight % 60; 
 				int hours = numMinutesSinceMidnight / 60; 

@@ -54,7 +54,7 @@ public class TimeQueryManager {
 		
 		for(int i = 0; i < buses.size(); i++) {
 			//build a list of times for each bus given associated with the stop 
-			ArrayList<Time> times = db.selectScheduleTimes(stop, buses.get(i), currentDay);
+			ArrayList<Time> times = db.selectScheduleTimes(stop, buses.get(i), 0); // changed
 			
 			for(int j = 0; j < times.size(); j++) {
 				//build a list of ScheduleItems for all buses and times associated with the stop
