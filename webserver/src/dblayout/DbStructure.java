@@ -2,8 +2,6 @@ package dblayout;
 
 import java.util.ArrayList;
 
-import cmu18641.bustracker.common.BaseBus;
-
 
 public class DbStructure {
 	
@@ -71,9 +69,11 @@ public class DbStructure {
     }
 
     
-    public static String scheduleRequestString 
-        (String stopName, ArrayList<BaseBus> buses, int weekDay)
+    public static String scheduleRequestString (String stopName, 
+    		ArrayList<String> busNames, ArrayList<String> busDirs, int weekDay)
     {
+    	assert (busNames.size() == busDirs.size());
+    	
 		// 1. get stopId from stop table
 		// 2. get busid from bus table
 		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
@@ -90,13 +90,12 @@ public class DbStructure {
 		        "WHERE ";
 		        // this stuff enters multiple buses
 		        s = s + "(";
-		        for (int i = 0; i != buses.size(); ++i)
+		        for (int i = 0; i != busNames.size(); ++i)
 		        {
-		        	BaseBus bus = buses.get(i);
 		        	s = s + 
-		            "tb." + BUS_NAME + " = '" + bus.getName() + "' AND " + 
-		            "tb." + BUS_DIR + " = '" + bus.getDirection();
-		        	if (i == buses.size()-1) 
+		            "tb." + BUS_NAME + " = '" + busNames.get(i) + "' AND " + 
+		            "tb." + BUS_DIR + " = '" + busDirs.get(i);
+		        	if (i == busNames.size()-1) 
 		        		s = s + "') AND ";
 		        	else
 		        		s = s + "' OR ";

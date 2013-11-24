@@ -29,8 +29,22 @@ public class RemoteQuery implements TimeQueryInterface {
 
 	    params.add(new BasicNameValuePair("stop", stop.getName()));
         
+//	    int i = 0;
+//	    for (Bus bus : buses)
+//	    {
+//	    	params.add(new BasicNameValuePair("bus[]", 
+//	    			Integer.toString(i) + "_" + bus.getName()));
+//	    	params.add(new BasicNameValuePair("direction[]", 
+//	    			Integer.toString(i) + "_" + bus.getDirection()));
+//	    	++i;
+//	    }
+	    
 	    for (Bus bus : buses)
-	    	params.add(new BasicNameValuePair("buses[]", bus.getName()));
+	    {
+	    	params.add(new BasicNameValuePair("bus[]", bus.getName()));
+            params.add(new BasicNameValuePair("direction[]", bus.getDirection()));
+        }
+	    
 
 	    String paramString = URLEncodedUtils.format(params, "utf-8");	    
 	    url += paramString;

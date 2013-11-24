@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import cmu18641.bustracker.common.BaseBus;
-import cmu18641.bustracker.common.BaseSchedule;
-import cmu18641.bustracker.common.BaseScheduleItem;
+import cmu18641.bustracker.common.entities.BaseBus;
+import cmu18641.bustracker.common.entities.BaseSchedule;
+import cmu18641.bustracker.common.entities.BaseScheduleItem;
 
 
 public class DatabaseConnector {
@@ -47,9 +47,12 @@ public class DatabaseConnector {
 	}
 	
 	
-	public BaseSchedule getSchedule (String stopName, ArrayList<BaseBus> buses, int weekDay)
+	public BaseSchedule getSchedule 
+	       (String stopName, ArrayList<String> busesNames, 
+			ArrayList<String> busesDirs, int weekDay)
 	{
-		String selectQuery = DbStructure.scheduleRequestString(stopName, buses, weekDay);
+		String selectQuery = DbStructure.scheduleRequestString
+				(stopName, busesNames, busesDirs, weekDay);
 		System.out.println(selectQuery);
 		
 		if (!connect()) return null; 

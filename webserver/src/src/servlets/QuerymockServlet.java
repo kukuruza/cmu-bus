@@ -7,7 +7,10 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
-import cmu18641.bustracker.common.*;
+import cmu18641.bustracker.common.entities.BaseBus;
+import cmu18641.bustracker.common.entities.BaseSchedule;
+import cmu18641.bustracker.common.entities.BaseScheduleItem;
+import cmu18641.bustracker.common.protocols.*;
 
 import com.google.gson.Gson;
 

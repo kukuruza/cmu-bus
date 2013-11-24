@@ -1,4 +1,4 @@
-package cmu18641.bustracker.common;
+package cmu18641.bustracker.common.entities;
 
 import java.util.ArrayList;
 
