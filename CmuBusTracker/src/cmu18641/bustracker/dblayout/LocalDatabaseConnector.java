@@ -28,7 +28,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper{
     private static final String LOG = LocalDatabaseConnector.class.getName();
     
     private static final String DATABASE_NAME = "busTracker";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 	private SQLiteDatabase database;
 	
 	// table names
@@ -416,6 +416,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper{
 		String stopName = stop.getName(); 
 		String busName = bus.getName(); 
 
+		currentDay = 0;
+		
 		// 1. get stopId from stop table
 		// 2. get busid from bus table
 		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid

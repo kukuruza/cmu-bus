@@ -24,6 +24,38 @@ import com.google.gson.Gson;
 public class Query extends HttpServlet {
 	private static final long serialVersionUID = -443200206040603721L;
 
+	// table names
+    private static final String TABLE_BUS = "buses";
+    private static final String TABLE_STOP = "stops";
+    private static final String TABLE_ROUTE = "routes";
+    private static final String TABLE_SCHEDULE = "schedules";
+    
+    // common column names
+    private static final String TIME_STAMP = "timestamp";
+    
+    // BUS table column names
+    private static final String BUS_ID = "busid";
+    private static final String BUS_NAME = "busname";
+    private static final String BUS_DIR = "busdir";
+    
+    // STOP table column names
+    private static final String STOP_ID = "stopid";
+    private static final String STOP_NAME = "stopname";
+    private static final String STOP_STREET1 = "stopstreet1";
+    private static final String STOP_STREET2 = "stopstreet2";
+    private static final String STOP_GPSLAT = "stopgpslat";
+    private static final String STOP_GPSLONG = "stopgpslong";
+    
+    // ROUTE table column names
+    private static final String ROUTE_ID = "routeid";
+    
+    // SCHEDULE table column names
+    private static final String SCHEDULE_ID = "scheduleid";
+    private static final String SCHEDULE_DAY = "scheduleday";
+    private static final String SCHEDULE_TIME = "scheduletime";
+	
+    
+    
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
               throws ServletException, IOException {
@@ -57,8 +89,32 @@ public class Query extends HttpServlet {
 	    	  
 	        Statement stat = conn.createStatement();
 
-	    	ResultSet rs = stat.executeQuery("SELECT direction FROM buses");
-	    	String str = rs.getString(1);
+	    	
+	    	
+	    	String stopName = "Squirrel Hill - FORBES AVE & SHADY AVE";
+	    	String busName = "61A";
+			int currentDay = 0;
+			
+			// 1. get stopId from stop table
+			// 2. get busid from bus table
+			// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
+			// 4. select times from schedule table where schedule route_id = route_id, and day = current day
+			String selectQuery = "SELECT  * FROM " + TABLE_BUS + " tb, " + TABLE_STOP + " ts, " + TABLE_ROUTE + 
+					" tr, " + TABLE_SCHEDULE + " tsc WHERE tb." + BUS_NAME + " = '" + busName + "' AND ts." + 
+					STOP_NAME + " = '" + stopName + "' AND ts." + STOP_ID + " = tr." + STOP_ID + " AND tb." + 
+					BUS_ID + " = tr." + BUS_ID + " AND tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND tsc." + 
+					SCHEDULE_DAY + " = '" + currentDay + "'";
+	    	ResultSet rs = stat.executeQuery(selectQuery);
+
+	    	String str = "";
+	    	while(rs.next())
+	    	{
+	    	    // now walk each column in the array...
+	    	    Object o = rs.getObject("scheduletime");
+	    	    String sVal = o.toString();
+	    	    str = str + " " + sVal; 
+	    	}
+
 	    	  
 	    	stat.close();
 	    	  
