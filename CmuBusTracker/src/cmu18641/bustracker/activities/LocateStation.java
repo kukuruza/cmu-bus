@@ -119,8 +119,13 @@ public class LocateStation extends Activity {
 	   	  // log and recover
 	   	  e.printStackTrace();
 	    }
-			
-		//stopAdapter.notifyDataSetChanged();
+		
+		if(stopAdapter != null) { 
+			stopAdapter.clear(); 
+			stopAdapter.addAll(stationList); 
+			stopAdapter.notifyDataSetChanged();
+		}
+		
 		Log.d("LocateStationActivity", "onResume()");
 	}
 		
@@ -147,7 +152,11 @@ public class LocateStation extends Activity {
 	   		  e.printStackTrace();
 	   	  	}
 			
-			stopAdapter.notifyDataSetChanged();
+			if(stopAdapter != null) { 
+				stopAdapter.clear(); 
+				stopAdapter.addAll(stationList); 
+				stopAdapter.notifyDataSetChanged();
+			}
 			
 			Toast refresh = Toast.makeText(LocateStation.this, "Refreshing List", Toast.LENGTH_SHORT);
 			refresh.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 200);
