@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+import cmu18641.bustracker.common.BaseBus;
+import cmu18641.bustracker.common.BaseSchedule;
+import cmu18641.bustracker.common.BaseScheduleItem;
+
 
 public class DatabaseConnector {
 
@@ -43,11 +47,13 @@ public class DatabaseConnector {
 	}
 	
 	
-	public String getSchedule (String stopName, ArrayList<String> buses, int weekDay)
+	public BaseSchedule getSchedule (String stopName, ArrayList<BaseBus> buses, int weekDay)
 	{
-		String busName = buses.get(0);
+		// FIXME: to array
+		String busName = buses.get(0).getName();
+		String busDir = buses.get(0).getDirection();
 		
-		String selectQuery = DbStructure.scheduleRequestString(stopName, busName, weekDay);
+		String selectQuery = DbStructure.scheduleRequestString(stopName, busName, busDir, weekDay);
 		
 		if (!connect()) return null; 
 		
@@ -60,24 +66,29 @@ public class DatabaseConnector {
 			return null;
 		}
 		
-    	String str = "";
+		BaseSchedule schedule = new BaseSchedule ();
+		schedule.setStop(stopName);
+		
     	try {
 			while(rs.next())
 			{
-			    // now walk each column in the array...
-			    Object o = rs.getObject("scheduletime");
-			    String sVal = o.toString();
-			    str = str + " " + sVal; 
+			    String timeVal = rs.getObject("scheduletime").toString();
+			    String busnameVal = rs.getObject("busname").toString();
+			    String busdirVal = rs.getObject("busdir").toString();
+			    BaseBus bus = new BaseBus(busnameVal, busdirVal);
+			    schedule.addItem(new BaseScheduleItem(bus, Integer.parseInt(timeVal)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-
     	
+		// TODO: if the result is empty check that bus and stop are valid
+		
     	closeConnection();
     	
-		return str;
+		return schedule;
 	}
 	
 	

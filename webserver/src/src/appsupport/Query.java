@@ -2,20 +2,12 @@ package src.appsupport;
 
 
 import java.io.*; 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
-
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 import cmu18641.bustracker.common.*;
 
@@ -29,6 +21,7 @@ import dblayout.DbStructure;
 public class Query extends HttpServlet {
 	private static final long serialVersionUID = -443200206040603721L;
 
+	
 	// this function decides if it is weekday or saturday or sunday/holiday
 	// TODO: implement holiday
 	private int getWeekDay()
@@ -44,29 +37,33 @@ public class Query extends HttpServlet {
 	    	return DbStructure.WEEK_WEEKDAY;
 	}
 	
+	
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
               throws ServletException, IOException {
 		
         PrintWriter out = response.getWriter();
-    	String stopName = "Squirrel Hill - FORBES AVE & SHADY AVE";
+    	String stopName = "Squirrel Hill - FORBES AVE & MURRAY AVE";
     	String busName = "61A";
+    	String busDir = "Braddock";
     	
 		int weekDay = getWeekDay();
 		// FIXME: when weekday schedule is in DB
 		weekDay = 0;
 		
-		ArrayList<String> busList = new ArrayList<String>();
-		busList.add(busName);
+		ArrayList<BaseBus> busList = new ArrayList<BaseBus>();
+		busList.add(new BaseBus (busName, busDir));
 		
 		DatabaseConnector connector = new DatabaseConnector();
-        String s = connector.getSchedule (stopName, busList, weekDay);
-        if (s == null)
+        BaseSchedule schedule = connector.getSchedule (stopName, busList, weekDay);
+        if (schedule == null)
+            // TODO: output error
         	out.println("null \n");
-        else
-        	out.println(s);
-                
-	
+
+        Gson gson = new Gson();
+        String json = gson.toJson(schedule);  
+
+        out.println(json);
 	}
   
 }

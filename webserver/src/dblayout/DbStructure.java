@@ -2,6 +2,7 @@ package dblayout;
 
 public class DbStructure {
 	
+	// weekDay
     public static final int WEEK_WEEKDAY = 0;
     public static final int WEEK_SATURDAY = 1;
     public static final int WEEK_SUNDAY_HOLIDAY = 2;
@@ -38,8 +39,9 @@ public class DbStructure {
     protected static final String SCHEDULE_DAY = "scheduleday";
     protected static final String SCHEDULE_TIME = "scheduletime";
 	
-
-    public static String scheduleRequestString (String stopName, String busName, int weekDay)
+	// TODO: filter based on time
+    public static String scheduleRequestString 
+        (String stopName, String busName, String busDir, int weekDay)
     {
 		// 1. get stopId from stop table
 		// 2. get busid from bus table
@@ -52,6 +54,7 @@ public class DbStructure {
 		        TABLE_SCHEDULE + " tsc " + 
 		        "WHERE " + 
 		        "tb." + BUS_NAME + " = '" + busName + "' AND " + 
+		        "tb." + BUS_DIR + " = '" + busDir + "' AND " + 
 		        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
 		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
 		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 

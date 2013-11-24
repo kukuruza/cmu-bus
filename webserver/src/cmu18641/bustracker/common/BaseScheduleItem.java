@@ -3,12 +3,12 @@ package cmu18641.bustracker.common;
 public class BaseScheduleItem { 
 	
 	private BaseBus _bus = null; 
-	private long _time = 0; 
+	private int _time = 0; 
 	
 	public BaseScheduleItem() { 
     }
 	
-	public BaseScheduleItem(BaseBus bus, long time) { 
+	public BaseScheduleItem(BaseBus bus, int time) { 
 		_bus = new BaseBus(bus); 
 		_time = time; 
 	}
