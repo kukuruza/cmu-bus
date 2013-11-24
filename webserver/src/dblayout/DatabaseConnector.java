@@ -49,11 +49,6 @@ public class DatabaseConnector {
 	
 	public BaseSchedule getSchedule (String stopName, ArrayList<BaseBus> buses, int weekDay)
 	{
-		// FIXME: to array
-		//String busName = buses.get(0).getName();
-		//String busDir = buses.get(0).getDirection();
-		
-		//String selectQuery = DbStructure.scheduleRequestString(stopName, busName, busDir, weekDay);
 		String selectQuery = DbStructure.scheduleRequestString(stopName, buses, weekDay);
 		System.out.println(selectQuery);
 		

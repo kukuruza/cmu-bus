@@ -1,4 +1,4 @@
-package src.appsupport;
+package src.servlets;
 
 
 import java.io.*; 
@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 
 
 @WebServlet("/querymock")
-public class Querymock extends HttpServlet {
+public class QuerymockServlet extends HttpServlet {
 	private static final long serialVersionUID = -6483477226845513011L;
 
 	@Override

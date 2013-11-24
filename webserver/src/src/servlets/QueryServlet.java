@@ -1,14 +1,18 @@
-package src.appsupport;
+package src.servlets;
 
 
 import java.io.*; 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cmu18641.bustracker.common.*;
 
@@ -21,11 +25,13 @@ import dblayout.DbStructure;
 
 
 @WebServlet("/query")
-public class Query extends HttpServlet {
+public class QueryServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = -443200206040603721L;
 
-	
+    private static final Logger logger = LoggerFactory.getLogger(QueryServlet.class);
+
+    
 	// this function decides if it is weekday or saturday or sunday/holiday
 	// TODO: implement holiday
 	private int getWeekDay()
@@ -55,6 +61,43 @@ public class Query extends HttpServlet {
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
               throws ServletException, IOException {
+		
+        Map<String, String[]> parameterMap = request.getParameterMap();
+
+        if ((parameterMap != null) && !parameterMap.isEmpty())
+        {
+            Map.Entry<String, String[]> entry;
+            int index;
+            Iterator<Map.Entry<String, String[]>> iterator = parameterMap.entrySet().iterator();
+            String str = new String();
+            String[] values;
+
+            while (iterator.hasNext())
+            {
+                entry = iterator.next();
+                values = entry.getValue();
+
+                if (values != null)
+                {
+                    for (index = 0; index < values.length; ++index)
+                    {
+                    	str = str + ", ";
+                        str = str + values[index];
+                    }
+                }
+                else
+                {
+                    str = str + "[none]";
+                }
+
+                logger.info("Key: {}; Value(s): {}", entry.getKey(), str);
+            }
+        }
+        else
+        {
+            logger.info("parameterMap is empty.");
+        }
+
 		
 		int weekDay = getWeekDay();
 		// FIXME: when weekday schedule is in DB

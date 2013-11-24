@@ -51,7 +51,11 @@ public class DbStructure {
 		// 2. get busid from bus table
 		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
 		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
-		return  "SELECT  * FROM " + 
+		return  "SELECT " + 
+		        BUS_NAME + ", " + 
+		        BUS_DIR + ", " + 
+		        SCHEDULE_TIME + 
+		        " FROM " + 
 		        TABLE_BUS + " tb, " + 
 		        TABLE_STOP + " ts, " + 
 		        TABLE_ROUTE + " tr, " + 
@@ -74,12 +78,17 @@ public class DbStructure {
 		// 2. get busid from bus table
 		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
 		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
-		String s = "SELECT  * FROM " + 
+		String s = "SELECT " + 
+		        BUS_NAME + ", " + 
+		        BUS_DIR + ", " + 
+		        SCHEDULE_TIME + 
+		        " FROM " + 
 		        TABLE_BUS + " tb, " + 
 		        TABLE_STOP + " ts, " + 
 		        TABLE_ROUTE + " tr, " + 
 		        TABLE_SCHEDULE + " tsc " + 
 		        "WHERE ";
+		        // this stuff enters multiple buses
 		        s = s + "(";
 		        for (int i = 0; i != buses.size(); ++i)
 		        {
