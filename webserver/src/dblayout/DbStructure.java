@@ -1,6 +1,16 @@
 package dblayout;
 
+import java.util.ArrayList;
+
+
 public class DbStructure {
+	
+	// weekDay
+    public static final int WEEK_WEEKDAY = 0;
+    public static final int WEEK_SATURDAY = 1;
+    public static final int WEEK_SUNDAY_HOLIDAY = 2;
+    
+	
 
 	// table names
     protected static final String TABLE_BUS = "buses";
@@ -32,24 +42,72 @@ public class DbStructure {
     protected static final String SCHEDULE_DAY = "scheduleday";
     protected static final String SCHEDULE_TIME = "scheduletime";
 	
-
-    public static String scheduleRequestString (String stopName, String busName, int weekDay)
+    public static String scheduleRequestString 
+        (String stopName, String busName, String busDir, int weekDay)
     {
 		// 1. get stopId from stop table
 		// 2. get busid from bus table
 		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
 		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
-		return  "SELECT  * FROM " + 
+		return  "SELECT " + 
+		        BUS_NAME + ", " + 
+		        BUS_DIR + ", " + 
+		        SCHEDULE_TIME + 
+		        " FROM " + 
 		        TABLE_BUS + " tb, " + 
 		        TABLE_STOP + " ts, " + 
 		        TABLE_ROUTE + " tr, " + 
 		        TABLE_SCHEDULE + " tsc " + 
 		        "WHERE " + 
 		        "tb." + BUS_NAME + " = '" + busName + "' AND " + 
+		        "tb." + BUS_DIR + " = '" + busDir + "' AND " + 
 		        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
 		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
 		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 
 		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
 		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "'";
     }
+
+    
+    public static String scheduleRequestString (String stopName, 
+    		ArrayList<String> busNames, ArrayList<String> busDirs, int weekDay)
+    {
+    	assert (busNames.size() == busDirs.size());
+    	
+		// 1. get stopId from stop table
+		// 2. get busid from bus table
+		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
+		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
+		String s = "SELECT " + 
+		        BUS_NAME + ", " + 
+		        BUS_DIR + ", " + 
+		        SCHEDULE_TIME + 
+		        " FROM " + 
+		        TABLE_BUS + " tb, " + 
+		        TABLE_STOP + " ts, " + 
+		        TABLE_ROUTE + " tr, " + 
+		        TABLE_SCHEDULE + " tsc " + 
+		        "WHERE ";
+		        // this stuff enters multiple buses
+		        s = s + "(";
+		        for (int i = 0; i != busNames.size(); ++i)
+		        {
+		        	s = s + 
+		            "tb." + BUS_NAME + " = '" + busNames.get(i) + "' AND " + 
+		            "tb." + BUS_DIR + " = '" + busDirs.get(i);
+		        	if (i == busNames.size()-1) 
+		        		s = s + "') AND ";
+		        	else
+		        		s = s + "' OR ";
+		        }
+		        s = s +
+		        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
+		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
+		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 
+		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
+		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "'";
+        return s;
+    }
+    
+
 }
