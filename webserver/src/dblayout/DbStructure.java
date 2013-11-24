@@ -1,6 +1,12 @@
 package dblayout;
 
 public class DbStructure {
+	
+    public static final int WEEK_WEEKDAY = 0;
+    public static final int WEEK_SATURDAY = 1;
+    public static final int WEEK_SUNDAY_HOLIDAY = 2;
+    
+	
 
 	// table names
     protected static final String TABLE_BUS = "buses";

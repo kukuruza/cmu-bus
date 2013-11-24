@@ -14,6 +14,8 @@ public class DatabaseConnector {
 	private Connection _conn;
 	private Statement _stat;
 
+    //private DbStructure dbStructure;
+    
 	
 	// get the connection to our database
 	private boolean connect()
