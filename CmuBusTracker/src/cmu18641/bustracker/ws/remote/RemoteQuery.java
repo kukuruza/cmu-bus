@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -29,20 +30,10 @@ public class RemoteQuery implements TimeQueryInterface {
 
 	    params.add(new BasicNameValuePair("stop", stop.getName()));
         
-//	    int i = 0;
-//	    for (Bus bus : buses)
-//	    {
-//	    	params.add(new BasicNameValuePair("bus[]", 
-//	    			Integer.toString(i) + "_" + bus.getName()));
-//	    	params.add(new BasicNameValuePair("direction[]", 
-//	    			Integer.toString(i) + "_" + bus.getDirection()));
-//	    	++i;
-//	    }
-	    
 	    for (Bus bus : buses)
 	    {
-	    	params.add(new BasicNameValuePair("bus[]", bus.getName()));
-            params.add(new BasicNameValuePair("direction[]", bus.getDirection()));
+	    	params.add(new BasicNameValuePair("bus", bus.getName()));
+            params.add(new BasicNameValuePair("dir", bus.getDirection()));
         }
 	    
 
@@ -55,7 +46,7 @@ public class RemoteQuery implements TimeQueryInterface {
 
 
 	@ Override
-	public Schedule getSchedule (Stop stop, ArrayList<Bus> buses) 
+	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) 
 			throws TrackerException
 	{
 		// TODO: to be moved to configs
