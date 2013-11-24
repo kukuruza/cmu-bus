@@ -23,8 +23,8 @@ public class Querymock extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         BaseSchedule schedule = new BaseSchedule();
-        BaseStop stop = new BaseStop ("testStop", "a", "b", 123, -234);
-        schedule.setStop (stop);
+        //BaseStop stop = new BaseStop ("testStop", "a", "b", 123, -234);
+        schedule.setStop ("testStop");
         schedule.addItem (new BaseScheduleItem(new BaseBus("61c", "downtown"), 
         		                               0));
         schedule.addItem (new BaseScheduleItem(new BaseBus("61c", "squirrel hill"), 

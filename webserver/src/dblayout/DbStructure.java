@@ -1,5 +1,10 @@
 package dblayout;
 
+import java.util.ArrayList;
+
+import cmu18641.bustracker.common.BaseBus;
+
+
 public class DbStructure {
 	
 	// weekDay
@@ -39,7 +44,6 @@ public class DbStructure {
     protected static final String SCHEDULE_DAY = "scheduleday";
     protected static final String SCHEDULE_TIME = "scheduletime";
 	
-	// TODO: filter based on time
     public static String scheduleRequestString 
         (String stopName, String busName, String busDir, int weekDay)
     {
@@ -61,4 +65,41 @@ public class DbStructure {
 		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
 		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "'";
     }
+
+    
+    public static String scheduleRequestString 
+        (String stopName, ArrayList<BaseBus> buses, int weekDay)
+    {
+		// 1. get stopId from stop table
+		// 2. get busid from bus table
+		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
+		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
+		String s = "SELECT  * FROM " + 
+		        TABLE_BUS + " tb, " + 
+		        TABLE_STOP + " ts, " + 
+		        TABLE_ROUTE + " tr, " + 
+		        TABLE_SCHEDULE + " tsc " + 
+		        "WHERE ";
+		        s = s + "(";
+		        for (int i = 0; i != buses.size(); ++i)
+		        {
+		        	BaseBus bus = buses.get(i);
+		        	s = s + 
+		            "tb." + BUS_NAME + " = '" + bus.getName() + "' AND " + 
+		            "tb." + BUS_DIR + " = '" + bus.getDirection();
+		        	if (i == buses.size()-1) 
+		        		s = s + "') AND ";
+		        	else
+		        		s = s + "' OR ";
+		        }
+		        s = s +
+		        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
+		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
+		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 
+		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
+		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "'";
+        return s;
+    }
+    
+
 }
