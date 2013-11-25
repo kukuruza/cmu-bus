@@ -32,10 +32,9 @@ public class RemoteQuery implements TimeQueryInterface {
         
 	    for (Bus bus : buses)
 	    {
-	    	params.add(new BasicNameValuePair("bus", bus.getName()));
-            params.add(new BasicNameValuePair("dir", bus.getDirection()));
+	    	params.add(new BasicNameValuePair("bus[]", bus.getName()) );
+            params.add(new BasicNameValuePair("dir[]", bus.getDirection()));
         }
-	    
 
 	    String paramString = URLEncodedUtils.format(params, "utf-8");	    
 	    url += paramString;
@@ -50,13 +49,28 @@ public class RemoteQuery implements TimeQueryInterface {
 			throws TrackerException
 	{
 		// TODO: to be moved to configs
-		String url = "http://localhost:8080/webserver/querymock";
+		String url = "http://10.0.2.2:8080/webserver/querymock";
 		
 		// compose a request
 		String requestUrl = formRequestString (url, stop, buses);
 		
 		// get answer from server
-		String responseString = Networking.askServer (requestUrl);
+		String responseString = "alala";
+		try {
+			AskServer askServer = new AskServer(); 
+			askServer.execute(requestUrl);
+			askServer.onPostExecute(responseString);
+			Log.i(TAG, "Let's see: " + responseString);
+    		if (responseString.equals("alala"))
+    			throw new TrackerException(TrackerException.BAD_REMOTE_RESULT, TAG,
+					"askServer failed");
+		} catch (Exception e) {
+			Log.e(TAG, "failed to ask server - " + e.getMessage());
+			throw new TrackerException(TrackerException.BAD_REMOTE_RESULT, TAG,
+					"askServer failed");
+		}
+		
+		Log.e(TAG, "Here");
 		
 		// parse json string into TimesMessage object
 		Gson gson = new Gson();

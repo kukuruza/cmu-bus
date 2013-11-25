@@ -9,13 +9,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import cmu18641.bustracker.exceptions.TrackerException;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.util.Log;
  
-public class Networking {
+public class AskServer extends AsyncTask<String, Void, String> {
+	private final static String TAG = "AskServer";
 
 	public static boolean isNetworkAvailable (Context context) {
 	    ConnectivityManager cm = (ConnectivityManager) 
@@ -28,35 +29,48 @@ public class Networking {
         return false;
     } 
 	
-	public static String askServer (String urlString) throws TrackerException
+	@Override
+	protected String doInBackground(String... params)
 	{
+		assert (params.length > 0);
+		String urlString = params[0];
+		
     	HttpGet get = new HttpGet (urlString);
 
 	    HttpClient client = new DefaultHttpClient();
 	    HttpResponse response = null;
+	    
 	    try {
 			response = client.execute(get);
 		} catch (ClientProtocolException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
-                     "ClientProtocolException sending request");
+			Log.e (TAG, "ClientProtocolException sending request" + e.getMessage());
+			return null;
 		} catch (IOException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
-                     "IOException sending request");
+			Log.e (TAG, "IOException sending request. " + e.getMessage());
+			return null;
 		}
-	    
+		    
 	    String responseString = null;
 		try {
 			responseString = new BasicResponseHandler().handleResponse(response);
 		} catch (HttpResponseException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
-                    "HttpResponseException extracting response body");
+			Log.e (TAG, "HttpResponseException extracting response body" + e.getMessage());
+			return null;
 		} catch (IOException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
-                    "IOException extracting response body");
+			Log.e (TAG, "IOException extracting response body" + e.getMessage());
+			return null;
 		}
+		
+		if (responseString == null)
+			Log.i (TAG, "responseString is null");
+		else
+    		Log.i (TAG, responseString);
 	    return responseString;
 	}
 
+	@Override
+	protected void onPostExecute(String result) {
+	}
 }
 
 

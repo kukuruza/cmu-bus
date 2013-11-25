@@ -1,7 +1,6 @@
 package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -9,13 +8,13 @@ import java.util.Iterator;
 import android.content.Context;
 import android.text.format.Time;
 import android.util.Log;
-import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.ws.local.LocalQuery;
+import cmu18641.bustracker.ws.remote.RemoteQuery;
 
 
 /*
@@ -29,21 +28,28 @@ public class TimeQueryManager {
 	
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
 			throws TrackerException {
+		// TODO: maybe remove TrackerException from here?
 		
 		// get the raw schedule
 		Schedule schedule = null;
-		//if (Networking.isNetworkAvailable(context))
-		//{
-		//	RemoteQuery remoteQuery = new RemoteQuery();
-		//	schedule = remoteQuery.getSchedule (stop, buses);
-		//}
-		//else
-		//{
-		//	Log.i(TAG, "network is unavailble");
+//		if (Networking.isNetworkAvailable(context))
+//		{
+//		    RemoteQuery remoteQuery = new RemoteQuery();
+//	    	schedule = remoteQuery.getSchedule (context, stop, buses);
+//	    	if (schedule == null)
+//	    	{
+//		    	Log.e (TAG, "remote query failed");
+//		    	// TODO: change null result to local query
+//		    	return new Schedule(stop);
+//		    }
+//		}
+//		else
+//		{
+//			Log.i(TAG, "network is unavailble");
 		
 		    LocalQuery localQuery = new LocalQuery();
 		    schedule = localQuery.getSchedule (context, stop, buses);
-		//}
+//		}
 		    
 		ArrayList<ScheduleItem> scheduleItems = schedule.getScheduleItemList();
 		    

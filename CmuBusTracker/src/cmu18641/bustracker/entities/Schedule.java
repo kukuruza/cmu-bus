@@ -14,6 +14,12 @@ public class Schedule {
 		_scheduleItemList = new ArrayList<ScheduleItem>(); 
 	}
 	
+	public Schedule (Stop stop)
+	{
+		this._stop = stop; 
+		this._scheduleItemList = new ArrayList<ScheduleItem>();
+	}
+	
 	public Schedule(Stop stop, ArrayList<ScheduleItem> scheduleItemList) { 
 		this._stop = stop; 
 		this._scheduleItemList = scheduleItemList; 

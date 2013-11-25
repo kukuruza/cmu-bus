@@ -2,6 +2,7 @@ package src.servlets;
 
 
 import java.io.*; 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -152,7 +153,7 @@ public class QueryServlet extends HttpServlet {
 	}
 	
 	
-	private void replaceSpecialCharacters (Map<String, String[]> parameterMap)
+	private boolean replaceSpecialCharacters (Map<String, String[]> parameterMap)
 	{
         if ((parameterMap != null) && !parameterMap.isEmpty())
         {
@@ -167,9 +168,14 @@ public class QueryServlet extends HttpServlet {
                 
                 if (values != null)
                     for (int index = 0; index < values.length; ++index)
-                    	values[index] = NetProtocol.putBackSpecialChars(values[index]);
+						try {
+							values[index] = URLDecoder.decode(values[index], "utf-8");
+						} catch (UnsupportedEncodingException e) {
+							return false;
+						}
             }
         }
+        return true;
 	}
 	
 
