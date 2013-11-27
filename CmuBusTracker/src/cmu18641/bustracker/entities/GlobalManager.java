@@ -59,13 +59,6 @@ public class GlobalManager {
 		return stopList; 
 	}
 	
-	// returns schedule for a stop and list of buses
-	public Schedule getSchedule(Context context, Stop stop, ArrayList<Bus> buses) 
-			throws TrackerException {
-		Log.i("GlobalManager", "getSchedule"); 
-		return timeQueryManager.getSchedule(context, stop, buses); 
-	}
-	
 	// fetch location from location service 
 	private Location fetchLocation(Context context) { 
 		

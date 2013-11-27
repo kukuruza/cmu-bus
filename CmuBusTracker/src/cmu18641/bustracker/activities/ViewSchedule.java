@@ -5,11 +5,12 @@ import cmu18641.bustracker.R;
 import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.ScheduleAdapter;
 import cmu18641.bustracker.entities.Bus;
-import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.ws.TimeQueryManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,11 +37,11 @@ import android.widget.Toast;
 
 public class ViewSchedule extends Activity {
 
-	private Schedule schedule; 
-	private Stop selectedStop; 
-	private ArrayList<Bus> selectedBuses; 
-	private ScheduleAdapter scheduleAdapter; 
-	private ArrayList<ScheduleItem> scheduleItemList;
+	private Schedule _schedule; 
+	private Stop _selectedStop; 
+	private ArrayList<Bus> _selectedBuses; 
+	private ScheduleAdapter _scheduleAdapter; 
+	private ArrayList<ScheduleItem> _scheduleItemList;
 	
 	private TextView stopNameTextView; 
 	private TextView stopDistanceTextView;
@@ -66,8 +67,8 @@ public class ViewSchedule extends Activity {
 		Bundle data = getIntent().getExtras(); 
 		if(data != null) { 
 			// grab station and selected buses from selectStationAndBus
-			selectedStop = data.getParcelable(LocateStation.STOP_SELECTED); 
-			selectedBuses = data.getParcelableArrayList(SelectStationAndBus.BUSES_SELECTED);
+			_selectedStop = data.getParcelable(LocateStation.STOP_SELECTED); 
+			_selectedBuses = data.getParcelableArrayList(SelectStationAndBus.BUSES_SELECTED);
 		}
 		else { 
 			// if bundle is null, return to previous activity
@@ -86,43 +87,19 @@ public class ViewSchedule extends Activity {
             }
         };
 		
-		if(!scheduleItemList.isEmpty()) { 
-				
-			// schedule adapter is used to map the scheduleitems to the listview
-			scheduleAdapter = new ScheduleAdapter(this, R.layout.activity_select_station_and_bus, scheduleItemList);
-				
-			// bind adapter and listener
-			ListView timeListView = (ListView) findViewById(R.id.scheduleListView);
-			timeListView.setAdapter(scheduleAdapter);
-			timeListView.setOnTouchListener(gestureListener);  
-		}
-		else { 
-			Builder builder = new AlertDialog.Builder(ViewSchedule.this);
-		    builder.setMessage("Sorry, no more buses for this stop are coming today. :(");
-		    builder.setCancelable(false); 
-		    builder.setPositiveButton(R.string.search_again,
-		            new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int id) {
-		            finish(); 
-		        }
-		    });
-		    
-		    AlertDialog dialog = builder.create();
-		    dialog.show();
-		}
-        
         // listen for shakes
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         shakeDetector = new ShakeDetector(shakeListener, this); 
 	}
 	
+	
 	// refresh data when shaking
 	OnShakeListener shakeListener = new OnShakeListener() { 
 		@Override
         public void onShake() {
 			fetchListViewData();  
-			scheduleAdapter.notifyDataSetChanged();
+			_scheduleAdapter.notifyDataSetChanged();
 			
 			Toast refresh = Toast.makeText(ViewSchedule.this, "Refreshing List", Toast.LENGTH_SHORT);
 			refresh.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 50);
@@ -152,24 +129,69 @@ public class ViewSchedule extends Activity {
     }   
 	
 	// fetch new data for page
-	private void fetchListViewData() { 
-		try {
-			schedule = Connector.globalManager.getSchedule(getApplicationContext(), selectedStop, selectedBuses);
-			scheduleItemList = schedule.getScheduleItemList(); 
-		} catch (TrackerException e) {
-			// log and recover
-			e.printStackTrace();
+	private void fetchListViewData()
+	{
+		class ExecuteTimeQuery extends AsyncTask<Void, Void, Void> {
+			
+			Schedule schedule;
+			
+			@Override
+			protected Void doInBackground(Void... params) {
+				try {
+					TimeQueryManager timeQueryManager = new TimeQueryManager();
+					schedule = timeQueryManager.getSchedule(getApplicationContext(), _selectedStop, _selectedBuses); 
+				} catch (TrackerException e) {
+					// log and recover
+					e.printStackTrace();
+				}
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(Void result) {
+				_schedule = schedule;
+				_scheduleItemList = _schedule.getScheduleItemList(); 
+				
+				if(_scheduleAdapter != null) { 
+					_scheduleAdapter.clear(); 
+					_scheduleAdapter.addAll(_scheduleItemList); 
+					_scheduleAdapter.notifyDataSetChanged();
+				}
+							
+				// reset header textViews
+				stopNameTextView.setText(_selectedStop.getName()); 
+				stopDistanceTextView.setText(_selectedStop.getDistanceString() + " miles");            
+				stopWalkingDistanceTextView.setText(_selectedStop.getWalkingTimeString() + " minutes"); 
+
+				if(!_scheduleItemList.isEmpty()) { 
+					
+					// schedule adapter is used to map the scheduleitems to the listview
+					_scheduleAdapter = new ScheduleAdapter(getApplicationContext(), R.layout.activity_select_station_and_bus, _scheduleItemList);
+						
+					// bind adapter and listener
+					ListView timeListView = (ListView) findViewById(R.id.scheduleListView);
+					timeListView.setAdapter(_scheduleAdapter);
+					timeListView.setOnTouchListener(gestureListener);  
+				}
+				else { 
+					Builder builder = new AlertDialog.Builder(ViewSchedule.this);
+				    builder.setMessage("Sorry, no more buses for this stop are coming today. :(");
+				    builder.setCancelable(false); 
+				    builder.setPositiveButton(R.string.search_again,
+				            new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int id) {
+				            finish(); 
+				        }
+				    });
+				    
+				    AlertDialog dialog = builder.create();
+				    dialog.show();
+				}
+		        
+}
 		}
 		
-		if(scheduleAdapter != null) { 
-			scheduleAdapter.clear(); 
-			scheduleAdapter.addAll(scheduleItemList); 
-			scheduleAdapter.notifyDataSetChanged();
-		}
-					
-		// reset header textViews
-		stopNameTextView.setText(selectedStop.getName()); 
-		stopDistanceTextView.setText(selectedStop.getDistanceString() + " miles");            
-		stopWalkingDistanceTextView.setText(selectedStop.getWalkingTimeString() + " minutes"); 
+		ExecuteTimeQuery exec = new ExecuteTimeQuery();
+		exec.execute();
 	}
 }
