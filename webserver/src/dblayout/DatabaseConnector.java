@@ -18,10 +18,29 @@ import cmu18641.bustracker.common.entities.BaseScheduleItem;
 
 public class DatabaseConnector {
 
-	private final String dbResource = "java:comp/env/jdbc/sched";
+	private static final String dbResource = "java:comp/env/jdbc/sched";
 
 	private Connection _conn;
 	private Statement _stat;
+	
+	// takes no parameters, just copies the whole file
+	public static String getDbPath ()
+	{
+		try {
+			InitialContext ctx = new InitialContext();
+			BasicDataSource ds = (BasicDataSource) ctx.lookup(dbResource);
+			String dbUrl = ds.getUrl();
+			
+			// simple workaround for getting actual file path
+			// involves knowledge of how database url is organized 
+			int firstSlash = dbUrl.indexOf ('/');
+			return dbUrl.substring(firstSlash + 1);
+			
+		} catch (NamingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	// get the connection to our database
@@ -29,7 +48,7 @@ public class DatabaseConnector {
 	{
 	    try {
 	    	InitialContext ctx = new InitialContext();
-	    	BasicDataSource ds = (BasicDataSource)ctx.lookup(dbResource);
+	    	BasicDataSource ds = (BasicDataSource) ctx.lookup(dbResource);
 	    	
 	    	_conn = ds.getConnection();
 	    	System.out.println("Successfully opened the database");
