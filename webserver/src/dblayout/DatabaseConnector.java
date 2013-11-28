@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 import cmu18641.bustracker.common.entities.BaseBus;
@@ -15,23 +18,19 @@ import cmu18641.bustracker.common.entities.BaseScheduleItem;
 
 public class DatabaseConnector {
 
+	private final String dbResource = "java:comp/env/jdbc/sched";
+
 	private Connection _conn;
 	private Statement _stat;
-
-    //private DbStructure dbStructure;
-    
+	
 	
 	// get the connection to our database
 	private boolean connect()
 	{
 	    try {
-	    	//InitialContext ctx = new InitialContext();
-	    	//BasicDataSource ds = (BasicDataSource)ctx.lookup("java:comp/env/jdbc/sched");
+	    	InitialContext ctx = new InitialContext();
+	    	BasicDataSource ds = (BasicDataSource)ctx.lookup(dbResource);
 	    	
-	    	BasicDataSource ds = new BasicDataSource();
-	    	ds.setDriverClassName("org.sqlite.JDBC");
-	    	// FIXME: use web.xml
-	    	ds.setUrl("jdbc:sqlite://Users/evg/Desktop/CMU/course-Java-phones/cmu-bus/webserver/dbs/sched.db");
 	    	_conn = ds.getConnection();
 	    	System.out.println("Successfully opened the database");
 	    	
@@ -39,6 +38,11 @@ public class DatabaseConnector {
 	        System.out.println("Sucessfully created statement");
 
 	        return true;
+	        
+		} catch (NamingException ne) {
+			// TODO Auto-generated catch block
+			ne.printStackTrace();
+	    	return false;
 	    } catch (SQLException se) {
 	    	se.printStackTrace();
 	    	// TODO: implement custom exception
