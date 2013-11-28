@@ -1,3 +1,15 @@
-"no more buses" does not work
-request is executed twice
+FIXME:
+"no more buses" does not work anymore :(
+every time request is somehow executed twice
+times after midnight will not be shown at e.g. 11.45 pm
 
+TODO:
+need to add help activity
+need to add configs on what to use: remote/local
+need a label to show the info source: remote/local
+need to switch from the font size -> appearance (medium/small/etc)
+need to refactor BaseEntities vs Entities classes
+move common package somewhere so that app and webserver can share it
+
+FEATURES:
+move filter on time logic to requests in order to shorten times

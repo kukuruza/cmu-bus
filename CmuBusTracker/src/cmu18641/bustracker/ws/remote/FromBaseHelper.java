@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.location.Location;
 import android.text.format.Time;
-import android.util.Log;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.common.entities.BaseScheduleItem;
 import cmu18641.bustracker.entities.Bus;
@@ -13,7 +12,7 @@ import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
 
 public class FromBaseHelper {
-	private final static String TAG = "FromBaseHelper";
+	//private final static String TAG = "FromBaseHelper";
 
 	static Schedule fromBase (BaseSchedule baseSchedule)
 	{
@@ -33,7 +32,6 @@ public class FromBaseHelper {
         // set ScheduleItem-s
 		ArrayList<ScheduleItem> itemList = new ArrayList<ScheduleItem>();
 		assert (baseSchedule.getScheduleItemList() != null);
-		Log.i (TAG, Integer.toString(baseSchedule.getScheduleItemList().size()));
 		for (BaseScheduleItem baseItem : baseSchedule.getScheduleItemList())
 		{
 		    ScheduleItem item = new ScheduleItem ();
