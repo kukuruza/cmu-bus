@@ -158,7 +158,22 @@ public class ViewSchedule extends Activity {
 			@Override
 			protected void onPostExecute(Void result) {
 				
-				if (schedule != null)
+				if (schedule == null)
+				{
+					int duration = Toast.LENGTH_SHORT;
+					String errorText = "Error. Failed to get schedule";
+					Toast toast = Toast.makeText(ViewSchedule.this, errorText, duration);
+					toast.show();
+				}
+				else if ( !schedule.getStop().getName().equals(_selectedStop.getName()))
+				{
+					Log.wtf (TAG, "sent and received stop names differ");
+					int duration = Toast.LENGTH_SHORT;
+					String errorText = "Internal error. Sorry";
+					Toast toast = Toast.makeText(ViewSchedule.this, errorText, duration);
+					toast.show();
+				}
+				else
 				{
 					_schedule = schedule;
 					_scheduleItemList = _schedule.getScheduleItemList(); 
@@ -193,14 +208,6 @@ public class ViewSchedule extends Activity {
 					    AlertDialog dialog = builder.create();
 					    dialog.show();
 					}
-				}
-				else
-				{
-					// show that the request failed
-					int duration = Toast.LENGTH_SHORT;
-					String errorText = "Error. Failed to get schedule";
-					Toast toast = Toast.makeText(ViewSchedule.this, errorText, duration);
-					toast.show();
 				}
             }
 		}

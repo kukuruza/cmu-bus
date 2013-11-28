@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import android.location.Location;
 import android.text.format.Time;
 import android.util.Log;
-import cmu18641.bustracker.common.*;
+import cmu18641.bustracker.common.entities.BaseSchedule;
+import cmu18641.bustracker.common.entities.BaseScheduleItem;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
@@ -18,32 +19,37 @@ public class FromBaseHelper {
 	{
 		Schedule schedule = new Schedule();
 
-		if (baseSchedule == null)
-		{
-			Log.e (TAG, "baseSchedule on input was null");
-			return null;
-		}
+		assert (baseSchedule != null);
 		
 		// set stop
 		Location loc = new Location ((String)null);
-		loc.setLatitude(baseSchedule.getStop().latitude);
-		loc.setLongitude(baseSchedule.getStop().longitude);
-		BaseStop baseStop = baseSchedule.getStop();
-		Stop stop = new Stop (baseStop.getName(), baseStop.street1, 
-				              baseStop.street2, loc );
+		loc.setLatitude(0);
+		loc.setLongitude(0);
+		String stopName = baseSchedule.getStop();
+		assert (stopName != null);
+		Stop stop = new Stop (stopName, "", "", loc );
 		schedule.setStop(stop);
 		
         // set ScheduleItem-s
 		ArrayList<ScheduleItem> itemList = new ArrayList<ScheduleItem>();
+		assert (baseSchedule.getScheduleItemList() != null);
+		Log.i (TAG, Integer.toString(baseSchedule.getScheduleItemList().size()));
 		for (BaseScheduleItem baseItem : baseSchedule.getScheduleItemList())
 		{
 		    ScheduleItem item = new ScheduleItem ();
 		    // set bus
-		    Bus bus = new Bus (item.getBus().getName(), item.getBus().getDirection());
+		    assert (baseItem.getBus() != null);
+		    Bus bus = new Bus (baseItem.getBus().getName(), baseItem.getBus().getDirection());
 		    item.setBus(bus);
 		    // set time
+		    int minutes = (int) baseItem.getTime();
 		    Time time = new Time();
-		    time.set(baseItem.getTime());
+		    time.setToNow();
+		    time.second = 0; 
+		    time.monthDay = 1; 
+		    time.month = 1;
+		    time.minute = minutes % 60;
+		    time.hour = minutes / 60;
 		    item.setTime(time);
 		    // insert item
 		    itemList.add(item);
@@ -52,5 +58,4 @@ public class FromBaseHelper {
 		
 	    return schedule;
 	}
-
 }

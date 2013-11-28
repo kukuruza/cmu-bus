@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import cmu18641.bustracker.common.BaseSchedule;
+import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.entities.*;
 import cmu18641.bustracker.exceptions.TrackerException;
 
@@ -70,7 +70,7 @@ public class RemoteQuery implements TimeQueryInterface {
 			// get answer from server
 			responseString = Networking.askServer (requestUrl);
 		} catch (RuntimeException e) {
-			Log.e (TAG, "RuntimeException in getSchedule");
+			Log.e (TAG, "RuntimeException in askServer");
 			throw new TrackerException (0, "RuntimeException in askServer", TAG);
 		}
 			
@@ -80,18 +80,16 @@ public class RemoteQuery implements TimeQueryInterface {
 			Gson gson = new Gson();
 			baseSchedule = gson.fromJson (responseString, BaseSchedule.class);
 			Log.i(TAG, "baseSchedule name is" + (baseSchedule.getStop() == null ? " null" : "fine"));
-			Log.i(TAG, responseString);
 		} catch (RuntimeException e) {
 			Log.e (TAG, "RuntimeException in parsing to Gson");
-			throw new TrackerException (0, "RuntimeException in getSchedule", TAG);
+			throw new TrackerException (0, "RuntimeException in parsing to Gson", TAG);
 		}
 		
 		Schedule schedule;
 		try {
 			schedule = FromBaseHelper.fromBase(baseSchedule);
-			schedule.log(TAG);
 		} catch (RuntimeException e) {
-			Log.e (TAG, "RuntimeException in getSchedule");
+			Log.e (TAG, "RuntimeException in FromBaseHelper");
 			throw new TrackerException (0, "RuntimeException in FromBaseHelper", TAG);
 		}
 

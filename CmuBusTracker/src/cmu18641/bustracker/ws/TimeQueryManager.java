@@ -14,6 +14,7 @@ import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.ws.local.LocalQuery;
+import cmu18641.bustracker.ws.remote.Networking;
 import cmu18641.bustracker.ws.remote.RemoteQuery;
 
 
@@ -32,8 +33,8 @@ public class TimeQueryManager {
 		
 		// get the raw schedule
 		Schedule schedule = null;
-//		if (Networking.isNetworkAvailable(context))
-//		{
+		if (Networking.isNetworkAvailable(context))
+		{
 		    RemoteQuery remoteQuery = new RemoteQuery();
 	    	schedule = remoteQuery.getSchedule (context, stop, buses);
 	    	if (schedule == null)
@@ -42,19 +43,17 @@ public class TimeQueryManager {
 	    		throw new TrackerException(0, "error", TAG);
 		    	// TODO: change null result to local query
 		    }
-//		}
-//		else
-//		{
-//			Log.i(TAG, "network is unavailble");
-//		
-//		    LocalQuery localQuery = new LocalQuery();
-//		    schedule = localQuery.getSchedule (context, stop, buses);
-//		}
+		}
+		else
+		{
+			Log.i(TAG, "network is unavailble");
+		
+		    LocalQuery localQuery = new LocalQuery();
+		    schedule = localQuery.getSchedule (context, stop, buses);
+		}
 		    
 		ArrayList<ScheduleItem> scheduleItems = schedule.getScheduleItemList();
-		    
-		   
-		
+
 		
 		// get current time
 		Time currentTime = new Time();

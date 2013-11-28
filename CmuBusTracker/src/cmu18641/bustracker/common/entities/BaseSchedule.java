@@ -1,32 +1,33 @@
-package cmu18641.bustracker.common;
+package cmu18641.bustracker.common.entities;
 
 import java.util.ArrayList;
 
+
 public class BaseSchedule {
 
-	private BaseStop _stop; 
+	private String _stopName; 
 	private ArrayList<BaseScheduleItem> _scheduleItem; 
 	
 	public BaseSchedule() { 
-		_stop = null; 
+		_stopName = null; 
 		_scheduleItem = new ArrayList<BaseScheduleItem>(); 
 	}
 	
-	public BaseSchedule(BaseStop stop, ArrayList<BaseScheduleItem> scheduleItem) { 
-		_stop = stop; 
-		_scheduleItem = scheduleItem; 
+	public void setStop (String stopName) { 
+		_stopName = stopName; 
 	}
 	
-	public void setStop(BaseStop stop) { 
-		_stop = stop; 
+	public BaseSchedule(String stopName, ArrayList<BaseScheduleItem> scheduleItem) { 
+		_stopName = stopName; 
+		_scheduleItem = scheduleItem; 
 	}
 	
 	public void setScheduleItem(ArrayList<BaseScheduleItem> scheduleItem) { 
 		_scheduleItem = scheduleItem;
 	}
 	
-	public BaseStop getStop() { 
-		return _stop; 
+	public String getStop() { 
+		return _stopName; 
 	}
 	
 	public ArrayList<BaseScheduleItem> getScheduleItemList() { 
