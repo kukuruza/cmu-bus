@@ -43,26 +43,23 @@ public class ViewSchedule extends Activity {
 	private ScheduleAdapter _scheduleAdapter; 
 	private ArrayList<ScheduleItem> _scheduleItemList;
 	
-	private TextView stopNameTextView; 
-	private TextView stopDistanceTextView;
-	private TextView stopWalkingDistanceTextView;
+	// went to local vars. Evgeny
+	//private TextView stopNameTextView; 
+	//private TextView stopDistanceTextView;
+	//private TextView stopWalkingDistanceTextView;
 	
-	private GestureDetector gestureDetector;
-    private OnTouchListener gestureListener;
+	private GestureDetector _gestureDetector;
+    private OnTouchListener _gestureListener;
     
-    private ShakeDetector shakeDetector;
-    private SensorManager sensorManager;
-    private Sensor accelerometer;
+    private ShakeDetector _shakeDetector;
+    private SensorManager _sensorManager;
+    private Sensor _accelerometer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_schedule);
 		Log.d("ViewScheduleActivity", "OnCreate()");
-		
-		stopNameTextView = (TextView) findViewById(R.id.viewschedule_stopNameTextView);
-		stopDistanceTextView = (TextView) findViewById(R.id.viewschedule_distanceTextView);
-		stopWalkingDistanceTextView = (TextView) findViewById(R.id.viewschedule_walkingDistanceTextView);
 		
 		Bundle data = getIntent().getExtras(); 
 		if(data != null) { 
@@ -72,25 +69,34 @@ public class ViewSchedule extends Activity {
 		}
 		else { 
 			// if bundle is null, return to previous activity
+			// TODO: Is it a will-never-happen case? If so, should be assertion
 			finish(); 
 		}
 		
-		fetchListViewData(); 
-		
+		// set header textViews
+		TextView stopNameTextView = (TextView) findViewById(R.id.viewschedule_stopNameTextView);
+		TextView stopDistanceTextView = (TextView) findViewById(R.id.viewschedule_distanceTextView);
+		TextView stopWalkingDistanceTextView = (TextView) findViewById(R.id.viewschedule_walkingDistanceTextView);
+		stopNameTextView.setText(_selectedStop.getName()); 
+		stopDistanceTextView.setText(_selectedStop.getDistanceString() + " miles");            
+		stopWalkingDistanceTextView.setText(_selectedStop.getWalkingTimeString() + " minutes"); 
 		
 		// listen for gestures
-        gestureDetector = new GestureDetector(this, new SwipeDetector(this));
-        gestureListener = new OnTouchListener() {
+        _gestureDetector = new GestureDetector(this, new SwipeDetector(this));
+        _gestureListener = new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
+                return _gestureDetector.onTouchEvent(event);
             }
         };
 		
         // listen for shakes
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        shakeDetector = new ShakeDetector(shakeListener, this); 
+        _sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        _accelerometer = _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        _shakeDetector = new ShakeDetector(shakeListener, this); 
+        
+		// get and display schedule
+		fetchListViewData(); 
 	}
 	
 	
@@ -113,7 +119,7 @@ public class ViewSchedule extends Activity {
 		super.onResume();
 		
 		// register shake listener
-		sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+		_sensorManager.registerListener(_shakeDetector, _accelerometer, SensorManager.SENSOR_DELAY_UI);
 		
 		// update listview
 		fetchListViewData();  
@@ -124,7 +130,7 @@ public class ViewSchedule extends Activity {
 	// unregister shake listener
 	@Override
     protected void onPause() {
-        sensorManager.unregisterListener(shakeDetector); 
+        _sensorManager.unregisterListener(_shakeDetector); 
         super.onPause();
     }   
 	
@@ -134,12 +140,12 @@ public class ViewSchedule extends Activity {
 		class ExecuteTimeQuery extends AsyncTask<Void, Void, Void> {
 			
 			Schedule schedule;
-			
+
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
 					TimeQueryManager timeQueryManager = new TimeQueryManager();
-					schedule = timeQueryManager.getSchedule(getApplicationContext(), _selectedStop, _selectedBuses); 
+					schedule = timeQueryManager.getSchedule(getBaseContext(), _selectedStop, _selectedBuses); 
 				} catch (TrackerException e) {
 					// log and recover
 					e.printStackTrace();
@@ -158,20 +164,15 @@ public class ViewSchedule extends Activity {
 					_scheduleAdapter.notifyDataSetChanged();
 				}
 							
-				// reset header textViews
-				stopNameTextView.setText(_selectedStop.getName()); 
-				stopDistanceTextView.setText(_selectedStop.getDistanceString() + " miles");            
-				stopWalkingDistanceTextView.setText(_selectedStop.getWalkingTimeString() + " minutes"); 
-
 				if(!_scheduleItemList.isEmpty()) { 
 					
 					// schedule adapter is used to map the scheduleitems to the listview
-					_scheduleAdapter = new ScheduleAdapter(getApplicationContext(), R.layout.activity_select_station_and_bus, _scheduleItemList);
+					_scheduleAdapter = new ScheduleAdapter(getBaseContext(), R.layout.activity_select_station_and_bus, _scheduleItemList);
 						
 					// bind adapter and listener
 					ListView timeListView = (ListView) findViewById(R.id.scheduleListView);
 					timeListView.setAdapter(_scheduleAdapter);
-					timeListView.setOnTouchListener(gestureListener);  
+					timeListView.setOnTouchListener(_gestureListener);  
 				}
 				else { 
 					Builder builder = new AlertDialog.Builder(ViewSchedule.this);
