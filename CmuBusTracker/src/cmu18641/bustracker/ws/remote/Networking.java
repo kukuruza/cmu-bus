@@ -8,6 +8,9 @@ import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import cmu18641.bustracker.exceptions.TrackerException;
 
@@ -18,6 +21,14 @@ import android.util.Log;
  
 public class Networking {
 	private static final String TAG = "Networking"; 
+	
+	// Set the timeout in milliseconds until a connection is established.
+	// The default value is zero, that means the timeout is not used. 
+	private final static int TimeoutConnection = 3000;
+	// Set the default socket timeout (SO_TIMEOUT) 
+	// in milliseconds which is the timeout for waiting for data.
+	private final static int TimeoutSocket = 5000;
+
 
 	public static boolean isNetworkAvailable (Context context) {
 	    ConnectivityManager cm = (ConnectivityManager) 
@@ -33,8 +44,12 @@ public class Networking {
 	public static String askServer (String urlString) throws TrackerException
 	{
     	HttpGet get = new HttpGet (urlString);
+    	HttpParams httpParameters = new BasicHttpParams();
+    	HttpConnectionParams.setConnectionTimeout(httpParameters, TimeoutConnection);
+    	HttpConnectionParams.setSoTimeout(httpParameters, TimeoutSocket);
 
-	    HttpClient client = new DefaultHttpClient();
+
+	    HttpClient client = new DefaultHttpClient (httpParameters);
 	    HttpResponse response = null;
 	    try {
 			Log.d (TAG, "start client.execute");

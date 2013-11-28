@@ -5,11 +5,10 @@ import cmu18641.bustracker.R;
 import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.ScheduleAdapter;
 import cmu18641.bustracker.entities.Bus;
+import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
-import cmu18641.bustracker.exceptions.TrackerException;
-import cmu18641.bustracker.ws.TimeQueryManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -36,18 +35,13 @@ import android.widget.Toast;
  */
 
 public class ViewSchedule extends Activity {
-	private final String TAG = "ViewSchedule";
+	private final static String TAG = "ViewSchedule";
 
 	private Schedule _schedule; 
 	private Stop _selectedStop; 
 	private ArrayList<Bus> _selectedBuses; 
 	private ScheduleAdapter _scheduleAdapter; 
 	private ArrayList<ScheduleItem> _scheduleItemList;
-	
-	// went to local vars. Evgeny
-	//private TextView stopNameTextView; 
-	//private TextView stopDistanceTextView;
-	//private TextView stopWalkingDistanceTextView;
 	
 	private GestureDetector _gestureDetector;
     private OnTouchListener _gestureListener;
@@ -70,14 +64,13 @@ public class ViewSchedule extends Activity {
 		}
 		else { 
 			// if bundle is null, return to previous activity
-			// TODO: Is it a will-never-happen case? If so, should be assertion
 			finish(); 
 		}
 		
 		// set header textViews
-		TextView stopNameTextView = (TextView) findViewById(R.id.viewschedule_stopNameTextView);
-		TextView stopDistanceTextView = (TextView) findViewById(R.id.viewschedule_distanceTextView);
-		TextView stopWalkingDistanceTextView = (TextView) findViewById(R.id.viewschedule_walkingDistanceTextView);
+		TextView  stopNameTextView = (TextView) findViewById(R.id.viewschedule_stopNameTextView);
+		TextView  stopDistanceTextView = (TextView) findViewById(R.id.viewschedule_distanceTextView);
+		TextView  stopWalkingDistanceTextView = (TextView) findViewById(R.id.viewschedule_walkingDistanceTextView);
 		stopNameTextView.setText(_selectedStop.getName()); 
 		stopDistanceTextView.setText(_selectedStop.getDistanceString() + " miles");            
 		stopWalkingDistanceTextView.setText(_selectedStop.getWalkingTimeString() + " minutes"); 
@@ -125,7 +118,7 @@ public class ViewSchedule extends Activity {
 		// update listview
 		fetchListViewData();  
 		
-		Log.d("ViewScheduleActivity", "onResume()");
+		Log.d (TAG, "onResume()");
 	}
 	
 	// unregister shake listener
@@ -139,18 +132,10 @@ public class ViewSchedule extends Activity {
 	private void fetchListViewData()
 	{
 		class ExecuteTimeQuery extends AsyncTask<Void, Void, Void> {
-			
-			Schedule schedule;
 
 			@Override
 			protected Void doInBackground(Void... params) {
-				try {
-					TimeQueryManager timeQueryManager = new TimeQueryManager();
-					schedule = timeQueryManager.getSchedule(getBaseContext(), _selectedStop, _selectedBuses); 
-				} catch (TrackerException e) {
-					Log.e (TAG, "Could not get a schedule");
-					schedule = null;
-				}
+				_schedule = Connector.globalManager.getSchedule(getBaseContext(), _selectedStop, _selectedBuses); 
 				return null;
 			}
 			
@@ -158,24 +143,15 @@ public class ViewSchedule extends Activity {
 			@Override
 			protected void onPostExecute(Void result) {
 				
-				if (schedule == null)
+				if (_schedule == null)
 				{
 					int duration = Toast.LENGTH_SHORT;
 					String errorText = "Error. Failed to get schedule";
 					Toast toast = Toast.makeText(ViewSchedule.this, errorText, duration);
 					toast.show();
 				}
-				else if ( !schedule.getStop().getName().equals(_selectedStop.getName()))
-				{
-					Log.wtf (TAG, "sent and received stop names differ");
-					int duration = Toast.LENGTH_SHORT;
-					String errorText = "Internal error. Sorry";
-					Toast toast = Toast.makeText(ViewSchedule.this, errorText, duration);
-					toast.show();
-				}
 				else
 				{
-					_schedule = schedule;
 					_scheduleItemList = _schedule.getScheduleItemList(); 
 					
 					if (_scheduleAdapter != null) { 

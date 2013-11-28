@@ -76,4 +76,8 @@ public class GlobalManager {
 		
 		return userLocation; 
 	}
+	
+	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) {
+		return timeQueryManager.getSchedule (context, stop, buses);
+	}
 }

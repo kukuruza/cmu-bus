@@ -27,33 +27,41 @@ public class TimeQueryManager {
 
 	public final int numOut = 15; // number of schedule results to display 
 	
-	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses)
-			throws TrackerException {
-		// TODO: maybe remove TrackerException from here?
+	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) {
 		
 		// get the raw schedule
 		Schedule schedule = null;
 		if (Networking.isNetworkAvailable(context))
 		{
 		    RemoteQuery remoteQuery = new RemoteQuery();
-	    	schedule = remoteQuery.getSchedule (context, stop, buses);
-	    	if (schedule == null)
-	    	{
+	    	try {
+				schedule = remoteQuery.getSchedule (context, stop, buses);
+			} catch (TrackerException e) {
 		    	Log.e (TAG, "remote query failed");
-	    		throw new TrackerException(0, "error", TAG);
-		    	// TODO: change null result to local query
-		    }
+		    	return null;
+			}
 		}
 		else
 		{
 			Log.i(TAG, "network is unavailble");
 		
 		    LocalQuery localQuery = new LocalQuery();
-		    schedule = localQuery.getSchedule (context, stop, buses);
+		    try {
+				schedule = localQuery.getSchedule (context, stop, buses);
+			} catch (TrackerException e) {
+		    	Log.e (TAG, "local query failed");
+		    	return null;
+			}
 		}
-		    
-		ArrayList<ScheduleItem> scheduleItems = schedule.getScheduleItemList();
 
+		if ( !schedule.getStop().getName().equals(stop.getName()))
+		{
+			Log.wtf (TAG, "sent and received stop names differ");
+			return null;
+		}
+
+		
+		ArrayList<ScheduleItem> scheduleItems = schedule.getScheduleItemList();
 		
 		// get current time
 		Time currentTime = new Time();
