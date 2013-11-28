@@ -14,8 +14,10 @@ import cmu18641.bustracker.exceptions.TrackerException;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
  
 public class Networking {
+	private static final String TAG = "Networking"; 
 
 	public static boolean isNetworkAvailable (Context context) {
 	    ConnectivityManager cm = (ConnectivityManager) 
@@ -35,23 +37,29 @@ public class Networking {
 	    HttpClient client = new DefaultHttpClient();
 	    HttpResponse response = null;
 	    try {
+			Log.d (TAG, "start client.execute");
 			response = client.execute(get);
 		} catch (ClientProtocolException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
+			Log.e (TAG, "got ClientProtocolException");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
                      "ClientProtocolException sending request");
 		} catch (IOException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
+			Log.e (TAG, "got IOException executing request");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
                      "IOException sending request");
 		}
 	    
 	    String responseString = null;
 		try {
+			Log.d (TAG, "start handleResponse");
 			responseString = new BasicResponseHandler().handleResponse(response);
 		} catch (HttpResponseException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
+			Log.e (TAG, "got HttpResponseException");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
                     "HttpResponseException extracting response body");
 		} catch (IOException e) {
-			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, "Networking.askServer", 
+			Log.e (TAG, "got IOException parsing http response");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
                     "IOException extracting response body");
 		}
 	    return responseString;

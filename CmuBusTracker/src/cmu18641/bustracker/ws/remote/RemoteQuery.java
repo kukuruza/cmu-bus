@@ -33,17 +33,17 @@ public class RemoteQuery implements TimeQueryInterface {
 //	    int i = 0;
 //	    for (Bus bus : buses)
 //	    {
-//	    	params.add(new BasicNameValuePair("bus[]", 
+//	    	params.add(new BasicNameValuePair("bus", 
 //	    			Integer.toString(i) + "_" + bus.getName()));
-//	    	params.add(new BasicNameValuePair("direction[]", 
+//	    	params.add(new BasicNameValuePair("dir", 
 //	    			Integer.toString(i) + "_" + bus.getDirection()));
 //	    	++i;
 //	    }
 	    
 	    for (Bus bus : buses)
 	    {
-	    	params.add(new BasicNameValuePair("bus[]", bus.getName()));
-            params.add(new BasicNameValuePair("direction[]", bus.getDirection()));
+	    	params.add(new BasicNameValuePair("bus", bus.getName()));
+            params.add(new BasicNameValuePair("dir", bus.getDirection()));
         }
 	    
 
@@ -59,21 +59,42 @@ public class RemoteQuery implements TimeQueryInterface {
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) 
 			throws TrackerException
 	{
-		// TODO: to be moved to configs
-		String url = "http://localhost:8080/webserver/querymock";
+		String responseString;
+		try {
+			// TODO: to be moved to configs
+			String url = "http://10.0.2.2:8080/webserver/query";
+			
+			// compose a request
+			String requestUrl = formRequestString (url, stop, buses);
+			
+			// get answer from server
+			responseString = Networking.askServer (requestUrl);
+		} catch (RuntimeException e) {
+			Log.e (TAG, "RuntimeException in getSchedule");
+			throw new TrackerException (0, "RuntimeException in askServer", TAG);
+		}
+			
+		BaseSchedule baseSchedule;
+		try {
+			// parse json string into TimesMessage object
+			Gson gson = new Gson();
+			baseSchedule = gson.fromJson (responseString, BaseSchedule.class);
+			Log.i(TAG, "baseSchedule name is" + (baseSchedule.getStop() == null ? " null" : "fine"));
+			Log.i(TAG, responseString);
+		} catch (RuntimeException e) {
+			Log.e (TAG, "RuntimeException in parsing to Gson");
+			throw new TrackerException (0, "RuntimeException in getSchedule", TAG);
+		}
 		
-		// compose a request
-		String requestUrl = formRequestString (url, stop, buses);
-		
-		// get answer from server
-		String responseString = Networking.askServer (requestUrl);
-		
-		// parse json string into TimesMessage object
-		Gson gson = new Gson();
-		BaseSchedule baseSchedule = gson.fromJson (responseString, BaseSchedule.class); 
-		
-		Schedule schedule = FromBaseHelper.fromBase(baseSchedule);
-		schedule.log(TAG);
+		Schedule schedule;
+		try {
+			schedule = FromBaseHelper.fromBase(baseSchedule);
+			schedule.log(TAG);
+		} catch (RuntimeException e) {
+			Log.e (TAG, "RuntimeException in getSchedule");
+			throw new TrackerException (0, "RuntimeException in FromBaseHelper", TAG);
+		}
+
 		return schedule;
 	}
 }

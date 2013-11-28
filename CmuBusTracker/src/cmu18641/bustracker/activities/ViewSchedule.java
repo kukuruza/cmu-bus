@@ -148,7 +148,7 @@ public class ViewSchedule extends Activity {
 					TimeQueryManager timeQueryManager = new TimeQueryManager();
 					schedule = timeQueryManager.getSchedule(getBaseContext(), _selectedStop, _selectedBuses); 
 				} catch (TrackerException e) {
-					Log.e (TAG, "Could not get a scheduel from anywhere");
+					Log.e (TAG, "Could not get a schedule");
 					schedule = null;
 				}
 				return null;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.location.Location;
 import android.text.format.Time;
+import android.util.Log;
 import cmu18641.bustracker.common.*;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
@@ -11,11 +12,18 @@ import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
 
 public class FromBaseHelper {
+	private final static String TAG = "FromBaseHelper";
 
 	static Schedule fromBase (BaseSchedule baseSchedule)
 	{
 		Schedule schedule = new Schedule();
 
+		if (baseSchedule == null)
+		{
+			Log.e (TAG, "baseSchedule on input was null");
+			return null;
+		}
+		
 		// set stop
 		Location loc = new Location ((String)null);
 		loc.setLatitude(baseSchedule.getStop().latitude);
