@@ -1,6 +1,10 @@
 package cmu18641.bustracker.ws.remote;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -41,9 +45,9 @@ public class Networking {
         return false;
     } 
 	
-	public static String askServer (String urlString) throws TrackerException
+	public static String askServer (String serverUrlString) throws TrackerException
 	{
-    	HttpGet get = new HttpGet (urlString);
+    	HttpGet get = new HttpGet (serverUrlString);
     	HttpParams httpParameters = new BasicHttpParams();
     	HttpConnectionParams.setConnectionTimeout(httpParameters, TimeoutConnection);
     	HttpConnectionParams.setSoTimeout(httpParameters, TimeoutSocket);
@@ -78,6 +82,60 @@ public class Networking {
                     "IOException extracting response body");
 		}
 	    return responseString;
+	}
+	
+	
+	public static void requestFile (String serverUrlString, String fileSavePath) 
+			throws TrackerException
+	{
+    	HttpGet get = new HttpGet (serverUrlString);
+    	HttpParams httpParameters = new BasicHttpParams();
+    	HttpConnectionParams.setConnectionTimeout(httpParameters, TimeoutConnection);
+    	HttpConnectionParams.setSoTimeout(httpParameters, TimeoutSocket);
+
+
+	    HttpClient client = new DefaultHttpClient (httpParameters);
+	    HttpResponse response = null;
+	    try {
+			Log.d (TAG, "start client.execute");
+			response = client.execute(get);
+		} catch (ClientProtocolException e) {
+			Log.e (TAG, "got ClientProtocolException");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
+                     "ClientProtocolException sending request");
+		} catch (IOException e) {
+			Log.e (TAG, "got IOException executing request");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
+                     "IOException sending request");
+		}
+	    
+        InputStream input = null;
+        OutputStream output = null;
+        byte[] buffer = new byte[1024];
+
+        try {
+			Log.d (TAG, "start handleResponse");
+			
+            Log.i (TAG, "Downloading file...");
+            input = response.getEntity().getContent();
+            output = new FileOutputStream (fileSavePath);
+            for (int length; (length = input.read(buffer)) > 0;) {
+                output.write(buffer, 0, length);
+            }
+            Log.i (TAG, "File successfully downloaded!");
+
+		} catch (HttpResponseException e) {
+			Log.e (TAG, "got HttpResponseException");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
+                    "HttpResponseException extracting response body");
+		} catch (IOException e) {
+			Log.e (TAG, "got IOException parsing http response");
+			throw new TrackerException (TrackerException.BAD_REMOTE_RESULT, TAG, 
+                    "IOException extracting response body");
+		} finally {
+            if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
+            if (input != null) try { input.close(); } catch (IOException logOrIgnore) {}
+        }
 	}
 
 }
