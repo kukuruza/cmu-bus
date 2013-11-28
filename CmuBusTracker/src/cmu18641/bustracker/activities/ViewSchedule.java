@@ -36,6 +36,7 @@ import android.widget.Toast;
  */
 
 public class ViewSchedule extends Activity {
+	private final String TAG = "ViewSchedule";
 
 	private Schedule _schedule; 
 	private Stop _selectedStop; 
@@ -147,49 +148,61 @@ public class ViewSchedule extends Activity {
 					TimeQueryManager timeQueryManager = new TimeQueryManager();
 					schedule = timeQueryManager.getSchedule(getBaseContext(), _selectedStop, _selectedBuses); 
 				} catch (TrackerException e) {
-					// log and recover
-					e.printStackTrace();
+					Log.e (TAG, "Could not get a scheduel from anywhere");
+					schedule = null;
 				}
 				return null;
 			}
 			
+			// this method will populate the view or show an error
 			@Override
 			protected void onPostExecute(Void result) {
-				_schedule = schedule;
-				_scheduleItemList = _schedule.getScheduleItemList(); 
 				
-				if(_scheduleAdapter != null) { 
-					_scheduleAdapter.clear(); 
-					_scheduleAdapter.addAll(_scheduleItemList); 
-					_scheduleAdapter.notifyDataSetChanged();
-				}
-							
-				if(!_scheduleItemList.isEmpty()) { 
+				if (schedule != null)
+				{
+					_schedule = schedule;
+					_scheduleItemList = _schedule.getScheduleItemList(); 
 					
-					// schedule adapter is used to map the scheduleitems to the listview
-					_scheduleAdapter = new ScheduleAdapter(getBaseContext(), R.layout.activity_select_station_and_bus, _scheduleItemList);
+					if (_scheduleAdapter != null) { 
+						_scheduleAdapter.clear(); 
+						_scheduleAdapter.addAll(_scheduleItemList); 
+						_scheduleAdapter.notifyDataSetChanged();
+					}
+								
+					if (!_scheduleItemList.isEmpty()) { 
 						
-					// bind adapter and listener
-					ListView timeListView = (ListView) findViewById(R.id.scheduleListView);
-					timeListView.setAdapter(_scheduleAdapter);
-					timeListView.setOnTouchListener(_gestureListener);  
+						// schedule adapter is used to map the scheduleitems to the listview
+						_scheduleAdapter = new ScheduleAdapter(getBaseContext(), R.layout.activity_select_station_and_bus, _scheduleItemList);
+							
+						// bind adapter and listener
+						ListView timeListView = (ListView) findViewById(R.id.scheduleListView);
+						timeListView.setAdapter(_scheduleAdapter);
+						timeListView.setOnTouchListener(_gestureListener);  
+					}
+					else { 
+						Builder builder = new AlertDialog.Builder (ViewSchedule.this);
+					    builder.setMessage("Sorry, no more buses for this stop are coming today. :(");
+					    builder.setCancelable(false); 
+					    builder.setPositiveButton(R.string.search_again,
+					            new DialogInterface.OnClickListener() {
+					        public void onClick(DialogInterface dialog, int id) {
+					            finish(); 
+					        }
+					    });
+					    
+					    AlertDialog dialog = builder.create();
+					    dialog.show();
+					}
 				}
-				else { 
-					Builder builder = new AlertDialog.Builder(ViewSchedule.this);
-				    builder.setMessage("Sorry, no more buses for this stop are coming today. :(");
-				    builder.setCancelable(false); 
-				    builder.setPositiveButton(R.string.search_again,
-				            new DialogInterface.OnClickListener() {
-				        public void onClick(DialogInterface dialog, int id) {
-				            finish(); 
-				        }
-				    });
-				    
-				    AlertDialog dialog = builder.create();
-				    dialog.show();
+				else
+				{
+					// show that the request failed
+					int duration = Toast.LENGTH_SHORT;
+					String errorText = "Error. Failed to get schedule";
+					Toast toast = Toast.makeText(ViewSchedule.this, errorText, duration);
+					toast.show();
 				}
-		        
-}
+            }
 		}
 		
 		ExecuteTimeQuery exec = new ExecuteTimeQuery();
