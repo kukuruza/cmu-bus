@@ -23,7 +23,7 @@
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/checkBox"
         android:text="@string/example_bus_name"
-        android:textSize="25sp" />
+        android:textAppearance="@android:style/TextAppearance.Large" />
 
     <TextView
         android:id="@+id/busdirection"
