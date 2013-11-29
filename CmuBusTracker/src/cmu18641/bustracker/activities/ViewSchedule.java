@@ -21,6 +21,9 @@ import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -191,4 +194,24 @@ public class ViewSchedule extends Activity {
 		ExecuteTimeQuery exec = new ExecuteTimeQuery();
 		exec.execute();
 	}
+	
+	// create the Activity's menu from a menu resource XML file
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.help_menu, menu);
+		return true;
+	}
+
+	// handle choice from options menu
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		String message = new String("Here you go! A list of the arrival times for the buses you " + 
+				"selected.  Wrong bus?  Swipe back and search again."); 
+
+		new SimpleDialogBuilderHelper(ViewSchedule.this, message, "Ok"); 
+		return super.onOptionsItemSelected(item);
+	} 	
 }

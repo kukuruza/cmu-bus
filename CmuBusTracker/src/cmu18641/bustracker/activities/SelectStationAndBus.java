@@ -10,13 +10,13 @@ import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Menu; 
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -63,8 +63,8 @@ public class SelectStationAndBus extends Activity {
 				Log.d("SelectStationAndBusActivity", "Querying to find default station");
 				selectedStop = Connector.globalManager.getStopsByCurrentLocation(SelectStationAndBus.this).get(0); 
 			} catch(TrackerException te) { 
-				// log and recover
-				te.printStackTrace(); 
+				new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Please restart the app", "Ok");	
+				Log.e("SelectStationAndBusActivity", "exception", te);
 			}
 		}
 		
@@ -75,8 +75,8 @@ public class SelectStationAndBus extends Activity {
 		try { 
 			busList = Connector.globalManager.getBusesByStop(SelectStationAndBus.this, selectedStop); 
 		} catch(TrackerException te) { 
-			// log and recover
-			te.printStackTrace();
+			new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Please restart the app", "Ok");	
+			Log.e("SelectStationAndBusActivity", "exception", te); 
 		}
 		
 		// bus adapter maps buses to the listview
@@ -110,23 +110,10 @@ public class SelectStationAndBus extends Activity {
 				SelectStationAndBus.this.startActivity(showSchedule);
 			}
 			else { 
-				Builder builder = new AlertDialog.Builder(SelectStationAndBus.this);
-			    builder.setMessage("Select a bus to continue");
-			    builder.setCancelable(true); 
-			    builder.setPositiveButton(android.R.string.ok,
-			            new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int id) {
-			            dialog.cancel();
-			        }
-			    });
-			    
-			    AlertDialog dialog = builder.create();
-			    dialog.show();
+				new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Select a bus to continue", "Ok");	
 			}
 			
-			Log.d("SelectStationAndBusActivity - findNextBusButtonClicked", "OnClick()");
-			
-			
+			Log.d("SelectStationAndBusActivity - findNextBusButtonClicked", "OnClick()");	
 		}
 				
 	};
@@ -139,8 +126,7 @@ public class SelectStationAndBus extends Activity {
 			Intent showLocateStation = new Intent(SelectStationAndBus.this, LocateStation.class);
 			SelectStationAndBus.this.startActivity(showLocateStation);
 			Log.d("SelectStationAndBusActivity - findStationButtonClicked", "OnClick()");
-		}
-					
+		}					
 	};
 			
 	
@@ -166,10 +152,28 @@ public class SelectStationAndBus extends Activity {
 			}
 			
 			Log.d("SelectStationAndBusActivity", busSelections.toString()); 
-
-		}
-		   
+		}	   
 	}; 
+	
+	// create the Activity's menu from a menu resource XML file
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.help_menu, menu);
+	    return true;
+	}
+	   
+	// handle choice from options menu
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 
-
+		String message = new String("Welcome to the bus tracker app!  You can change the selected " + 
+					"station by clicking on the station name, and select your bus by tapping on the " + 
+					"bus names.  Just hit \"find next bus\" when you're ready to get the schedule." ); 
+					
+		new SimpleDialogBuilderHelper(SelectStationAndBus.this, message, "Ok"); 
+		return super.onOptionsItemSelected(item);
+	} 
+	
 }

@@ -14,6 +14,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -58,8 +61,8 @@ public class SearchStation extends Activity {
 		try { 
 			stationList = Connector.globalManager.getStopByAddress(SearchStation.this, addressSearchQuery);
 		} catch (TrackerException te) { 
-			// log and recover
-			te.printStackTrace();
+			new SimpleDialogBuilderHelper(SearchStation.this, "Please restart the app", "Ok");	
+   	  		Log.e("SearchStation", "exception", te);
 		}
 		
 		// listen for gestures
@@ -108,5 +111,25 @@ public class SearchStation extends Activity {
 		}
 		   
 	};
+	
+	// create the Activity's menu from a menu resource XML file
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.help_menu, menu);
+		return true;
+	}
+
+	// handle choice from options menu
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		String message = new String("Select a new station by tapping on one from the list, or if " + 
+				"you don't see the one you want, go back and search again"); 
+
+		new SimpleDialogBuilderHelper(SearchStation.this, message, "Ok"); 
+		return super.onOptionsItemSelected(item);
+	} 	
 
 }
