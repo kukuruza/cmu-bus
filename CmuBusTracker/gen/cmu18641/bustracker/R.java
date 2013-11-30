@@ -49,19 +49,21 @@ public final class R {
         public static final int walkingdistance=0x7f090014;
     }
     public static final class layout {
-        public static final int activity_locate_station=0x7f030000;
-        public static final int activity_search_station=0x7f030001;
-        public static final int activity_select_station_and_bus=0x7f030002;
-        public static final int activity_view_schedule=0x7f030003;
-        public static final int bus_list_item=0x7f030004;
-        public static final int schedule_list_item=0x7f030005;
-        public static final int stop_list_item=0x7f030006;
+        public static final int activity_help=0x7f030000;
+        public static final int activity_locate_station=0x7f030001;
+        public static final int activity_search_station=0x7f030002;
+        public static final int activity_select_station_and_bus=0x7f030003;
+        public static final int activity_view_schedule=0x7f030004;
+        public static final int bus_list_item=0x7f030005;
+        public static final int schedule_list_item=0x7f030006;
+        public static final int stop_list_item=0x7f030007;
     }
     public static final class menu {
-        public static final int locate_station=0x7f080000;
-        public static final int search_station=0x7f080001;
-        public static final int select_station_and_bus=0x7f080002;
-        public static final int view_schedule=0x7f080003;
+        public static final int help=0x7f080000;
+        public static final int locate_station=0x7f080001;
+        public static final int search_station=0x7f080002;
+        public static final int select_station_and_bus=0x7f080003;
+        public static final int view_schedule=0x7f080004;
     }
     public static final class raw {
         public static final int shake=0x7f040000;

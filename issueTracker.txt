@@ -1,5 +1,5 @@
 FIXME:
-"no more buses" does not work anymore :(
+"no more buses" didn't work yesterday. Today it works
 every time request is somehow executed twice
 times after midnight will not be shown at e.g. 11.45 pm
 

@@ -1,19 +1,29 @@
-stop_id,name,street1,street2,latitude,longitude
-1,Downtown - 5TH AVE & WOOD ST,Fifth,Wood,40.440488,-79.999637
-2,Uptown - 5TH AVE & ROSS ST,Fifth,Ross,40.438998,-79.995372
-3,Oakland - FORBES AVE & ATWOOD ST,Forbes,Atwood,40.440942,-79.957751
-4,Oakland - FORBES AVE OPP CRAIG ST,Forbes,Craig,40.444408,-79.948733
-5,Squirrel Hill - FORBES AVE & MURRAY AVE,Forbes,Murray,40.43812,-79.923601
-6,Squirrel Hill - FORBES AVE & SHADY AVE,Forbes,Shady,40.438031,-79.919455
-7,Wilkinsburg - FORBES AVE & EAST END AVE,Forbes,East End,40.439627,-79.89658
-8,Wilkinsburg - ROWLAND CONNECTOR & PENNWOOD,Rowland,Pennwood,40.440517,-79.886946
-9,Wilkinsburg - SWISSVALE AVE & COAL,Swissvale,Coal,40.434774,-79.882872
-10,Swissvale - NOBLE ST & WASHINGTON ST,Noble,Washington,40.421193,-79.886117
-11,Swissvale - WOODSTOCK AVE & SWISSVALE STATION STEPS,Woodstock,Swissvale,40.41571,-79.878685
-12,Braddock - LIBRARY ST & BRADDOCK AVE FS,Library,Braddock,40.401299,-79.865617
-13,Wilkinsburg - COAL ST & WALNUT FS,Coal,Walnut,40.436369,-79.882419
-14,Wilkinsburg - KELLY AVE & PITT ST,Kelly,Pitt,40.440454,-79.889701
-15,Wilkinsburg - FORBES AVE & BRADDOCK FS,Forbes,Braddock,40.439739,-79.897543
-16,Squirrel Hill - FORBES AVE BTW DENNISTON & SHADY,Forbes,Shady,40.438057,-79.918931
-17,Oakland - 5TH AVE OPP ATWOOD ST,Fifth,Atwood,40.441819,-79.958507
-18,Uptown - 6TH AVE & 5TH AVE FS,Sixth,Fifth,40.43926,-79.994616
+stopid,stopname,stopstreet1,stopstreet2,stopgpslat,stopgpslong,
+1,Fifth Ave at Wood St,Fifth,Wood,40.440488,-79.999637,
+2,Fifth Ave at Ross St,Fifth,Ross,40.438998,-79.995372,
+3,Forbes Ave at Atwood St,Forbes,Atwood,40.440942,-79.957751,
+4,Forbes Ave opposite Craig St,Forbes,Craig,40.444408,-79.948733,
+5,Forbes Ave at Murray St,Forbes,Murray,40.43812,-79.923601,
+6,Forbes Ave at Shady St,Forbes,Shady,40.438031,-79.919455,
+7,Forbes Ave at East End,Forbes,East End,40.439627,-79.89658,
+8,Rowland Connector & Pennwood,Rowland,Pennwood,40.440517,-79.886946,
+9,Swissvale Ave & Coal St,Swissvale,Coal,40.434774,-79.882872,
+10,Noble St & Washington St,Noble,Washington,40.421193,-79.886117,
+11,Woodstock Ave & Swissvale st. steps,Woodstock,Swissvale,40.41571,-79.878685,
+12,Library St & Braddock Ave FS,Library,Braddock,40.401299,-79.865617,
+13,Coal St & Walnut St FS,Coal,Walnut,40.436369,-79.882419,
+14,Kelly Ave & Pitt St,Kelly,Pitt,40.440454,-79.889701,
+15,Forbes Ave at Braddock St FS,Forbes,Braddock,40.439739,-79.897543,
+16,Forbes Ave btw. Dennison & Shady,Forbes,Shady,40.438057,-79.918931,
+17,Fifth Ave opposite Atwood St,Fifth,Atwood,40.441819,-79.958507,
+18,Sixth Ave & Fifth Ave FS,Sixth,Fifth,40.43926,-79.994616,
+19,Morewood Gardens ,Morewood,,40.445418,-79.942714,
+20,Forbes Ave & South Craig St,Forbes,South Craig,40.444467,-79.948642,
+21,South Dithridge at Wiinthrop St,South Dithridge,Wiinthrop,40.445686,-79.95039,
+22,North Dithridge at Fifth Ave,North Dithridge,Fifth,40.446814,-79.950549,
+23,Fifth Ave at Wilkins Ave,Fifth,Wilkins,40.447839,-79.937092,
+24,Fifth Ave at South Aiken Ave,Fifth,South Aiken,40.448188,-79.934378,
+25,Fifth Ave at Bellefonte St,Fifth,Bellefonte,40.448711,-79.932725,
+,,,,,,
+,,,,,,
+,,,,,,
