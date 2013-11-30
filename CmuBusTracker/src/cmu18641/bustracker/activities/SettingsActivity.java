@@ -6,6 +6,7 @@ import android.preference.PreferenceActivity;
 
 public class SettingsActivity extends PreferenceActivity {
     public static final String KEY_REMOTE = "pref_remote";
+    public static final String KEY_FAVORITES = "pref_favorites";
 
     @SuppressWarnings("deprecation")
 	@Override

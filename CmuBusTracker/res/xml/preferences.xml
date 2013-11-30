@@ -5,4 +5,11 @@
         android:title="@string/pref_title_remote"
         android:summary="@string/pref_summary_remote"
         android:defaultValue="true" />
+    
+    <Preference
+        android:key="pref_favorites"
+        android:title="@string/pref_title_favorites"
+        android:summary="@string/pref_summary_favorites"
+        android:defaultValue="" />
+        
 </PreferenceScreen>

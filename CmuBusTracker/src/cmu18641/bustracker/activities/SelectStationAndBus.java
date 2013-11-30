@@ -1,5 +1,7 @@
 package cmu18641.bustracker.activities;
 
+import helpers.Favorites;
+
 import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.adapter.BusAdapter;
@@ -188,6 +190,10 @@ public class SelectStationAndBus extends Activity {
 	            startActivity(new Intent(this, SettingsActivity.class));
 	            return(true);
 	        }
+	        // add the route to favorites
+	        case R.id.add_favorites:
+	        	Favorites.addToFavorites (this, selectedStop, busSelections);
+	            return true;
 			default:
 	    		return super.onOptionsItemSelected(item);
 		}

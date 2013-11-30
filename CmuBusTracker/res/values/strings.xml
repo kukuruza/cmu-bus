@@ -31,5 +31,8 @@
     <string name="pref_title_remote">use data from server</string>
     <string name="pref_summary_remote">Check to let the app connect to the server to fetch 
         data. If the app cannot access the server, local schedule database is used.</string>
+    <string name="pref_title_favorites">favorite routes</string>
+    <string name="pref_summary_favorites">You can manualy edit your favorite routes here, 
+        e.g. delete them</string>
 
 </resources>

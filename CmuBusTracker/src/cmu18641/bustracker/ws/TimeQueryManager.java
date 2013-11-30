@@ -80,6 +80,7 @@ public class TimeQueryManager {
 	}
 	
 	
+	// the main function - tries accessing remote and local data
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) 
 	{	
 		// get the raw schedule
