@@ -155,25 +155,45 @@ public class SelectStationAndBus extends Activity {
 		}	   
 	}; 
 	
+	
+	
+	///   ---- Menu ----   ///
+	
 	// create the Activity's menu from a menu resource XML file
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.help_menu, menu);
+	    inflater.inflate(R.menu.select_stop_bus_menu, menu);
 	    return true;
 	}
 	   
 	// handle choice from options menu
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		String message = new String("Welcome to the bus tracker app!  You can change the selected " + 
-					"station by clicking on the station name, and select your bus by tapping on the " + 
-					"bus names.  Just hit \"find next bus\" when you're ready to get the schedule." ); 
-					
-		new SimpleDialogBuilderHelper(SelectStationAndBus.this, message, "Ok"); 
-		return super.onOptionsItemSelected(item);
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) {
+		    // get help
+	        case R.id.help1:
+	        {
+	    		String message = new String("Welcome to the bus tracker app!  You can change the selected " + 
+						"station by clicking on the station name, and select your bus by tapping on the " + 
+						"bus names.  Just hit \"find next bus\" when you're ready to get the schedule." ); 
+				new SimpleDialogBuilderHelper(SelectStationAndBus.this, message, "Ok"); 
+	            return true;
+	        }
+	        // edit preferences
+	        case R.id.settings:
+	        {
+	            startActivity(new Intent(this, SettingsActivity.class));
+	            return(true);
+	        }
+	        // add the route to favorites
+	        case R.id.add_favorites:
+	            return true;
+			default:
+	    		return super.onOptionsItemSelected(item);
+		}
 	} 
 	
 }

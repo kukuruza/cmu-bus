@@ -6,8 +6,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
+import cmu18641.bustracker.activities.SettingsActivity;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
@@ -82,13 +85,20 @@ public class TimeQueryManager {
 		// get the raw schedule
 		Schedule schedule = null;
 		
+		// check preferences
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		boolean prefRemote = sharedPref.getBoolean(SettingsActivity.KEY_REMOTE, true);
+		
 		// check network
 		boolean availableNetwork = Networking.isNetworkAvailable(context);
 		if (!availableNetwork)
-			Log.i(TAG, "network is unavailble");
+			Log.i(TAG, "network is NOT availble");
+		else
+			Log.i(TAG, "network is availble");
+			
 		
 		// remote query
-		if (availableNetwork)
+		if (prefRemote && availableNetwork)
 		{
 		    RemoteQuery remoteQuery = new RemoteQuery();
 	    	try {

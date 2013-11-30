@@ -23,6 +23,13 @@
     <string name="example_bus_direction">ExampleDirection</string>
     <string name="example_stop_address">ExampleStopAddress</string>
     <string name="example_srcinfo_string">local/remote</string>
+    
     <string name="help">Help</string>
+    <string name="settings_title">Settings</string>
+    <string name="add_favorites_title">Add to Favorites</string>
+    
+    <string name="pref_title_remote">use data from server</string>
+    <string name="pref_summary_remote">Check to let the app connect to the server to fetch 
+        data. If the app cannot access the server, local schedule database is used.</string>
 
 </resources>

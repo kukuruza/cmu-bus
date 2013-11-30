@@ -3,14 +3,14 @@
     package="cmu18641.bustracker"
     android:versionCode="1"
     android:versionName="1.0" >
-    
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    
+
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +37,10 @@
         <activity
             android:name="cmu18641.bustracker.activities.ViewSchedule"
             android:label="@string/title_activity_view_schedule" >
+        </activity>
+        <activity
+            android:name="cmu18641.bustracker.activities.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 
