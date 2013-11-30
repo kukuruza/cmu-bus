@@ -188,9 +188,6 @@ public class SelectStationAndBus extends Activity {
 	            startActivity(new Intent(this, SettingsActivity.class));
 	            return(true);
 	        }
-	        // add the route to favorites
-	        case R.id.add_favorites:
-	            return true;
 			default:
 	    		return super.onOptionsItemSelected(item);
 		}
