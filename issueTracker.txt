@@ -7,7 +7,6 @@ TODO:
 need to add help activity
 need to add configs on what to use: remote/local
 need a label to show the info source: remote/local
-need to switch from the font size -> appearance (medium/small/etc)
 need to refactor BaseEntities vs Entities classes
 move common package somewhere so that app and webserver can share it
 webserver: put relative path to db resource

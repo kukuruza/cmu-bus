@@ -62,7 +62,6 @@ public class TimeQueryManager {
 		           return Time.compare(s1.getTime(), s2.getTime());
 		       }
 		});
-		
 
 		// return only top numOut results
 		ArrayList<ScheduleItem> subScheduleItem; 

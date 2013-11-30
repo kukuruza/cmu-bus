@@ -8,6 +8,7 @@ import android.text.format.Time;
 import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.entities.*;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.ws.TimeQueryInterface;
 
 
 
@@ -51,7 +52,7 @@ public class LocalQuery implements TimeQueryInterface {
 		
 		
 		// by Evgeny 11.24.13 to match function return type
-		return new Schedule (stop, scheduleItems);
+		return new Schedule (stop, scheduleItems, "local schedule");
 		
 		
 		/*

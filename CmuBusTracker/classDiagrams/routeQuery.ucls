@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <interface id="1" language="java" name="cmu18641.bustracker.entities.RouteQueryInterface" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/entities/RouteQueryInterface.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="1" language="java" name="cmu18641.bustracker.ws.RouteQueryInterface" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/cmu18641/bustracker/ws/RouteQueryInterface.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="116" width="321" x="120" y="22"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

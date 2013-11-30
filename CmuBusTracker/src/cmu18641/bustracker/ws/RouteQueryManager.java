@@ -7,7 +7,6 @@ import android.content.Context;
 import android.location.Location;
 import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.entities.Bus;
-import cmu18641.bustracker.entities.RouteQueryInterface;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 

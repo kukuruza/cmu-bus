@@ -155,6 +155,14 @@ public class ViewSchedule extends Activity {
 				}
 				else
 				{
+					// by Evgeny. Displays whether it came from local or remote
+					String infoSrc = _schedule.getInfoSrc();
+					if (infoSrc != null)
+					{
+     					TextView infoSrcTextView = (TextView) findViewById(R.id.viewschedule_infoSrcTextView);
+	    				infoSrcTextView.setText ("(" + infoSrc + ")");
+					}
+					
 					_scheduleItemList = _schedule.getScheduleItemList(); 
 					
 					if (_scheduleAdapter != null) { 

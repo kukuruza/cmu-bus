@@ -17,6 +17,7 @@ import cmu18641.bustracker.R;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.entities.*;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.ws.TimeQueryInterface;
 
 
 public class RemoteQuery implements TimeQueryInterface {
@@ -52,7 +53,7 @@ public class RemoteQuery implements TimeQueryInterface {
 	{
 		String responseString;
 		try {
-			String url = context.getResources().getString(R.string.server_dbquery_url);
+			String url = context.getResources().getString(R.string.server_timequery_url);
 			
 			// compose a request
 			String requestUrl = formRequestString (url, stop, buses);
@@ -82,7 +83,8 @@ public class RemoteQuery implements TimeQueryInterface {
 			Log.e (TAG, "RuntimeException in FromBaseHelper");
 			throw new TrackerException (0, "RuntimeException in FromBaseHelper", TAG);
 		}
-
+		
+		schedule.setInfoSrc("info from server");
 		return schedule;
 	}
 }

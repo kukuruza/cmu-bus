@@ -46,6 +46,16 @@
          				android:gravity="right" 
          				android:paddingLeft="20dp"
          				android:paddingTop="5dp"/>
+
+        		     <TextView android:id="@+id/viewschedule_infoSrcTextView"
+         				android:layout_width="wrap_content" 
+         				android:layout_height="wrap_content" 
+         				android:textAppearance="@android:style/TextAppearance.Small" 
+         				android:textStyle="normal"
+         				android:text="@string/example_srcinfo_string"
+         				android:gravity="right" 
+         				android:paddingLeft="20dp"
+         				android:paddingTop="5dp"/>
         		    
         		</LinearLayout>
        		 	

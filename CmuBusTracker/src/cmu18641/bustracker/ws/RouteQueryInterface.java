@@ -1,9 +1,11 @@
-package cmu18641.bustracker.entities;
+package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.location.Location;
+import cmu18641.bustracker.entities.Bus;
+import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 
 public interface RouteQueryInterface {
