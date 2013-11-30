@@ -50,14 +50,13 @@ public final class R {
         public static final int walkingdistance=0x7f090014;
     }
     public static final class layout {
-        public static final int activity_help=0x7f030000;
-        public static final int activity_locate_station=0x7f030001;
-        public static final int activity_search_station=0x7f030002;
-        public static final int activity_select_station_and_bus=0x7f030003;
-        public static final int activity_view_schedule=0x7f030004;
-        public static final int bus_list_item=0x7f030005;
-        public static final int schedule_list_item=0x7f030006;
-        public static final int stop_list_item=0x7f030007;
+        public static final int activity_locate_station=0x7f030000;
+        public static final int activity_search_station=0x7f030001;
+        public static final int activity_select_station_and_bus=0x7f030002;
+        public static final int activity_view_schedule=0x7f030003;
+        public static final int bus_list_item=0x7f030004;
+        public static final int schedule_list_item=0x7f030005;
+        public static final int stop_list_item=0x7f030006;
     }
     public static final class menu {
         public static final int help=0x7f080000;
@@ -68,25 +67,27 @@ public final class R {
         public static final int swipe=0x7f040001;
     }
     public static final class string {
-        public static final int Find_Next_Bus=0x7f060008;
-        public static final int Find_Station=0x7f060009;
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int enterAddress=0x7f06000a;
-        public static final int example_bus_direction=0x7f060010;
-        public static final int example_bus_name=0x7f06000f;
-        public static final int example_mile_string=0x7f06000d;
-        public static final int example_stop_address=0x7f060011;
-        public static final int example_stop_name=0x7f06000c;
-        public static final int example_walkingdist_string=0x7f06000e;
-        public static final int hello_world=0x7f060002;
-        public static final int help=0x7f060012;
-        public static final int search=0x7f06000b;
-        public static final int search_again=0x7f060003;
-        public static final int title_activity_locate_station=0x7f060005;
-        public static final int title_activity_search_station=0x7f060006;
-        public static final int title_activity_select_station_and_bus=0x7f060004;
-        public static final int title_activity_view_schedule=0x7f060007;
+        public static final int Find_Next_Bus=0x7f06000a;
+        public static final int Find_Station=0x7f06000b;
+        public static final int action_settings=0x7f060003;
+        public static final int app_name=0x7f060002;
+        public static final int enterAddress=0x7f06000c;
+        public static final int example_bus_direction=0x7f060012;
+        public static final int example_bus_name=0x7f060011;
+        public static final int example_mile_string=0x7f06000f;
+        public static final int example_stop_address=0x7f060013;
+        public static final int example_stop_name=0x7f06000e;
+        public static final int example_walkingdist_string=0x7f060010;
+        public static final int hello_world=0x7f060004;
+        public static final int help=0x7f060014;
+        public static final int search=0x7f06000d;
+        public static final int search_again=0x7f060005;
+        public static final int server_dbquery_url=0x7f060001;
+        public static final int server_timequery_url=0x7f060000;
+        public static final int title_activity_locate_station=0x7f060007;
+        public static final int title_activity_search_station=0x7f060008;
+        public static final int title_activity_select_station_and_bus=0x7f060006;
+        public static final int title_activity_view_schedule=0x7f060009;
     }
     public static final class style {
         /** 

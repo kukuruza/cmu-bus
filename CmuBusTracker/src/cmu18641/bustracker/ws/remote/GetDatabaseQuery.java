@@ -1,6 +1,8 @@
 package cmu18641.bustracker.ws.remote;
 
+import android.content.Context;
 import android.util.Log;
+import cmu18641.bustracker.R;
 import cmu18641.bustracker.exceptions.TrackerException;
 
 /*
@@ -15,9 +17,10 @@ import cmu18641.bustracker.exceptions.TrackerException;
 public class GetDatabaseQuery {
 	private final static String TAG = "DownloadDbQuery";
 
-	public void downloadDb (String pathToSave) throws TrackerException
+	public void downloadDb (Context context, String pathToSave) 
+			throws TrackerException
 	{
-		String serverUrl = "http://10.0.2.2:8080/webserver/getdatabase";
+		String serverUrl = context.getResources().getString(R.string.server_timequery_url);
 
 		try {
 			Networking.requestFile (serverUrl, pathToSave); 

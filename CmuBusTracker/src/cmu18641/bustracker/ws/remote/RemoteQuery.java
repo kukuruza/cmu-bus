@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import cmu18641.bustracker.R;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.entities.*;
 import cmu18641.bustracker.exceptions.TrackerException;
@@ -51,8 +52,7 @@ public class RemoteQuery implements TimeQueryInterface {
 	{
 		String responseString;
 		try {
-			// TODO: to be moved to configs
-			String url = "http://10.0.2.2:8080/webserver/query";
+			String url = context.getResources().getString(R.string.server_dbquery_url);
 			
 			// compose a request
 			String requestUrl = formRequestString (url, stop, buses);
