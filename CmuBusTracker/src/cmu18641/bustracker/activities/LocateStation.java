@@ -19,6 +19,9 @@ import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,12 +70,11 @@ public class LocateStation extends Activity {
 		searchStationButton = (Button) findViewById(R.id.searchAddressButton);
 		stationListView = (ListView) findViewById(R.id.stopListView);
 		
-		//new GetStationsTask().execute(); 
 		try {
    		 	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
    	  	} catch (TrackerException e) {
-   		   //log and recover
-   		  e.printStackTrace();
+   	  		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
+   	  		Log.e("LocateStation", "exception", e);
    	  	}
 		
 		// bus adapter is used to map buses to the listview
@@ -110,14 +112,11 @@ public class LocateStation extends Activity {
 		// register shake listener
 		sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
 			
-		// update listview
-		//new GetStationsTask().execute(); 
-		
 		try {
 	   	  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
 	   	} catch (TrackerException e) {
-	   	  // log and recover
-	   	  e.printStackTrace();
+	   		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
+   	  		Log.e("LocateStation", "exception", e);
 	    }
 		
 		if(stopAdapter != null) { 
@@ -142,14 +141,12 @@ public class LocateStation extends Activity {
 	OnShakeListener shakeListener = new OnShakeListener() { 
 		@Override
         public void onShake() {
-			// update listview
-			//new GetStationsTask().execute(); 
-			
+
 			try {
 	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
 	   	  	} catch (TrackerException e) {
-	   		  // log and recover
-	   		  e.printStackTrace();
+	   	  		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
+	   	  		Log.e("LocateStation", "exception", e);
 	   	  	}
 			
 			if(stopAdapter != null) { 
@@ -205,33 +202,27 @@ public class LocateStation extends Activity {
 			showSelectStationAndBus.putExtra(STOP_SELECTED, stationList.get(position)); 
 			LocateStation.this.startActivity(showSelectStationAndBus);
 		}
-	   
 	};
 	
-	
-	// performs database query outside GUI thread
-	/*
-	private class GetStationsTask extends AsyncTask<Void, Void, ArrayList<Stop>> {
-		@Override
-	    protected ArrayList<Stop> doInBackground(Void... params) {
-			try {
-	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
-	   	  	} catch (TrackerException e) {
-	   		  // log and recover
-	   		  e.printStackTrace();
-	   	  	}
-			return stationList;
-	    }
+	// create the Activity's menu from a menu resource XML file
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.help_menu, menu);
+		return true;
+	}
 
-	    @Override
-	    protected void onPostExecute(ArrayList<Stop> stationList) {
-	    	// bus adapter is used to map buses to the listview
-			stopAdapter = new StopAdapter(LocateStation.this, R.layout.activity_locate_station, stationList);
-			
-			// bind adapter and set listener
-			stationListView.setAdapter(stopAdapter);
-	    }
-	};
-	*/
+	// handle choice from options menu
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		String message = new String("Select a new station by tapping on one from the list, or if " + 
+				"you don't see the one you want, enter a street name below to look up the one you had " + 
+				"in mind"); 
+
+		new SimpleDialogBuilderHelper(LocateStation.this, message, "Ok"); 
+		return super.onOptionsItemSelected(item);
+	} 	
 	
 }

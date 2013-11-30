@@ -11,7 +11,7 @@
         android:layout_marginLeft="15dp"
         android:gravity="center_vertical"
         android:text="@string/example_bus_name"
-        android:textSize="25sp" />
+        android:textAppearance="@android:style/TextAppearance.Large" />
 
     <TextView
         android:id="@+id/scheduleitem_busdirection"

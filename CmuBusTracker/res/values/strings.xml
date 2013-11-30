@@ -19,5 +19,6 @@
     <string name="example_bus_name">ExampleBus</string>
     <string name="example_bus_direction">ExampleDirection</string>
     <string name="example_stop_address">ExampleStopAddress</string>
+    <string name="help">Help</string>
 
 </resources>
