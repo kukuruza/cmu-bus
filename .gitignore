@@ -1,5 +1,6 @@
 # ignore eclipse bin files
 CmuBusTracker/bin/*
+CmuBusTracker/gen/*
 
 # ignore all the videos, etc.
 data

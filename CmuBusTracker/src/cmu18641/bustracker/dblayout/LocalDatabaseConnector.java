@@ -28,7 +28,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper{
     private static final String LOG = LocalDatabaseConnector.class.getName();
     
     private static final String DATABASE_NAME = "busTracker";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 	private SQLiteDatabase database;
 	
 	// table names

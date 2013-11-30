@@ -26,7 +26,7 @@ public class LocationService extends Service implements LocationListener{
     double latitude; 
     double longitude; 
  
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 1 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 0 meters
     private static final long MIN_TIME_CHANGE_FOR_UPDATES = 500; // 30 seconds
  
     protected LocationManager locationManager;
@@ -44,10 +44,11 @@ public class LocationService extends Service implements LocationListener{
  
             // gps is more accurate
             if(isGPSEnabled) {
-            	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                
             	currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            	
+            	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,   
+            			MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+            	
                 if(currentLocation != null) {
                 	latitude = currentLocation.getLatitude();
                     longitude = currentLocation.getLongitude();
@@ -57,7 +58,7 @@ public class LocationService extends Service implements LocationListener{
             }
             else if(isNetworkEnabled) { 
             	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                        MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+            			MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
             
             	currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             	if(currentLocation != null) {
@@ -141,7 +142,8 @@ public class LocationService extends Service implements LocationListener{
  
     @Override
     public void onLocationChanged(Location location) {
-   
+    	Log.d("debug", "location change"); 
+    	currentLocation = location; 
     }
  
     @Override

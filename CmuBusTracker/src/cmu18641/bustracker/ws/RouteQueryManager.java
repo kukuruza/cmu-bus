@@ -3,6 +3,8 @@ package cmu18641.bustracker.ws;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
+
 import android.content.Context;
 import android.location.Location;
 import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
@@ -99,12 +101,15 @@ public class RouteQueryManager implements RouteQueryInterface {
 			throws TrackerException {
 		
 		//cleanup user street query entry
-		street = street.toLowerCase(); 
+		street = street.toLowerCase(Locale.US); 
 		street = street.replace("and", ""); 
 		street = street.replace("street", "");
 		street = street.replace("avenue", ""); 
 		street = street.replace("road", ""); 
 		street = street.trim(); 
+		
+		// capitilize first letter
+		street = street.substring(0, 1).toUpperCase(Locale.US) + street.substring(1);
 
 		//retrieves all stops from the database that have a matching street
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
