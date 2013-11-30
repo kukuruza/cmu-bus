@@ -24,6 +24,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int action_settings=0x7f090016;
         public static final int busListView=0x7f090006;
         public static final int busdirection=0x7f09000e;
         public static final int busname=0x7f09000d;
@@ -32,7 +33,7 @@ public final class R {
         public static final int enterAddressEditText=0x7f090002;
         public static final int findNextBusButton=0x7f090007;
         public static final int findStationButton=0x7f090005;
-        public static final int help=0x7f090016;
+        public static final int help=0x7f090017;
         public static final int locatestationlayout=0x7f090000;
         public static final int scheduleListView=0x7f09000b;
         public static final int scheduleitem_busarrivaltime=0x7f090011;
@@ -59,7 +60,8 @@ public final class R {
         public static final int stop_list_item=0x7f030007;
     }
     public static final class menu {
-        public static final int help_menu=0x7f080000;
+        public static final int help=0x7f080000;
+        public static final int help_menu=0x7f080001;
     }
     public static final class raw {
         public static final int shake=0x7f040000;
