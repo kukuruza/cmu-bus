@@ -31,21 +31,6 @@ public class RouteQueryManager implements RouteQueryInterface {
 		db = null; 
 		return busList; 
 		
-		/* test data
-		String names[] = {"A Route Shuttle", "B Route Shuttle", "AB Route Shuttle", 
-				"Bakery Square Shuttle", "PTC Shuttle", "61A", "61B", "61C", "61D", "67", "83" };
-		ArrayList<Bus> busList = new ArrayList<Bus>(); 
-		Random generator = new Random(); 
-		String direction; 
-		Bus temp; 
-		for(int i = 0; i < names.length; i++){
-			 direction =  (generator.nextInt(2) != 0) ? "west": "east";
-			 temp = new Bus(names[i], direction);		 
-			 busList.add(temp);       
-		}
-		return busList; 
-		*/
-		
 	}
 
 	@Override
@@ -69,19 +54,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 	    });
 		
 		return stopList;
-		
-		/* test data
-		Log.v("RouteQueryManager", "getStopsByCurrentLocation"); 
-		String names[] = {"Morewood and Forbes", "5th and Craig", "Forbes and Craig", 
-				"Mellwood and Fescher", "Bayard and Craig", "Gale and Smears", "Morewood and Bayard" };
-		ArrayList<Stop> stopList = new ArrayList<Stop>(); 
-		Stop temp; 
-		for(int i = 0; i < names.length; i++){
-			 temp = new Stop(names[i], "West Street", "East Street", new Location("loc"));		 
-			 stopList.add(temp);       
-		}
-		return stopList; 
-		*/
+
 	}
 	
 	@Override
@@ -130,20 +103,6 @@ public class RouteQueryManager implements RouteQueryInterface {
 		
 		
 		return stopList; 
-		
-		/* test data
-		Log.v("RouteQueryManager", "getStopsByAddress");
-		String names[] = {"Morewood and Forbes", "5th and Craig", "Forbes and Craig", 
-				"Mellwood and Fescher", "Bayard and Craig", "Gale and Smears", "Morewood and Bayard" };
-		ArrayList<Stop> stopList = new ArrayList<Stop>(); 
-		Stop temp; 
-		// for testing
-		for(int i = 0; i < names.length; i++){
-			 temp = new Stop(names[i], "West Street", "East Street", new Location("loc"));		 
-			 stopList.add(temp);       
-		}
-		return stopList; 
-		*/
 	
 	}
 
