@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
+import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.ws.RouteQueryManager;
 import cmu18641.bustracker.ws.TimeQueryManager;
+import cmu18641.bustracker.ws.remote.GetDatabaseQuery;
 
 /*
  * GlobalManager.java
@@ -81,5 +83,28 @@ public class GlobalManager {
 	
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) {
 		return timeQueryManager.getSchedule (context, stop, buses);
+	}
+	
+	// updated database to be saved 
+	public void updateDatabase(Context context) { 
+		
+		// get path to private data directory
+		String databasePath = context.getApplicationInfo().dataDir + "/databases";
+		
+		// delete old database
+		context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
+		
+		// download new database to apps private data directory
+		GetDatabaseQuery newDb = new GetDatabaseQuery(); 
+		try {
+			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
+		} catch (TrackerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// increment version
+		LocalDatabaseConnector.incrementDbVersion(); 
+		
 	}
 }

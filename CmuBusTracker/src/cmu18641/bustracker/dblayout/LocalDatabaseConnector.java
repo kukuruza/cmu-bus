@@ -23,12 +23,12 @@ import android.util.Log;
  * Provides implementation to query local SQLite database
  */
 
-public class LocalDatabaseConnector extends SQLiteAssetHelper{
+public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	
     private static final String LOG = LocalDatabaseConnector.class.getName();
     
-    private static final String DATABASE_NAME = "busTracker";
-    private static final int DATABASE_VERSION = 5;
+    public static final String DATABASE_NAME = "busTracker";
+    private static int DATABASE_VERSION = 5;
 	private SQLiteDatabase database;
 	
 	// table names
@@ -78,6 +78,11 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper{
 		if(database != null && database.isOpen()) { 
 			database.close();
 		}
+	}
+	
+	// change db version on upgrade
+	public static void incrementDbVersion() { 
+		DATABASE_VERSION++; 
 	}
 	
 	// inserts a new bus in BUS table

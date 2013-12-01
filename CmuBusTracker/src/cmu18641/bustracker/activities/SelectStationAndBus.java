@@ -210,8 +210,10 @@ public class SelectStationAndBus extends Activity {
 	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-            // TODO: this is the actual method
-			// TODO: need some dialog to wait
+            Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
+            new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Please wait for database to update", "Ok"); 
+            // TODO: freeze app
+            
 			return null;
 		}
 		
