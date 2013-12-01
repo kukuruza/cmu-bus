@@ -1,13 +1,15 @@
-package cmu18641.bustracker.entities;
+package cmu18641.bustracker.ws;
 
 import java.util.ArrayList;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
+import cmu18641.bustracker.entities.Bus;
+import cmu18641.bustracker.entities.Schedule;
+import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
-import cmu18641.bustracker.ws.RouteQueryManager;
-import cmu18641.bustracker.ws.TimeQueryManager;
+import cmu18641.bustracker.helpers.LocationService;
 import cmu18641.bustracker.ws.remote.GetDatabaseQuery;
 
 /*
@@ -19,6 +21,7 @@ import cmu18641.bustracker.ws.remote.GetDatabaseQuery;
  */
 
 public class GlobalManager {
+	private static final String TAG = "GlobalManager"; 
 
 	RouteQueryManager routeQueryManager; 
 	TimeQueryManager timeQueryManager; 
@@ -86,25 +89,30 @@ public class GlobalManager {
 	}
 	
 	// updated database to be saved 
-	public void updateDatabase(Context context) { 
-		
-		// get path to private data directory
-		String databasePath = context.getApplicationInfo().dataDir + "/databases";
-		
-		// delete old database
-		context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
-		
-		// download new database to apps private data directory
-		GetDatabaseQuery newDb = new GetDatabaseQuery(); 
+	public void updateDatabase(Context context) 
+	{ 
 		try {
-			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
-		} catch (TrackerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// get path to private data directory
+			String databasePath = context.getApplicationInfo().dataDir + "/databases";
+			
+			// delete old database
+			context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
+			
+			// download new database to apps private data directory
+			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
+			try {
+				newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
+			} catch (TrackerException e) {
+				e.printStackTrace();
+			}
+			
+			// increment version
+			LocalDatabaseConnector.incrementDbVersion();
+			
+		} catch (Exception e) {
+			Log.e (TAG, "Could not update the database");
+			
 		}
-		
-		// increment version
-		LocalDatabaseConnector.incrementDbVersion(); 
 		
 	}
 }

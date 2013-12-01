@@ -6,6 +6,8 @@ import cmu18641.bustracker.adapter.StopAdapter;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.helpers.SimpleDialogBuilderHelper;
+import cmu18641.bustracker.helpers.SwipeDetector;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;

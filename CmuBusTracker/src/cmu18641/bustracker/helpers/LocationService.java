@@ -1,4 +1,4 @@
-package cmu18641.bustracker.entities;
+package cmu18641.bustracker.helpers;
 
 import android.app.AlertDialog;
 import android.app.Service;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <interface id="1" language="java" name="cmu18641.bustracker.activities.ShakeDetector.OnShakeListener" 
-    project="CmuBusTracker" file="/CmuBusTracker/src/cmu18641/bustracker/activities/ShakeDetector.java" binary="false" 
+  <interface id="1" language="java" name="cmu18641.bustracker.helpers.ShakeDetector.OnShakeListener" 
+    project="CmuBusTracker" file="/CmuBusTracker/src/cmu18641/bustracker/helpers/ShakeDetector.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="80" width="152" x="1107" y="853"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -30,8 +30,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="cmu18641.bustracker.activities.ViewSchedule" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/activities/ViewSchedule.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="cmu18641.bustracker.activities.ViewScheduleActivity" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/cmu18641/bustracker/activities/ViewScheduleActivity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="278" width="263" x="1067" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -48,8 +49,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="cmu18641.bustracker.activities.ShakeDetector" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/activities/ShakeDetector.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="cmu18641.bustracker.helpers.ShakeDetector" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/cmu18641/bustracker/helpers/ShakeDetector.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="368" width="255" x="1107" y="445"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

@@ -1,5 +1,7 @@
 package cmu18641.bustracker.entities;
 
+import cmu18641.bustracker.ws.GlobalManager;
+
 /*
  * Connector.java
  * 

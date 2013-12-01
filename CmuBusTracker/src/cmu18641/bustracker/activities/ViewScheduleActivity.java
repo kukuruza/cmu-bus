@@ -2,13 +2,16 @@ package cmu18641.bustracker.activities;
 
 import java.util.ArrayList;
 import cmu18641.bustracker.R;
-import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.ScheduleAdapter;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
+import cmu18641.bustracker.helpers.ShakeDetector;
+import cmu18641.bustracker.helpers.SimpleDialogBuilderHelper;
+import cmu18641.bustracker.helpers.SwipeDetector;
+import cmu18641.bustracker.helpers.ShakeDetector.OnShakeListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -37,7 +40,7 @@ import android.widget.Toast;
  * Activity to view list of buses and arrival times for a station
  */
 
-public class ViewSchedule extends Activity {
+public class ViewScheduleActivity extends Activity {
 	private final static String TAG = "ViewSchedule";
 
 	private Schedule _schedule; 
@@ -104,7 +107,7 @@ public class ViewSchedule extends Activity {
 			fetchListViewData();  
 			_scheduleAdapter.notifyDataSetChanged();
 			
-			Toast refresh = Toast.makeText(ViewSchedule.this, "Refreshing List", Toast.LENGTH_SHORT);
+			Toast refresh = Toast.makeText(ViewScheduleActivity.this, "Refreshing List", Toast.LENGTH_SHORT);
 			refresh.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 50);
 			refresh.show();
         }
@@ -150,7 +153,7 @@ public class ViewSchedule extends Activity {
 				{
 					int duration = Toast.LENGTH_SHORT;
 					String errorText = "Error. Failed to get schedule";
-					Toast toast = Toast.makeText(ViewSchedule.this, errorText, duration);
+					Toast toast = Toast.makeText(ViewScheduleActivity.this, errorText, duration);
 					toast.show();
 				}
 				else
@@ -182,7 +185,7 @@ public class ViewSchedule extends Activity {
 						timeListView.setOnTouchListener(_gestureListener);  
 					}
 					else { 
-						Builder builder = new AlertDialog.Builder (ViewSchedule.this);
+						Builder builder = new AlertDialog.Builder (ViewScheduleActivity.this);
 					    builder.setMessage("Sorry, no more buses for this stop are coming today. :(");
 					    builder.setCancelable(false); 
 					    builder.setPositiveButton(R.string.search_again,
@@ -219,7 +222,7 @@ public class ViewSchedule extends Activity {
 		String message = new String("Here you go! A list of the arrival times for the buses you " + 
 				"selected.  Wrong bus?  Swipe back and search again."); 
 
-		new SimpleDialogBuilderHelper(ViewSchedule.this, message, "Ok"); 
+		new SimpleDialogBuilderHelper(ViewScheduleActivity.this, message, "Ok"); 
 		return super.onOptionsItemSelected(item);
 	} 	
 }

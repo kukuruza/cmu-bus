@@ -1,4 +1,4 @@
-package cmu18641.bustracker.activities;
+package cmu18641.bustracker.helpers;
 
 import cmu18641.bustracker.R;
 import android.app.Activity;
@@ -16,7 +16,7 @@ public class SwipeDetector extends SimpleOnGestureListener {
 
      private Context currentContext;
      
-     SwipeDetector(Context current) { 
+     public SwipeDetector(Context current) { 
     	 this.currentContext = current; 
      }
      

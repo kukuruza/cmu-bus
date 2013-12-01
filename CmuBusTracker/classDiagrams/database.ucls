@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="4" language="java" name="cmu18641.bustracker.entities.GlobalManager" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/entities/GlobalManager.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="cmu18641.bustracker.ws.GlobalManager" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/cmu18641/bustracker/ws/GlobalManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="573" y="299"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

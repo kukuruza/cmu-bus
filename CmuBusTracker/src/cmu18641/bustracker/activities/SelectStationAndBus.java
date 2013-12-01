@@ -9,6 +9,7 @@ import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.helpers.Favorites;
+import cmu18641.bustracker.helpers.SimpleDialogBuilderHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -107,7 +108,7 @@ public class SelectStationAndBus extends Activity {
 		public void onClick(View v) {
 			
 			if(!busSelections.isEmpty()) { 
-				Intent showSchedule = new Intent(SelectStationAndBus.this, ViewSchedule.class);
+				Intent showSchedule = new Intent(SelectStationAndBus.this, ViewScheduleActivity.class);
 				showSchedule.putParcelableArrayListExtra(BUSES_SELECTED, (ArrayList<? extends Parcelable>) busSelections); 
 				showSchedule.putExtra(LocateStation.STOP_SELECTED, selectedStop);
 				SelectStationAndBus.this.startActivity(showSchedule);
@@ -187,7 +188,8 @@ public class SelectStationAndBus extends Activity {
 	        }
 	        case R.id.update_db:
 	        {
-	        	new ExecuteUpdate().doInBackground();
+	        	ExecuteUpdate executeUpdate = new ExecuteUpdate();
+	        	executeUpdate.doInBackground();
 	        	return true;
 	        }
 	        // edit preferences
@@ -211,9 +213,8 @@ public class SelectStationAndBus extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
             Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
-            new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Please wait for database to update", "Ok"); 
-            // TODO: freeze app
-            
+            new SimpleDialogBuilderHelper(SelectStationAndBus.this, 
+            		"Please wait for database to update", "Ok"); 
 			return null;
 		}
 		

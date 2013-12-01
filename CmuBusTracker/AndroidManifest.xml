@@ -35,7 +35,7 @@
             android:label="@string/title_activity_search_station" >
         </activity>
         <activity
-            android:name="cmu18641.bustracker.activities.ViewSchedule"
+            android:name="cmu18641.bustracker.activities.ViewScheduleActivity"
             android:label="@string/title_activity_view_schedule" >
         </activity>
         <activity
