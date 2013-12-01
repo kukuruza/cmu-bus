@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -251,6 +252,21 @@ public class LocateStation extends Activity {
 			LocateStation.this.startActivity(showSelectStationAndBus);
 		}
 	};
+	
+	
+	OnItemLongClickListener onItemLongClickListener = new OnItemLongClickListener() {
+		@Override
+        public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+            Log.d (TAG, "Long click to remove favorite at pos: " + pos);
+	   		new SimpleDialogBuilderHelper (LocateStation.this, "Deleted favorite", "Ok");	
+			Intent showSelectStationAndBus = new Intent(LocateStation.this, SelectStationAndBus.class);
+			LocateStation.this.startActivity(showSelectStationAndBus);
+			return true;
+        }
+    }; 
+	
+	
+	/// ---- menu ---- ///
 	
 	// create the Activity's menu from a menu resource XML file
 	@Override

@@ -91,7 +91,7 @@ public class Favorites {
 			// retrieve favorites
 			SharedPreferences settings = context.getSharedPreferences ("preferences", Context.MODE_PRIVATE);
 			String inJson = settings.getString(SettingsActivity.KEY_FAVORITES, "");
-			Log.d (TAG, "Initial favorites string in addToFavorites: " + inJson);
+			Log.d (TAG, "Favorites string in getFavorites: " + inJson);
 			
 			// init gson
 			Gson gson = new Gson();
