@@ -27,7 +27,12 @@ public class GetDatabaseQuery {
 		} catch (TrackerException e) {
 			Log.e (TAG, "Could not load database");
 			throw e;
+		} catch (Exception e) {
+			Log.wtf (TAG, "Exception, could not load database \n");
+			e.printStackTrace();
+			throw new TrackerException(0, "Exception, could not load database", TAG);
 		}
+
 	}
 	
 }

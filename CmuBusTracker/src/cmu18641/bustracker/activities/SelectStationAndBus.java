@@ -186,8 +186,25 @@ public class SelectStationAndBus extends Activity {
 				new SimpleDialogBuilderHelper(SelectStationAndBus.this, message, "Ok"); 
 	            return true;
 	        }
+	        // update database
 	        case R.id.update_db:
-	        {
+	        {	
+	        	// this class manages asynchronous call to update database from the server 
+	        	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
+	        		@Override
+	        		protected Void doInBackground(Void... params) {
+	                    Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
+	                    //new SimpleDialogBuilderHelper(SelectStationAndBus.this, 
+	                    //		"Please wait for database to update", "Ok"); 
+	        			return null;
+	        		}
+	        		
+	        		@Override
+	        		protected void onPostExecute(Void result) {
+	        			// TODO: remove the dialog			
+	        		}
+	        	}
+
 	        	ExecuteUpdate executeUpdate = new ExecuteUpdate();
 	        	executeUpdate.doInBackground();
 	        	return true;
@@ -205,23 +222,5 @@ public class SelectStationAndBus extends Activity {
 			default:
 	    		return super.onOptionsItemSelected(item);
 		}
-	} 
-	
-	
-	// this class manages asynchronous call to update database from the server 
-	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
-		@Override
-		protected Void doInBackground(Void... params) {
-            Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
-            new SimpleDialogBuilderHelper(SelectStationAndBus.this, 
-            		"Please wait for database to update", "Ok"); 
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Void result) {
-			// TODO: remove the dialog			
-		}
-	}
-	
+	} 	
 }

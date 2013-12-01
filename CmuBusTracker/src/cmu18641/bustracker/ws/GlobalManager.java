@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
+import android.widget.Toast;
 import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
@@ -11,6 +12,7 @@ import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.helpers.LocationService;
 import cmu18641.bustracker.ws.remote.GetDatabaseQuery;
+import cmu18641.bustracker.ws.remote.Networking;
 
 /*
  * GlobalManager.java
@@ -92,6 +94,18 @@ public class GlobalManager {
 	public void updateDatabase(Context context) 
 	{ 
 		try {
+			// check network
+			boolean availableNetwork = Networking.isNetworkAvailable(context);
+			if (!availableNetwork)
+			{
+				Toast.makeText(context, "Could not update the database \n" + 
+						"Network is not available", Toast.LENGTH_LONG).show();
+				Log.i(TAG, "network is NOT availble");
+				return;
+			}
+			else
+				Log.i(TAG, "network is availble");
+				
 			// get path to private data directory
 			String databasePath = context.getApplicationInfo().dataDir + "/databases";
 			
@@ -100,18 +114,15 @@ public class GlobalManager {
 			
 			// download new database to apps private data directory
 			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
-			try {
-				newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
-			} catch (TrackerException e) {
-				e.printStackTrace();
-			}
+			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
 			
 			// increment version
 			LocalDatabaseConnector.incrementDbVersion();
 			
-		} catch (Exception e) {
-			Log.e (TAG, "Could not update the database");
-			
+		} catch (TrackerException e) {
+			Log.e (TAG, "Could not update the database: " + e.getMessage());
+			Toast.makeText(context, "Could not update the database \n" + 
+					"Really sorry, internal error", Toast.LENGTH_LONG).show();
 		}
 		
 	}
