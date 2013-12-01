@@ -33,4 +33,41 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/cmu18641/bustracker/common/entities</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>src/cmu18641/bustracker/common/protocols</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>src/cmu18641/bustracker/common/entities/BaseBus.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseBus.java</locationURI>
+		</link>
+		<link>
+			<name>src/cmu18641/bustracker/common/entities/BaseSchedule.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseSchedule.java</locationURI>
+		</link>
+		<link>
+			<name>src/cmu18641/bustracker/common/entities/BaseScheduleItem.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseScheduleItem.java</locationURI>
+		</link>
+		<link>
+			<name>src/cmu18641/bustracker/common/entities/BaseStop.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseStop.java</locationURI>
+		</link>
+		<link>
+			<name>src/cmu18641/bustracker/common/protocols/NetProtocol.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/protocols/NetProtocol.java</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
