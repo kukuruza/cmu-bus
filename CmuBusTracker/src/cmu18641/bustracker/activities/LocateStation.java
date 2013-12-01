@@ -9,7 +9,6 @@ import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.StopAdapter;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
-import cmu18641.bustracker.entities.UserChoice;
 import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
@@ -77,20 +76,20 @@ public class LocateStation extends Activity {
     private void addFavoritesList () {
 		// get favorite stops
 		ArrayList<Stop> stationListFavorites = new ArrayList<Stop> ();
-		ArrayList<UserChoice> favorites = Favorites.getFavorites (this);
+		ArrayList<String> favorites = Favorites.getFavorites (this);
 		if (favorites == null)
 			return;
-		for (UserChoice favorite : favorites)
+		for (String favorite : favorites)
 		{
-			Stop stop = findStopByName(stationList, favorite.stopName);
+			Stop stop = findStopByName(stationList, favorite);
 			if (stop != null)
 			{
 				stationListFavorites.add(stop);
-    		    Log.d (TAG, "found stop with name: " + favorite.stopName);
+    		    Log.d (TAG, "found stop with name: " + favorite);
 			}
 			else
 			{
-    		    Log.e (TAG, "NOT found stop with name: " + favorite.stopName);
+    		    Log.e (TAG, "NOT found stop with name: " + favorite);
     		    stationListFavorites.clear();
     		    break;
 			}
