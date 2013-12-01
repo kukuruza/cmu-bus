@@ -54,44 +54,6 @@ public class LocalQuery implements TimeQueryInterface {
 		// by Evgeny 11.24.13 to match function return type
 		return new Schedule (stop, scheduleItems, "local schedule");
 		
-		
-		/*
-		//////////////test data
-		ArrayList<ScheduleItem> scheduleItemList = new ArrayList<ScheduleItem>(11); 
-
-		// array of buses
-
-		String names[] = {"A Route Shuttle", "B Route Shuttle", "AB Route Shuttle", 
-				"Bakery Square Shuttle", "PTC Shuttle", "61A", "61B", "61C", "61D", "67", "83" };
-
-		ArrayList<Bus> busList = new ArrayList<Bus>(); 
-		Random generator = new Random(); 
-		String direction; 
-		Bus temp; 
-		Time timeTemp = new Time(); 
-		
-		for(int i = 0; i < names.length; i++){
-			 direction =  (generator.nextInt(2) != 0) ? "west": "east";
-			 timeTemp.set(generator.nextInt(60), generator.nextInt(60), generator.nextInt(60),
-						generator.nextInt(30), generator.nextInt(12), 2013);
-			 
-			 temp = new Bus(names[i], direction);		 
-			 
-			 ScheduleItem scheduleItem = new ScheduleItem(); 
-			 
-			 scheduleItem.setBus(temp); 
-			 scheduleItem.setTime(timeTemp); 
-			 
-			 scheduleItemList.add(scheduleItem);      
-		}
-		
-		Schedule schedule = new Schedule(); 
-		schedule.setScheduleItemList(scheduleItemList); 
-	
-		
-		return schedule; 
-		///////////////end test data
-		*/
 
 	}
 
