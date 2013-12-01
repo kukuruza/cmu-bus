@@ -10,13 +10,18 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import src.servlets.QueryServlet;
 import cmu18641.bustracker.common.entities.BaseBus;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.common.entities.BaseScheduleItem;
 
 
 public class DatabaseConnector {
+
+	private static final Logger logger = LoggerFactory.getLogger(QueryServlet.class);
 
 	private static final String dbResource = "java:comp/env/jdbc/sched";
 
@@ -34,8 +39,12 @@ public class DatabaseConnector {
 			// simple workaround for getting actual file path
 			// involves knowledge of how database url is organized 
 			int firstSlash = dbUrl.indexOf ('/');
-			return dbUrl.substring(firstSlash + 1);
+			String path = dbUrl.substring(firstSlash + 1);
 			
+			// involes knowledge that database zip file is needed
+			path = path + ".zip";
+			
+			return path;
 		} catch (NamingException e) {
 			e.printStackTrace();
 			return null;
@@ -51,20 +60,18 @@ public class DatabaseConnector {
 	    	BasicDataSource ds = (BasicDataSource) ctx.lookup(dbResource);
 	    	
 	    	_conn = ds.getConnection();
-	    	System.out.println("Successfully opened the database");
+	    	logger.info("Successfully opened the database");
 	    	
 	        _stat = _conn.createStatement();
-	        System.out.println("Sucessfully created statement");
+	        logger.info("Sucessfully created statement");
 
 	        return true;
 	        
 		} catch (NamingException ne) {
-			// TODO Auto-generated catch block
 			ne.printStackTrace();
 	    	return false;
 	    } catch (SQLException se) {
 	    	se.printStackTrace();
-	    	// TODO: implement custom exception
 	    	return false;
 	    }
 	}
@@ -76,7 +83,7 @@ public class DatabaseConnector {
 	{
 		String selectQuery = DbStructure.scheduleRequestString
 				(stopName, busesNames, busesDirs, weekDay);
-		System.out.println(selectQuery);
+		logger.info(selectQuery);
 		
 		if (!connect()) return null; 
 		
@@ -84,7 +91,6 @@ public class DatabaseConnector {
 		try {
 			rs = _stat.executeQuery(selectQuery);
 		} catch (SQLException e) {
-			// TODO: insert custom exception
 			e.printStackTrace();
 			return null;
 		}
@@ -102,7 +108,6 @@ public class DatabaseConnector {
 			    schedule.addItem(new BaseScheduleItem(bus, Integer.parseInt(timeVal)));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -123,8 +128,8 @@ public class DatabaseConnector {
 			_conn.close();
 			return true;
 		} catch (SQLException e) {
-			System.err.println("Could not close db connection. " +
-					           "You may have to restart the server,");
+			logger.error("Could not close db connection. " +
+					     "You may have to restart the server,");
 			e.printStackTrace();
 			return false;
 		}

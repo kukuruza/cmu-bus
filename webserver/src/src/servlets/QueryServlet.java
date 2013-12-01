@@ -197,18 +197,15 @@ public class QueryServlet extends HttpServlet {
         	return;  // this may be an error or a valid empty request
 		
 		int weekDay = getWeekDay();
-		// FIXME: when weekday schedule is in DB
-		weekDay = 0;
-		
-		// TODO: filter on time
-		//int minutes = getMinutes ();
 		
 		// get schedule from database
 		DatabaseConnector connector = new DatabaseConnector();
         BaseSchedule schedule = connector.getSchedule (_stopName, _busNames, _busDirs, weekDay);
         if (schedule == null)
-            // TODO: output error
-        	out.println("null \n");
+        {
+        	out.println(NetProtocol.ANSWER_ON_ERROR);
+        	return;
+        }
 
         // send the answer
         Gson gson = new Gson();

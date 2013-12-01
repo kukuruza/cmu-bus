@@ -1,4 +1,5 @@
 FIXME:
+update db is not implemented
 times after midnight will not be shown at e.g. 11.45 pm
 
 TODO:
