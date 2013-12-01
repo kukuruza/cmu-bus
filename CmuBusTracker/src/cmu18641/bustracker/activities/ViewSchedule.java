@@ -93,7 +93,7 @@ public class ViewSchedule extends Activity {
         _shakeDetector = new ShakeDetector(shakeListener, this); 
         
 		// get and display schedule
-		fetchListViewData(); 
+		//fetchListViewData(); 
 	}
 	
 	
