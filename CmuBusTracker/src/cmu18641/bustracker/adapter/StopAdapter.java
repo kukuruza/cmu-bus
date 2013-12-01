@@ -24,10 +24,22 @@ public class StopAdapter extends ArrayAdapter<Stop> {
 	private ArrayList<Stop> stopList; 
 	private ViewHolder viewHolder; 
 	
-	public StopAdapter(Context context, int resource, ArrayList<Stop> stopList) {
+	private static final String FavoriteLabel = "* ";
+	private ArrayList<String> favoriteLabelsList;
+	
+	public StopAdapter(Context context, int resource, ArrayList<Stop> stopList,
+			int numFavorites) {
 		super(context, resource, stopList);
 		this.context = context; 
-		this.stopList = stopList; 
+		this.stopList = stopList;
+		
+		// populate favoriteLabelsList list with '* ' and empty strings
+		favoriteLabelsList = new ArrayList<String>();
+		for (int i = 0; i != stopList.size(); ++i)
+			if (i < numFavorites)
+    			favoriteLabelsList.add(FavoriteLabel);
+			else
+				favoriteLabelsList.add("");
 	}
 
 	@Override
@@ -52,7 +64,7 @@ public class StopAdapter extends ArrayAdapter<Stop> {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 					
-		viewHolder.name.setText(stopList.get(position).getName());
+		viewHolder.name.setText(favoriteLabelsList.get(position) + stopList.get(position).getName());
 		viewHolder.address.setText(stopList.get(position).getAddress());
 		viewHolder.walkingDistance.setText(stopList.get(position).getWalkingTimeString() + " minutes");
 		viewHolder.distance.setText(stopList.get(position).getDistanceString() + " miles"); 

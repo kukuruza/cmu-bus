@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -53,6 +52,7 @@ public class LocateStation extends Activity {
 	private Button searchStationButton;
 	private EditText searchAddressEditText; 
 	private ListView stationListView; 
+	private int numFavorites = 0;
 	
 	private ArrayList<Stop> stationList;
 	private StopAdapter stopAdapter; 
@@ -95,7 +95,9 @@ public class LocateStation extends Activity {
     		    break;
 			}
 		}
-		
+
+		numFavorites = stationListFavorites.size();
+
 		// add favorites in front of all
 		stationListFavorites.addAll(stationList);
 		stationList = stationListFavorites;
@@ -124,7 +126,7 @@ public class LocateStation extends Activity {
 
 		
 		// bus adapter is used to map buses to the listview
-		stopAdapter = new StopAdapter(this, R.layout.activity_locate_station, stationList);
+		stopAdapter = new StopAdapter(this, R.layout.activity_locate_station, stationList, numFavorites);
 		
 		// bind adapter and set listener
 		stationListView.setAdapter(stopAdapter);
