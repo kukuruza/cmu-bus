@@ -9,6 +9,7 @@ import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.helpers.Favorites;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.app.Activity;
@@ -184,6 +185,11 @@ public class SelectStationAndBus extends Activity {
 				new SimpleDialogBuilderHelper(SelectStationAndBus.this, message, "Ok"); 
 	            return true;
 	        }
+	        case R.id.update_db:
+	        {
+	        	new ExecuteUpdate().doInBackground();
+	        	return true;
+	        }
 	        // edit preferences
 	        case R.id.settings:
 	        {
@@ -198,5 +204,21 @@ public class SelectStationAndBus extends Activity {
 	    		return super.onOptionsItemSelected(item);
 		}
 	} 
+	
+	
+	// this class manages asynchronous call to update database from the server 
+	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+            // TODO: this is the actual method
+			// TODO: need some dialog to wait
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO: remove the dialog			
+		}
+	}
 	
 }

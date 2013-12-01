@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dblayout.DatabaseConnector;
+import src.dbhelpers.DatabaseConnector;
 
 
 @WebServlet("/getdatabase")

@@ -1,4 +1,4 @@
-package dblayout;
+package src.dbhelpers;
 
 import java.util.ArrayList;
 
@@ -88,7 +88,7 @@ public class DbStructure {
 		        TABLE_ROUTE + " tr, " + 
 		        TABLE_SCHEDULE + " tsc " + 
 		        "WHERE ";
-		        // this stuff enters multiple buses
+		        // this code enters multiple buses
 		        s = s + "(";
 		        for (int i = 0; i != busNames.size(); ++i)
 		        {

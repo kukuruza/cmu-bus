@@ -1,4 +1,4 @@
-package dblayout;
+package src.dbhelpers;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

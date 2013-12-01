@@ -5,7 +5,10 @@
       android:title="@string/help" 
       android:alphabeticShortcut="e"></item>
 
-    <item android:id="@+id/settings" 
+    <item android:id="@+id/update_db" 
+      android:title="@string/update_db_title"></item>
+
+   <item android:id="@+id/settings" 
       android:title="@string/settings_title"></item>
 
    <item android:id="@+id/add_favorites" 

@@ -16,13 +16,12 @@ import javax.servlet.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import src.dbhelpers.DatabaseConnector;
+import src.dbhelpers.DbStructure;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.common.protocols.*;
 
 import com.google.gson.Gson;
-
-import dblayout.DatabaseConnector;
-import dblayout.DbStructure;
 
 
 
