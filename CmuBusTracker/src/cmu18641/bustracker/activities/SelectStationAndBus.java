@@ -1,6 +1,5 @@
 package cmu18641.bustracker.activities;
 
-import helpers.Favorites;
 
 import java.util.ArrayList;
 import cmu18641.bustracker.R;
@@ -9,6 +8,7 @@ import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.helpers.Favorites;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.app.Activity;

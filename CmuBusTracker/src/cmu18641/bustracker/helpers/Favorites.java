@@ -1,4 +1,4 @@
-package helpers;
+package cmu18641.bustracker.helpers;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
