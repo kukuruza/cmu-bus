@@ -1,9 +1,7 @@
 package cmu18641.bustracker.activities;
 
 import helpers.Favorites;
-
 import java.util.ArrayList;
-
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.StopAdapter;
@@ -30,7 +28,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;

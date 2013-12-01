@@ -27,7 +27,7 @@ public class LocationService extends Service implements LocationListener{
     double longitude; 
  
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 0 meters
-    private static final long MIN_TIME_CHANGE_FOR_UPDATES = 500; // 30 seconds
+    private static final long MIN_TIME_CHANGE_FOR_UPDATES = 0; // 0 seconds
  
     protected LocationManager locationManager;
  
@@ -56,7 +56,7 @@ public class LocationService extends Service implements LocationListener{
             
                 Log.i(TAG, "GPS enabled");
             }
-            else if(isNetworkEnabled) { 
+            if(isNetworkEnabled && currentLocation == null) { 
             	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
             			MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
             
@@ -67,8 +67,10 @@ public class LocationService extends Service implements LocationListener{
             	}
         
             Log.i(TAG, "Network enabled");
+            
             }
-            else { 
+
+            if(!isNetworkEnabled && !isGPSEnabled) { 
             	Log.i(TAG, "No provider enabled"); 
             	showSettingsAlert(); 
             	currentLocation = null; 
