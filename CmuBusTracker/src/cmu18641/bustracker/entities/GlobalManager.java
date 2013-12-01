@@ -71,8 +71,8 @@ public class GlobalManager {
             			+ locationService.getLongitude());
         }
  
-        locationService.stopUsingLocation(); 
-        locationService = null; 
+        //locationService.stopUsingLocation(); 
+        //locationService = null; 
         
         Log.d("location", userLocation.getLatitude() + " " + userLocation.getLongitude());
 		

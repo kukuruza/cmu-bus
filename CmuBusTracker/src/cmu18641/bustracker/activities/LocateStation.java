@@ -1,9 +1,7 @@
 package cmu18641.bustracker.activities;
 
 import helpers.Favorites;
-
 import java.util.ArrayList;
-
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.StopAdapter;
