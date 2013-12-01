@@ -1,11 +1,15 @@
 package cmu18641.bustracker.activities;
 
+import helpers.Favorites;
+
 import java.util.ArrayList;
+
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.activities.ShakeDetector.OnShakeListener;
 import cmu18641.bustracker.adapter.StopAdapter;
 import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
+import cmu18641.bustracker.entities.UserChoice;
 import cmu18641.bustracker.exceptions.TrackerException;
 import android.os.Bundle;
 import android.app.Activity;
@@ -41,7 +45,8 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 
 public class LocateStation extends Activity {
-
+	public static final String TAG = "LocateStation";
+	
 	public static final String STOP_SELECTED = "stop_selected";
 	public static final String SEARCH_QUERY_ID = "address_id";
 	
@@ -59,6 +64,44 @@ public class LocateStation extends Activity {
     private SensorManager sensorManager;
     private Sensor accelerometer;
 	
+    // go through stops to find the one with given name
+    private Stop findStopByName (ArrayList<Stop> stops, String searchStopName)
+    {
+    	assert (searchStopName != null);
+    	for (Stop stop : stops)
+    		if (stop.getName().equals(searchStopName))
+    			return stop;
+    	return null;	
+    }
+    
+    private void addFavoritesList () {
+		// get favorite stops
+		ArrayList<Stop> stationListFavorites = new ArrayList<Stop> ();
+		ArrayList<UserChoice> favorites = Favorites.getFavorites (this);
+		if (favorites == null)
+			return;
+		for (UserChoice favorite : favorites)
+		{
+			Stop stop = findStopByName(stationList, favorite.stopName);
+			if (stop != null)
+			{
+				stationListFavorites.add(stop);
+    		    Log.d (TAG, "found stop with name: " + favorite.stopName);
+			}
+			else
+			{
+    		    Log.e (TAG, "NOT found stop with name: " + favorite.stopName);
+    		    stationListFavorites.clear();
+    		    break;
+			}
+		}
+		
+		// add favorites in front of all
+		stationListFavorites.addAll(stationList);
+		stationList = stationListFavorites;
+    }
+    
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,12 +113,15 @@ public class LocateStation extends Activity {
 		searchStationButton = (Button) findViewById(R.id.searchAddressButton);
 		stationListView = (ListView) findViewById(R.id.stopListView);
 		
+		// get all stops
 		try {
    		 	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+   			addFavoritesList();
    	  	} catch (TrackerException e) {
    	  		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
    	  		Log.e("LocateStation", "exception", e);
    	  	}
+
 		
 		// bus adapter is used to map buses to the listview
 		stopAdapter = new StopAdapter(this, R.layout.activity_locate_station, stationList);
@@ -114,6 +160,7 @@ public class LocateStation extends Activity {
 			
 		try {
 	   	  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+	   	    addFavoritesList();
 	   	} catch (TrackerException e) {
 	   		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
    	  		Log.e("LocateStation", "exception", e);
@@ -144,10 +191,12 @@ public class LocateStation extends Activity {
 
 			try {
 	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+	   		    addFavoritesList();
 	   	  	} catch (TrackerException e) {
 	   	  		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
 	   	  		Log.e("LocateStation", "exception", e);
 	   	  	}
+			
 			
 			if(stopAdapter != null) { 
 				stopAdapter.clear(); 

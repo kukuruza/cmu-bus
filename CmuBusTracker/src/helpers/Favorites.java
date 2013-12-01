@@ -58,7 +58,7 @@ public class Favorites {
 	}
 	
 	
-	public static boolean addToFavorites (Context context, Stop stop, ArrayList<Bus> buses)
+	public static boolean addToFavorites (Context context, Stop stop)
 	{
 		try {
 			// check that the bus set is not empty
@@ -123,7 +123,7 @@ public class Favorites {
 		}	
 	}
 	
-	public static void getFavorites (Context context)
+	public static ArrayList<UserChoice> getFavorites (Context context)
 	{
 		try {
 			// retrieve favorites
@@ -133,8 +133,14 @@ public class Favorites {
 			// parse string into objects
 			ArrayList<String> strList = parseIntoStrings (favorites_str);
 			ArrayList<UserChoice> objectList = parseIntoObjects (strList);
+			Log.d (TAG, "Read favorites");
+			return objectList;
+			
 		} catch (Exception e) {
 			Log.e (TAG, "Error while reading and parsing favorites: " + e.getMessage());
+			Toast.makeText(context, "Could not get your favorites \n" + 
+					"Realy sorry, internal error", Toast.LENGTH_LONG).show();
+			return null;
 		}
 	}
 }

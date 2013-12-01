@@ -42,6 +42,10 @@
             android:name="cmu18641.bustracker.activities.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="cmu18641.bustracker.activities.UseFavoritesActivity"
+            android:label="@string/title_activity_use_favorites" >
+        </activity>
     </application>
 
 </manifest>

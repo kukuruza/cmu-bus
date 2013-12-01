@@ -192,7 +192,7 @@ public class SelectStationAndBus extends Activity {
 	        }
 	        // add the route to favorites
 	        case R.id.add_favorites:
-	        	Favorites.addToFavorites (this, selectedStop, busSelections);
+	        	Favorites.addToFavorites (this, selectedStop);
 	            return true;
 			default:
 	    		return super.onOptionsItemSelected(item);
