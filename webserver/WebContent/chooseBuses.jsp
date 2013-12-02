@@ -8,12 +8,18 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="dbhelpers.DbTime" %>
 
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>CMU Bus | choose buses</title>
 </head>
+
+<jsp:useBean id="route" class="beans.RouteBean" scope="session"/>
+<jsp:setProperty name="route" property="*"/>
+
 <body>
 
     <form name="getScheduleForm" action="viewSchedule.jsp" method="get" >
@@ -25,12 +31,11 @@
     ArrayList<String> busDirs = new ArrayList<String>();
     busDirs.add("Braddock");
     
-    //int weekDay = TimeHelper.getWeekDay();
-    int weekDay = 0;
+    // set form data
+    route.setStopName(stopName);
+    route.setBusNames(busNames);
+    route.setBusDirs(busDirs);
     
-    // get schedule
-	DatabaseConnector connector = new DatabaseConnector();
-    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs, weekDay);
   %>
   
     <input type="submit" value="get schedule">

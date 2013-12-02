@@ -15,12 +15,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>CMU Bus | choose buses</title>
 </head>
+
+<jsp:useBean id="route" class="beans.RouteBean" scope="session"/>
+<jsp:setProperty name="route" property="*"/>
+
 <body>
- <% String stopName = new String("Fifth Ave at Wood St");
-    ArrayList<String> busNames = new ArrayList<String>();
-    busNames.add("61A");
-    ArrayList<String> busDirs = new ArrayList<String>();
-    busDirs.add("Braddock");
+ <% // load form data
+    String stopName = route.getStopName();
+    ArrayList<String> busNames = route.getBusNames();
+    ArrayList<String> busDirs = route.getBusDirs();
     
     //int weekDay = TimeHelper.getWeekDay();
     int weekDay = 0;
@@ -35,14 +38,14 @@
  <% } else {
         ArrayList<BaseScheduleItem> scheduleItemList = schedule.getScheduleItemList();
  %>	    
-	    <%= stopName %>
+	    <b> Stop: <%= stopName %> </b>
 
 	    <!-- Table header -->
 	    <table border="0">
 	    <tr>
-	        <td style="padding-right:30px"> bus </td>
-	        <td style="padding-right:30px"> direction </td>
-	        <td>                            time </td>
+	        <td style="padding-right:30px"><b> bus </b></td>
+	        <td style="padding-right:30px"><b> direction </b></td>
+	        <td>                           <b> time </b></td>
 	    </tr>
 	    
 	    <!-- Schedule itself -->
