@@ -1,4 +1,4 @@
-package src.dbhelpers;
+package dbhelpers;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,7 +13,7 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import src.servlets.QueryServlet;
+import servlets.QueryServlet;
 import cmu18641.bustracker.common.entities.BaseBus;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.common.entities.BaseScheduleItem;

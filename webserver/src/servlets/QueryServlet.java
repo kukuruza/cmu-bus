@@ -1,11 +1,10 @@
-package src.servlets;
+package servlets;
 
 
 import java.io.*; 
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -16,12 +15,13 @@ import javax.servlet.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import src.dbhelpers.DatabaseConnector;
-import src.dbhelpers.DbStructure;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.common.protocols.*;
 
 import com.google.gson.Gson;
+
+import dbhelpers.DatabaseConnector;
+import dbhelpers.DbTime;
 
 
 
@@ -41,32 +41,6 @@ public class QueryServlet extends HttpServlet {
     ArrayList<String> _busDirs = null;
     
     
-	// this function decides if it is weekday or saturday or sunday/holiday
-	// TODO: implement holiday
-	private int getWeekDay()
-	{
-    	Calendar calendar = Calendar.getInstance();
-	    int day = calendar.get(Calendar.DAY_OF_WEEK);
-	    
-	    if (day == Calendar.SUNDAY)
-	    	return DbStructure.WEEK_SUNDAY_HOLIDAY;
-	    else if (day == Calendar.SATURDAY)
-	    	return DbStructure.WEEK_SATURDAY;
-	    else
-	    	return DbStructure.WEEK_WEEKDAY;
-	}
-	
-	
-	// get time in format of the DB - minutes since midnight
-	protected int getMinutes ()
-	{
-		Calendar calendar = Calendar.getInstance();
-		int min = calendar.get(Calendar.MINUTE);
-		int hours = calendar.get(Calendar.HOUR_OF_DAY);
-		return hours * 60 + min;
-	}
-	
-	
 	private void logRequestParameters ()
 	{
         if ((_parameterMap != null) && !_parameterMap.isEmpty())
@@ -195,7 +169,7 @@ public class QueryServlet extends HttpServlet {
         if (!processParams (out))
         	return;  // this may be an error or a valid empty request
 		
-		int weekDay = getWeekDay();
+		int weekDay = DbTime.getWeekDay();
 		
 		// get schedule from database
 		DatabaseConnector connector = new DatabaseConnector();
@@ -213,4 +187,3 @@ public class QueryServlet extends HttpServlet {
 	}
   
 }
-

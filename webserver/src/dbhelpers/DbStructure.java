@@ -1,4 +1,4 @@
-package src.dbhelpers;
+package dbhelpers;
 
 import java.util.ArrayList;
 
