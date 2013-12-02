@@ -60,7 +60,9 @@
  <%     for (BaseStop stop : stops) 
 	    {
  %>         <tr>
-            <td style="padding-right:30px"> tick </td>
+            <td style="padding-right:30px">
+                <input type="radio" name="stopRadio" value= <%= stop.getName() %> />
+            </td>
             <td style="padding-right:30px"><%= stop.getName() %></td>
             <td style="padding-right:30px"><%= stop.street1 %></td>
             <td style="padding-right:30px"><%= stop.street2 %></td>
