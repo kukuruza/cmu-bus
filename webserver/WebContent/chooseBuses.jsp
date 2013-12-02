@@ -17,8 +17,8 @@
 <title>CMU Bus | choose bus</title>
 </head>
 
-<jsp:useBean id="route" class="beans.RouteBean" scope="session"/>
-<jsp:setProperty name="route" property="*"/>
+<jsp:useBean id="routeBean" class="beans.RouteBean" scope="session"/>
+<jsp:setProperty name="routeBean" property="*"/>
 
 <jsp:useBean id="allStopsBean" class="beans.AllStopsBean" scope="session"/>
 <jsp:setProperty name="allStopsBean" property="*"/>
@@ -54,6 +54,11 @@
 	
 		    DatabaseConnector connector = new DatabaseConnector();
 		    ArrayList<BaseBus> buses = connector.getBusesForStop(stop);
+		    
+		    // start filling in routeBean
+		    routeBean.setStopName(stopName);
+		    ArrayList<String> busNames = new ArrayList<String>();
+		    ArrayList<String> busDirs = new ArrayList<String>();
 	
 		 %> <b><%= stopName %></b>
 		 
@@ -73,6 +78,8 @@
 	         <% int i = 0;
 		        for (BaseBus bus : buses) 
 			    {
+		        	busNames.add(bus.getName());
+		        	busDirs.add(bus.getDirection());
 	             %> <tr>
 		            <td style="padding-right:10px">
 		                <input type=checkbox name=bus value="<%= i+1 %>" />
@@ -81,7 +88,9 @@
 		            <td style="padding-right:30px"><%= bus.getDirection() %></td>
 		            </tr>
 	             <% ++i;
-		        } 
+		        }
+		        routeBean.setBusNames(busNames);
+		        routeBean.setBusDirs(busDirs);
 	         %> </table>
         
 		    <p><input type="submit" value="get schedule">

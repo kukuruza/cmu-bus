@@ -15,52 +15,56 @@
 <title>CMU Bus | schedule</title>
 </head>
 
-<jsp:useBean id="route" class="beans.RouteBean" scope="session"/>
-<jsp:setProperty name="route" property="*"/>
+<jsp:useBean id="routeBean" class="beans.RouteBean" scope="session"/>
+<jsp:setProperty name="routeBean" property="*"/>
 
 <body>
  <% // load form data
-    String stopName = route.getStopName();
-    ArrayList<String> busNames = route.getBusNames();
-    ArrayList<String> busDirs = route.getBusDirs();
+    String stopName = routeBean.getStopName();
+    ArrayList<String> busNames = routeBean.getBusNames();
+    ArrayList<String> busDirs = routeBean.getBusDirs();
     
-    //int weekDay = TimeHelper.getWeekDay();
-    int weekDay = 0;
+    if (stopName == null || busNames == null || busDirs == null) {
+      %> Sorry, internal error <%
+    } else {
     
-    // get schedule
-	DatabaseConnector connector = new DatabaseConnector();
-    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs, weekDay);
-  %>
- 
- <% if (schedule == null) { %>
-	    So sorry - an error occurred
- <% } else {
-        ArrayList<BaseScheduleItem> scheduleItemList = schedule.getScheduleItemList();
- %>	    
-	    <b> Stop: <%= stopName %> </b>
-
-	    <!-- Table header -->
-	    <table border="0">
-	    <tr>
-	        <td style="padding-right:30px"><b> bus </b></td>
-	        <td style="padding-right:30px"><b> direction </b></td>
-	        <td>                           <b> time </b></td>
-	    </tr>
+	    int weekDay = DbTime.getWeekDay();
 	    
-	    <!-- Schedule itself -->
- <%     DbTime dbTime = new DbTime();
-        for (BaseScheduleItem scheduleItem : scheduleItemList) 
-	    {
-        	dbTime.setTime((int)(scheduleItem.getTime()));
- %>         <tr>
-            <td><%= scheduleItem.getBus().getName() %></td>
-            <td><%= scheduleItem.getBus().getDirection() %></td>
-            <td><%= dbTime.toString() %></td>
-            </tr>
- <%     } %>
-        </table>
-        
- <% } %> <!-- end of the 'if' that checks result for error -->
+	    // get schedule
+		DatabaseConnector connector = new DatabaseConnector();
+	    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs, weekDay);
+	  %>
+	 
+	 <% if (schedule == null) { %>
+		    Sorry, internal error
+	 <% } else {
+	        ArrayList<BaseScheduleItem> scheduleItemList = schedule.getScheduleItemList();
+	 %>	    
+		    <b> Stop: <%= stopName %> </b>
+	
+		    <!-- Table header -->
+		    <table border="0">
+		    <tr>
+		        <td style="padding-right:30px"><b> bus </b></td>
+		        <td style="padding-right:30px"><b> direction </b></td>
+		        <td>                           <b> time </b></td>
+		    </tr>
+		    
+		    <!-- Schedule itself -->
+	 <%     DbTime dbTime = new DbTime();
+	        for (BaseScheduleItem scheduleItem : scheduleItemList) 
+		    {
+	        	dbTime.setTime((int)(scheduleItem.getTime()));
+	 %>         <tr>
+	            <td><%= scheduleItem.getBus().getName() %></td>
+	            <td><%= scheduleItem.getBus().getDirection() %></td>
+	            <td><%= dbTime.toString() %></td>
+	            </tr>
+	 <%     } %>
+	        </table>
+	        
+	 <% } %> <!-- end of the 'if' that checks result for error -->
+ <% } %> <!-- end of the 'if' that checks error for loading route -->
 
 </body>
 </html>
