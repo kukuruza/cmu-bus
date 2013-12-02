@@ -15,15 +15,13 @@
 <title>CMU Bus | choose stop</title>
 </head>
 
-<jsp:useBean id="stopbean" class="beans.StopBean" scope="session"/>
-<jsp:setProperty name="stopbean" property="*"/>
-
 <jsp:useBean id="allStopsBean" class="beans.AllStopsBean" scope="session"/>
 <jsp:setProperty name="allStopsBean" property="*"/>
 
 <body>
 
-    <form name="getScheduleForm" action="viewSchedule.jsp" method="get" >
+    <form action="chooseBuses.jsp" method="get" >
+        <input type=submit value="choose stop">
 
 
  <% 
@@ -51,30 +49,31 @@
 	    <table border="0">
 	    <tr>
 	        <td style="padding-right:30px"></td>
-	        <td style="padding-right:30px"><b> stop </b></td>
+	        <td style="padding-right:30px"><b> name </b></td>
 	        <td style="padding-right:30px"><b> street 1 </b></td>
 	        <td>                           <b> street 2 </b></td>
 	    </tr>
 	    
 	    <!-- Schedule itself -->
- <%     for (BaseStop stop : stops) 
+ <%     int i = 0;
+        for (BaseStop stop : stops) 
 	    {
  %>         <tr>
-            <td style="padding-right:30px">
-                <input type="radio" name="stopRadio" value= <%= stop.getName() %> />
+            <td style="padding-right:10px">
+                <input type=radio name=stop value="<%= i+1 %>" />
             </td>
             <td style="padding-right:30px"><%= stop.getName() %></td>
             <td style="padding-right:30px"><%= stop.street1 %></td>
             <td style="padding-right:30px"><%= stop.street2 %></td>
             </tr>
- <%     } %>
-        </table>
+ <%         ++i;
+        } 
+ %>     </table>
         
  <% } %> <!-- end of the 'if' that checks result for error -->
 
+     </form>
   
-    <input type="submit" value="choose stop">
-    </form>
 
 
 </body>
