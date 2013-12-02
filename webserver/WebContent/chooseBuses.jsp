@@ -45,29 +45,49 @@
         Error: incorrect stop number. First go and choose a stop usng the form
  <% } else { %>
 
-	    <!-- When everything is ready get schedule -->
+	    <!-- When everything is ready list buses  -->
 	
-		<form name="getScheduleForm" action="viewSchedule.jsp" method="get" >
+		<form action="viewSchedule.jsp" method="get" >
 		
 		 <% BaseStop stop = stops.get(Integer.parseInt(stopNum)-1);
-		    String stopName = stop.getName();
-		    
-		 %> <b><%= stopName %></b> <%
-		    
-		    ArrayList<String> busNames = new ArrayList<String>();
-		    busNames.add("61A");
-		    ArrayList<String> busDirs = new ArrayList<String>();
-		    busDirs.add("Braddock");
-		    
-		    // set form data
-		    route.setStopName(stopName);
-		    route.setBusNames(busNames);
-		    route.setBusDirs(busDirs);
-		    
-		  %>
-		  
+			String stopName = stop.getName();
+	
+		    DatabaseConnector connector = new DatabaseConnector();
+		    ArrayList<BaseBus> buses = connector.getBusesForStop(stop);
+	
+		 %> <b><%= stopName %></b>
+		 
+		 <% if (buses == null) { %>
+			   <p>Sorry, internal error
+	     <% } else { %>
+			 
+				<!-- Table header -->
+			    <table border="0">
+			    <tr>
+			        <td style="padding-right:30px"></td>
+			        <td style="padding-right:30px"><b> bus </b></td>
+			        <td>                           <b> direction </b></td>
+			    </tr>
+			    
+			    <!-- Buses itself -->
+	         <% int i = 0;
+		        for (BaseBus bus : buses) 
+			    {
+	             %> <tr>
+		            <td style="padding-right:10px">
+		                <input type=checkbox name=bus value="<%= i+1 %>" />
+		            </td>
+		            <td style="padding-right:30px"><%= bus.getName() %></td>
+		            <td style="padding-right:30px"><%= bus.getDirection() %></td>
+		            </tr>
+	             <% ++i;
+		        } 
+	         %> </table>
+        
 		    <p><input type="submit" value="get schedule">
 	    </form>
+	 
+	 <% } %> <!-- check for error in buses -->
 	    
  <% } %> <!-- check for data consistency -->
 

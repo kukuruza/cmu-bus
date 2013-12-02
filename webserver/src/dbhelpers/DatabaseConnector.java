@@ -152,14 +152,46 @@ public class DatabaseConnector {
 			return null;
 		}
 		
-		// TODO: if the result is empty check that bus and stop are valid
-		
 		closeConnection();
 		
 		return stops;
 	}
 
+
 	
+	public ArrayList<BaseBus> getBusesForStop (BaseStop stop)
+	{
+		String selectQuery = DbStructure.busesRequestString(stop.getName());
+		logger.info("getBusesForStop: " + selectQuery);
+		
+		if (!connect()) return null; 
+		
+		ResultSet rs;
+		try {
+			rs = _stat.executeQuery(selectQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		ArrayList<BaseBus> buses = new ArrayList<BaseBus>();
+		try {
+			while(rs.next())
+			{
+				String name = rs.getObject(DbStructure.BUS_NAME).toString();
+			    String dir  = rs.getObject(DbStructure.BUS_DIR).toString();
+			    buses.add (new BaseBus(name, dir));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		closeConnection();
+		
+		return buses;
+	}
+
 	
 	
 	public boolean closeConnection() 

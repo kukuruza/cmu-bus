@@ -54,7 +54,7 @@
 	        <td>                           <b> street 2 </b></td>
 	    </tr>
 	    
-	    <!-- Schedule itself -->
+	    <!-- Stops themselves -->
  <%     int i = 0;
         for (BaseStop stop : stops) 
 	    {

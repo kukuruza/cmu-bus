@@ -43,11 +43,29 @@ public class DbStructure {
     protected static final String SCHEDULE_TIME = "scheduletime";
 	
     
+    // get all stops from the stops table
     public static String allStopsRequestString()
     {
-	    // get all stops from the stops table
 	    return  "SELECT * FROM " + TABLE_STOP;
     }
+
+    // get all buses for a single stop
+    public static String busesRequestString(String stopName)
+    {
+		return  "SELECT " + 
+        BUS_NAME + ", " + 
+        BUS_DIR + " " + 
+        "FROM " + 
+        TABLE_BUS + " tb, " + 
+        TABLE_STOP + " ts, " + 
+        TABLE_ROUTE + " tr " + 
+        "WHERE " + 
+        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
+        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
+        "tb." + BUS_ID + " = tr." + BUS_ID;
+    }
+    
+    
 
     public static String scheduleRequestString 
         (String stopName, String busName, String busDir, int weekDay)
