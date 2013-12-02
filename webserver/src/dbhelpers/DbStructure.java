@@ -42,6 +42,13 @@ public class DbStructure {
     protected static final String SCHEDULE_DAY = "scheduleday";
     protected static final String SCHEDULE_TIME = "scheduletime";
 	
+    
+    public static String allStopsRequestString()
+    {
+	    // get all stops from the stops table
+	    return  "SELECT * FROM " + TABLE_STOP;
+    }
+
     public static String scheduleRequestString 
         (String stopName, String busName, String busDir, int weekDay)
     {
@@ -52,8 +59,8 @@ public class DbStructure {
 		return  "SELECT " + 
 		        BUS_NAME + ", " + 
 		        BUS_DIR + ", " + 
-		        SCHEDULE_TIME + 
-		        " FROM " + 
+		        SCHEDULE_TIME + " " +
+		        "FROM " + 
 		        TABLE_BUS + " tb, " + 
 		        TABLE_STOP + " ts, " + 
 		        TABLE_ROUTE + " tr, " + 
@@ -81,8 +88,8 @@ public class DbStructure {
 		String s = "SELECT " + 
 		        BUS_NAME + ", " + 
 		        BUS_DIR + ", " + 
-		        SCHEDULE_TIME + 
-		        " FROM " + 
+		        SCHEDULE_TIME + " " +
+		        "FROM " + 
 		        TABLE_BUS + " tb, " + 
 		        TABLE_STOP + " ts, " + 
 		        TABLE_ROUTE + " tr, " + 

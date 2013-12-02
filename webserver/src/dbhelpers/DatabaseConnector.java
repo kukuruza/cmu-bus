@@ -17,6 +17,7 @@ import servlets.QueryServlet;
 import cmu18641.bustracker.common.entities.BaseBus;
 import cmu18641.bustracker.common.entities.BaseSchedule;
 import cmu18641.bustracker.common.entities.BaseScheduleItem;
+import cmu18641.bustracker.common.entities.BaseStop;
 
 
 public class DatabaseConnector {
@@ -118,6 +119,46 @@ public class DatabaseConnector {
     	
 		return schedule;
 	}
+	
+	
+	public ArrayList<BaseStop> getAllStops()
+	{
+		String selectQuery = DbStructure.allStopsRequestString();
+		logger.info("getAllStops: " + selectQuery);
+		
+		if (!connect()) return null; 
+		
+		ResultSet rs;
+		try {
+			rs = _stat.executeQuery(selectQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		ArrayList<BaseStop> stops = new ArrayList<BaseStop>();
+		try {
+			while(rs.next())
+			{
+				String name      = rs.getObject(DbStructure.STOP_NAME).toString();
+			    String street1   = rs.getObject(DbStructure.STOP_STREET1).toString();
+			    String street2   = rs.getObject(DbStructure.STOP_STREET2).toString();
+			    double latitude  = Double.parseDouble(rs.getObject(DbStructure.STOP_GPSLAT).toString());
+			    double longitude = Double.parseDouble(rs.getObject(DbStructure.STOP_GPSLONG).toString());
+			    stops.add(new BaseStop(name, street1, street2, latitude, longitude));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		// TODO: if the result is empty check that bus and stop are valid
+		
+		closeConnection();
+		
+		return stops;
+	}
+
 	
 	
 	

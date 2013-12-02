@@ -5,7 +5,6 @@
 <%@ page import="dbhelpers.DatabaseConnector" %>
 <%@ page import="cmu18641.bustracker.common.entities.BaseSchedule" %>
 <%@ page import="cmu18641.bustracker.common.entities.BaseScheduleItem" %>
-<%@ page import="com.google.gson.Gson" %>
 <%@ page import="dbhelpers.DbTime" %>
     
     
@@ -13,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>CMU Bus | choose buses</title>
+<title>CMU Bus | schedule</title>
 </head>
 
 <jsp:useBean id="route" class="beans.RouteBean" scope="session"/>

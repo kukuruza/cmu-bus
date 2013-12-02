@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>CMU Bus | choose buses</title>
+<title>CMU Bus | mock schedule</title>
 </head>
 <body>
  <% String stopName = new String("Fifth Ave at Wood St");
