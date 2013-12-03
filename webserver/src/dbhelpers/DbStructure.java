@@ -48,6 +48,28 @@ public class DbStructure {
     {
 	    return  "SELECT * FROM " + TABLE_STOP;
     }
+    
+    // get all stops from the table where one of the streets matches
+    public static String stopsByStreetsRequestString (ArrayList<String> street)
+    {
+	    String s = "SELECT * " + 
+               "FROM " + TABLE_STOP + " ts " + 
+               "WHERE ";
+		        // this code enters multiple streets
+		        for (int i = 0; i != street.size(); ++i)
+		        {
+		        	s = s + 
+		        	"ts." + STOP_STREET1 + " = '" + street + "' OR " +
+		            "ts." + STOP_STREET2 + " = '" + street + "'";
+		        	if (i == street.size()-1) 
+		        		s = s + "'";
+		        	else
+		        		s = s + "' OR ";
+		        }
+              
+		 return s;
+    }
+
 
     // get all buses for a single stop
     public static String busesRequestString(String stopName)
@@ -134,5 +156,6 @@ public class DbStructure {
         return s;
     }
     
+     
 
 }

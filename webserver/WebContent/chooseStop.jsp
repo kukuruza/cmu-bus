@@ -21,6 +21,7 @@
 <body>
 
     <form action="chooseBuses.jsp" method="get" >
+        Please pick a bus stop and press on: 
         <input type=submit value="choose stop">
 
 

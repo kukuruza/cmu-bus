@@ -79,9 +79,10 @@ public class DatabaseConnector {
 	
 	
 	public BaseSchedule getSchedule 
-	       (String stopName, ArrayList<String> busesNames, 
-			ArrayList<String> busesDirs, int weekDay)
+	       (String stopName, ArrayList<String> busesNames, ArrayList<String> busesDirs)
 	{
+	    int weekDay = DbTime.getWeekDay();
+		
 		String selectQuery = DbStructure.scheduleRequestString
 				(stopName, busesNames, busesDirs, weekDay);
 		logger.info(selectQuery);
@@ -99,14 +100,19 @@ public class DatabaseConnector {
 		BaseSchedule schedule = new BaseSchedule ();
 		schedule.setStop(stopName);
 		
+		int currentMin = DbTime.getCurrentDbTime();
     	try {
 			while(rs.next())
 			{
 			    String timeVal = rs.getObject("scheduletime").toString();
+			    // logic is to be removed from here
+			    int minTotal = Integer.parseInt(timeVal);
+			    if (currentMin > minTotal)
+			    	continue;
 			    String busnameVal = rs.getObject("busname").toString();
 			    String busdirVal = rs.getObject("busdir").toString();
 			    BaseBus bus = new BaseBus(busnameVal, busdirVal);
-			    schedule.addItem(new BaseScheduleItem(bus, Integer.parseInt(timeVal)));
+			    schedule.addItem(new BaseScheduleItem(bus, minTotal));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,6 +131,44 @@ public class DatabaseConnector {
 	{
 		String selectQuery = DbStructure.allStopsRequestString();
 		logger.info("getAllStops: " + selectQuery);
+		
+		if (!connect()) return null; 
+		
+		ResultSet rs;
+		try {
+			rs = _stat.executeQuery(selectQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		ArrayList<BaseStop> stops = new ArrayList<BaseStop>();
+		try {
+			while(rs.next())
+			{
+				String name      = rs.getObject(DbStructure.STOP_NAME).toString();
+			    String street1   = rs.getObject(DbStructure.STOP_STREET1).toString();
+			    String street2   = rs.getObject(DbStructure.STOP_STREET2).toString();
+			    double latitude  = Double.parseDouble(rs.getObject(DbStructure.STOP_GPSLAT).toString());
+			    double longitude = Double.parseDouble(rs.getObject(DbStructure.STOP_GPSLONG).toString());
+			    stops.add(new BaseStop(name, street1, street2, latitude, longitude));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		closeConnection();
+		
+		return stops;
+	}
+	
+	
+	
+	public ArrayList<BaseStop> getStopsByStreet (ArrayList<String> streets)
+	{
+		String selectQuery = DbStructure.stopsByStreetsRequestString (streets);
+		logger.info("getStopsByStreet: " + selectQuery);
 		
 		if (!connect()) return null; 
 		

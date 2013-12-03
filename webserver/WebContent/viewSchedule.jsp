@@ -28,11 +28,9 @@
       %> Sorry, internal error <%
     } else {
     
-	    int weekDay = DbTime.getWeekDay();
-	    
 	    // get schedule
 		DatabaseConnector connector = new DatabaseConnector();
-	    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs, weekDay);
+	    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs);
 	  %>
 	 
 	 <% if (schedule == null) { %>
@@ -42,23 +40,32 @@
 	 %>	    
 		    <b> Stop: <%= stopName %> </b>
 	
+	        <!-- Print current time -->
+	 <%     DbTime now = new DbTime();
+	        now.setTime (DbTime.getCurrentDbTime());
+	 %>     <p> Current time: <%= now.toString() %>
+	
 		    <!-- Table header -->
 		    <table border="0">
 		    <tr>
 		        <td style="padding-right:30px"><b> bus </b></td>
 		        <td style="padding-right:30px"><b> direction </b></td>
-		        <td>                           <b> time </b></td>
+		        <td style="padding-right:30px"><b> time </b></td>
+		        <td>                           <b> minutes left </b>
 		    </tr>
 		    
 		    <!-- Schedule itself -->
 	 <%     DbTime dbTime = new DbTime();
+	        DbTime left = new DbTime();
 	        for (BaseScheduleItem scheduleItem : scheduleItemList) 
 		    {
 	        	dbTime.setTime((int)(scheduleItem.getTime()));
+	        	left.setTime (dbTime.getMinutesTotal() - now.getMinutesTotal());
 	 %>         <tr>
-	            <td><%= scheduleItem.getBus().getName() %></td>
-	            <td><%= scheduleItem.getBus().getDirection() %></td>
-	            <td><%= dbTime.toString() %></td>
+	            <td style="padding-right:30px"><%= scheduleItem.getBus().getName() %></td>
+	            <td style="padding-right:30px"><%= scheduleItem.getBus().getDirection() %></td>
+	            <td style="padding-right:30px"><%= dbTime.toString() %></td>
+	            <td>                           <%= left.getMinutesTotal() + " " %> min. </td>
 	            </tr>
 	 <%     } %>
 	        </table>

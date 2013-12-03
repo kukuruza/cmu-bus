@@ -28,10 +28,10 @@ public class Networking {
 	
 	// Set the timeout in milliseconds until a connection is established.
 	// The default value is zero, that means the timeout is not used. 
-	private final static int TimeoutConnection = 3000;
+	private final static int TimeoutConnection = 1000;
 	// Set the default socket timeout (SO_TIMEOUT) 
 	// in milliseconds which is the timeout for waiting for data.
-	private final static int TimeoutSocket = 5000;
+	private final static int TimeoutSocket = 2000;
 
 
 	public static boolean isNetworkAvailable (Context context) {

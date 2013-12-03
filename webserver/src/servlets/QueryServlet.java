@@ -21,7 +21,6 @@ import cmu18641.bustracker.common.protocols.*;
 import com.google.gson.Gson;
 
 import dbhelpers.DatabaseConnector;
-import dbhelpers.DbTime;
 
 
 
@@ -169,11 +168,9 @@ public class QueryServlet extends HttpServlet {
         if (!processParams (out))
         	return;  // this may be an error or a valid empty request
 		
-		int weekDay = DbTime.getWeekDay();
-		
 		// get schedule from database
 		DatabaseConnector connector = new DatabaseConnector();
-        BaseSchedule schedule = connector.getSchedule (_stopName, _busNames, _busDirs, weekDay);
+        BaseSchedule schedule = connector.getSchedule (_stopName, _busNames, _busDirs);
         if (schedule == null)
         {
         	out.println(NetProtocol.ANSWER_ON_ERROR);

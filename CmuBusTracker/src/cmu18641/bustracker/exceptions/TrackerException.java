@@ -32,7 +32,7 @@ public class TrackerException extends Throwable {
 	
 	public String getMessage()
 	{
-	    return _type[_errorNum] + " at " + _srcTag + "\n" + super.getMessage();
+	    return _type[_errorNum] + " at " + _srcTag + ": " + super.getMessage();
 	}
 }
 

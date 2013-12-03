@@ -23,6 +23,12 @@ public class DbTime {
 		_calendar.set (Calendar.MINUTE, _minutes);
 	}
 	
+	public int getMinutesTotal ()
+	{
+		assert (_hours >= 0 && _minutes >= 0);
+		return _hours * 60 + _minutes;
+	}
+	
 	public String toString()
 	{
 		assert (_hours >= 0 && _minutes >= 0);
