@@ -152,7 +152,8 @@ public class DbStructure {
 		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
 		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 
 		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
-		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "'";
+		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "' " +
+		        "ORDER BY " + SCHEDULE_TIME;
         return s;
     }
     
