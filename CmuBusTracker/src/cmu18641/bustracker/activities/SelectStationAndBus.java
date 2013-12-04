@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 /*
  * SelectStationAndBus.java
@@ -45,8 +46,6 @@ public class SelectStationAndBus extends Activity {
 
 	private Button findNextBusButton; 
 	private Button findStationButton; 
-	
-	private boolean _successfulUpdate = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +200,8 @@ public class SelectStationAndBus extends Activity {
 	        {	
 	        	// this class manages asynchronous call to update database from the server 
 	        	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
-	        		private AlertDialog dialog; 
+	        		private AlertDialog dialog;
+	        		private boolean _success = false;
 	        		
 	        		@Override
 	        	    protected void onPreExecute() {
@@ -215,28 +215,26 @@ public class SelectStationAndBus extends Activity {
 	        		
 	        		@Override
 	        		protected Void doInBackground(Void... params) {
-	                    Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
+	        			_success = Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
 	        			return null;
 	        		}
 	        		
 	        		@Override
 	        		protected void onPostExecute(Void result) {
-	        			if (!_successfulUpdate) { 
-	        			    //Toast.makeText(this, "Could not update the database \n" + 
-	        			    //		"Really sorry, internal error", Toast.LENGTH_LONG).show();
-	        			}
-	        			
-	        			if(dialog != null) { 
+	        			if (dialog != null) 
 	        				dialog.dismiss(); 
-	        			}
+
+	        			if (_success)
+	        			    Toast.makeText (SelectStationAndBus.this, "Sucessfully updated the schedule", 
+	        			    		Toast.LENGTH_LONG).show();
+	        			else
+	        			    Toast.makeText (SelectStationAndBus.this, "Could not update the schedule \n" + 
+	        			    		"Really sorry", Toast.LENGTH_LONG).show();
 	        		}
 	        	}
-
-	 		    // call to update db
-	        	ExecuteUpdate executeUpdate = new ExecuteUpdate();
-	        	executeUpdate.execute();
+	        	new ExecuteUpdate().execute();
 	        	
-	        	return true; 
+	        	return true; // return from menu
 	        }
 	        // edit preferences
 	        case R.id.settings:

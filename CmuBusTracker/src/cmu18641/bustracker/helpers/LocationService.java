@@ -27,12 +27,12 @@ public class LocationService extends Service implements LocationListener{
     double longitude; 
  
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 0 meters
-    private static final long MIN_TIME_CHANGE_FOR_UPDATES = 250; // 15 seconds
+    private static final long MIN_TIME_CHANGE_FOR_UPDATES = 0; // 0 seconds
  
     protected LocationManager locationManager;
  
     public LocationService(Context context) {
-    	Log.i(TAG, "starting locationService");
+    	Log.i(TAG, "starting GPS");
         this.mContext = context;
         locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
         initalizeLocationService(); 
@@ -88,7 +88,7 @@ public class LocationService extends Service implements LocationListener{
     // stop location provider updates
     public void stopUsingLocation(){
         if(locationManager != null){
-        	Log.i(TAG, "stopping locationService");
+        	Log.i(TAG, "stopping GPS");
             locationManager.removeUpdates(LocationService.this);
         }       
     }

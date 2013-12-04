@@ -201,9 +201,7 @@ public class ViewScheduleActivity extends Activity {
 				}
             }
 		}
-		
-		ExecuteTimeQuery exec = new ExecuteTimeQuery();
-		exec.execute();
+		new ExecuteTimeQuery().execute();
 	}
 	
 	// create the Activity's menu from a menu resource XML file
