@@ -66,8 +66,9 @@ public class GlobalManager {
 	
 	// fetch location from location service 
 	private Location fetchLocation(Context context) { 
-		
-		locationService = new LocationService(context); 
+		if(locationService == null) { 
+			locationService = new LocationService(context); 
+		}
 		Location userLocation = new Location("user"); 
 		
         if(locationService.canGetLocation() && locationService.getLocation() != null) {
@@ -75,12 +76,8 @@ public class GlobalManager {
             Log.d("Manager", "userLocation=" + locationService.getLatitude() + " " 
             			+ locationService.getLongitude());
         }
- 
-        //locationService.stopUsingLocation(); 
-        //locationService = null; 
-        
-        Log.d("location", userLocation.getLatitude() + " " + userLocation.getLongitude());
-		
+
+       		
 		return userLocation; 
 	}
 	
