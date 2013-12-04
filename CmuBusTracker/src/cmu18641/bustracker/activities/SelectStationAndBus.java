@@ -27,7 +27,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 /*
  * SelectStationAndBus.java
@@ -202,6 +201,18 @@ public class SelectStationAndBus extends Activity {
 	        {	
 	        	// this class manages asynchronous call to update database from the server 
 	        	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
+	        		private AlertDialog dialog; 
+	        		
+	        		@Override
+	        	    protected void onPreExecute() {
+	        			// show uncancelable dialog
+	    	        	Builder builder = new AlertDialog.Builder(SelectStationAndBus.this);
+	    	 		    builder.setMessage("Please wait. App updating.");
+	    	 		    builder.setCancelable(false); 
+	    	 		    dialog = builder.create();
+	    	 		    dialog.show();
+	        	    }
+	        		
 	        		@Override
 	        		protected Void doInBackground(Void... params) {
 	                    Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
@@ -210,26 +221,21 @@ public class SelectStationAndBus extends Activity {
 	        		
 	        		@Override
 	        		protected void onPostExecute(Void result) {
-	        			if (!_successfulUpdate)
-	        				;
+	        			if (!_successfulUpdate) { 
 	        			    //Toast.makeText(this, "Could not update the database \n" + 
 	        			    //		"Really sorry, internal error", Toast.LENGTH_LONG).show();
+	        			}
+	        			
+	        			if(dialog != null) { 
+	        				dialog.dismiss(); 
+	        			}
 	        		}
 	        	}
-
-	        	// show uncancelable dialog
-	        	Builder builder = new AlertDialog.Builder(SelectStationAndBus.this);
-	 		    builder.setMessage("Please wait. App updating.");
-	 		    builder.setCancelable(false); 
-	 		    AlertDialog dialog = builder.create();
-	 		    dialog.show();
 
 	 		    // call to update db
 	        	ExecuteUpdate executeUpdate = new ExecuteUpdate();
 	        	executeUpdate.execute();
 	        	
-	        	// dismiss dialag
-	        	dialog.cancel();
 	        	return true; 
 	        }
 	        // edit preferences
