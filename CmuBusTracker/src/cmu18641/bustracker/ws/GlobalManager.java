@@ -117,11 +117,21 @@ public class GlobalManager {
 			String databasePath = context.getApplicationInfo().dataDir + "/databases";
 			
 			// delete old database
-			context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
+			boolean deleted = context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
+			
+			if(deleted) { 
+				Log.i("GlobalManager", "old db deleted");
+			}
 			
 			// download new database to apps private data directory
 			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
 			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
+			
+			String fileList[] = context.fileList(); 
+			
+			for(int i = 0; i < fileList.length; i++) { 
+				Log.i("GlobalManager", fileList[i]); 
+			}
 			
 			// increment version
 			LocalDatabaseConnector.incrementDbVersion();
