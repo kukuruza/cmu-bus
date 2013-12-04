@@ -1,0 +1,11 @@
+stop_id,stop_name,stop_street1,stop_street2,stop_gpslat,stop_gpslong
+1,Fifth Ave at Wood St,Fifth,Wood,40.440488,-79.999637
+2,Forbes Ave past S Braddock Ave,Forbes,South Braddock,40.439674,-79.89764
+3,Fifth Ave opposite Atwood St,Fifth,Atwood,40.441819,-79.958507
+4,Forbes Ave opposite Craig St,Forbes,Craig,40.444408,-79.948733
+5,Forbes Ave at Murray St,Forbes,Murray,40.43812,-79.923601
+6,Forbes Ave & South Craig St,Forbes,South Craig,40.444467,-79.948642
+7,Sixth Ave & Fifth Ave FS,Sixth,Fifth,40.43926,-79.994616
+8,Forbes Ave at Atwood St,Forbes,Atwood,40.440942,-79.957751
+9,Fifth Ave at Ross St,Fifth,Ross,40.438998,-79.995372
+10,Forbes Ave at Atwood St,Forbes,Atwood,40.440942,-79.957751
