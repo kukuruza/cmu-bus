@@ -36,20 +36,14 @@
     // get stops
     // using bean to carry all the stops to avoid reloading
     ArrayList<BaseStop> stops;
-    //if (allStopsBean.getStops() == null)
-    //{
-    	// get from database
-    	String street = (String)request.getParameter("street");
-        DatabaseConnector connector = new DatabaseConnector();
-    	if (street == null)
-            stops = connector.getAllStops();
-    	else
-            stops = connector.getStopsByStreet(street);
-        allStopsBean.setStops(stops);
-    //}
-    //else
-    	// get pre-loaded
-    	//stops = allStopsBean.getStops();
+   	// get from database
+   	String street = (String)request.getParameter("street");
+       DatabaseConnector connector = new DatabaseConnector();
+   	if (street == null || street.equals(""))
+       stops = connector.getAllStops();
+   	else
+       stops = connector.getStopsByStreet(street);
+    allStopsBean.setStops(stops);
   %>
 
 

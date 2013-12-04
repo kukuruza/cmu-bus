@@ -79,7 +79,7 @@ public class ViewScheduleActivity extends Activity {
 		TextView  stopWalkingDistanceTextView = (TextView) findViewById(R.id.viewschedule_walkingDistanceTextView);
 		stopNameTextView.setText(_selectedStop.getName()); 
 		stopDistanceTextView.setText(_selectedStop.getDistanceString() + " miles");            
-		stopWalkingDistanceTextView.setText(_selectedStop.getWalkingTimeString() + " minutes"); 
+		stopWalkingDistanceTextView.setText(_selectedStop.getWalkingTimeString() + " min."); 
 		
 		// listen for gestures
         _gestureDetector = new GestureDetector(this, new SwipeDetector(this));
