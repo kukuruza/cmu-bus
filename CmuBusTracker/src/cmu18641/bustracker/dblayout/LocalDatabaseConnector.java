@@ -64,8 +64,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 
 	// constructor
 	public LocalDatabaseConnector(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		setForcedUpgradeVersion(DATABASE_VERSION);
+			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+			setForcedUpgradeVersion(DATABASE_VERSION);
 	}
 
 	// open the database connection

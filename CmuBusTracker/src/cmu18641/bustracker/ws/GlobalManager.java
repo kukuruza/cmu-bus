@@ -91,8 +91,8 @@ public class GlobalManager {
 	}
 	
 	// updated database to be saved 
-	public void updateDatabase(Context context) 
-	{ 
+	public void updateDatabase(Context context) { 
+		
 		try {
 			// check network
 			boolean availableNetwork = Networking.isNetworkAvailable(context);

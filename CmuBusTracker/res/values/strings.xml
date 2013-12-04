@@ -35,7 +35,7 @@
     <string name="pref_title_favorites">favorite routes</string>
     <string name="pref_summary_favorites">You can manualy edit your favorite routes here, 
         e.g. delete them</string>
-    <string name="update_db_title">Update schedule on phone</string>    
+    <string name="update_db_title">Update Schedule</string>    
     <string name="title_activity_use_favorites">UseFavoritesActivity</string>
 
 </resources>

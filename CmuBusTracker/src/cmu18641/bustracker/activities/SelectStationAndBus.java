@@ -1,6 +1,5 @@
 package cmu18641.bustracker.activities;
 
-
 import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.adapter.BusAdapter;
@@ -14,6 +13,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuInflater;
@@ -194,20 +195,29 @@ public class SelectStationAndBus extends Activity {
 	        		@Override
 	        		protected Void doInBackground(Void... params) {
 	                    Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
-	                    //new SimpleDialogBuilderHelper(SelectStationAndBus.this, 
-	                    //		"Please wait for database to update", "Ok"); 
 	        			return null;
 	        		}
 	        		
 	        		@Override
 	        		protected void onPostExecute(Void result) {
-	        			// TODO: remove the dialog			
+	        			/* empty */		
 	        		}
 	        	}
 
+	        	// show uncancelable dialog
+	        	Builder builder = new AlertDialog.Builder(SelectStationAndBus.this);
+	 		    builder.setMessage("Please wait. App updating.");
+	 		    builder.setCancelable(false); 
+	 		    AlertDialog dialog = builder.create();
+	 		    dialog.show();
+
+	 		    // call to update db
 	        	ExecuteUpdate executeUpdate = new ExecuteUpdate();
 	        	executeUpdate.doInBackground();
-	        	return true;
+	        	
+	        	// dismiss dialag
+	        	dialog.cancel();
+	        	return true; 
 	        }
 	        // edit preferences
 	        case R.id.settings:
@@ -222,5 +232,6 @@ public class SelectStationAndBus extends Activity {
 			default:
 	    		return super.onOptionsItemSelected(item);
 		}
-	} 	
+	} 
+	
 }
