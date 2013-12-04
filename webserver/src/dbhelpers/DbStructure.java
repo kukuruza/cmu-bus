@@ -146,6 +146,50 @@ public class DbStructure {
         return s;
     }
     
+    public static String scheduleRequestBetweenTimesString (String stopName, 
+    		ArrayList<String> busNames, ArrayList<String> busDirs, int weekDay, 
+    		int minMinutes, int maxMinutes)
+    {
+    	assert (busNames.size() == busDirs.size());
+    	
+		// 1. get stopId from stop table
+		// 2. get busid from bus table
+		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
+		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
+		String s = "SELECT " + 
+		        BUS_NAME + ", " + 
+		        BUS_DIR + ", " + 
+		        SCHEDULE_TIME + " " +
+		        "FROM " + 
+		        TABLE_BUS + " tb, " + 
+		        TABLE_STOP + " ts, " + 
+		        TABLE_ROUTE + " tr, " + 
+		        TABLE_SCHEDULE + " tsc " + 
+		        "WHERE ";
+		        // this code enters multiple buses
+		        s = s + "(";
+		        for (int i = 0; i != busNames.size(); ++i)
+		        {
+		        	s = s + 
+		            "tb." + BUS_NAME + " = '" + busNames.get(i) + "' AND " + 
+		            "tb." + BUS_DIR + " = '" + busDirs.get(i);
+		        	if (i == busNames.size()-1) 
+		        		s = s + "') AND ";
+		        	else
+		        		s = s + "' OR ";
+		        }
+		        s = s +
+		        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
+		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
+		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 
+		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
+		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "' AND " +
+		        "tsc." + SCHEDULE_TIME + " >= " + Integer.toString(minMinutes) + " AND " +
+		        "tsc." + SCHEDULE_TIME + " < " + Integer.toString(maxMinutes) + " " +
+		        "ORDER BY " + SCHEDULE_TIME;
+        return s;
+    }
+    
      
 
 }

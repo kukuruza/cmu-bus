@@ -4,8 +4,11 @@
     <string name="server_timequery_url">http://192.168.1.7:8080/webserver/query</string>
     <string name="server_dbquery_url">http://192.168.1.7:8080/webserver/getdatabase</string>
 
+    <string name="fromDevice_timequery_url">http://192.168.1.7:8080/webserver/query</string>
+    <string name="fromDevice_dbquery_url">http://192.168.1.7:8080/webserver/getdatabase</string>
     <string name="fromADM_timequery_url">http://10.0.2.2:8080/webserver/query</string>
     <string name="fromADM_dbquery_url">http://10.0.2.2:8080/webserver/getdatabase</string>
+    
     
     <string name="app_name">CmuBusTracker</string>
     <string name="action_settings">Settings</string>

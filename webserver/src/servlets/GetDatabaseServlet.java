@@ -41,6 +41,7 @@ public class GetDatabaseServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
               throws ServletException, IOException 
     {	
+		System.out.println("request to GetDatabaseServlet");
 		String resourcePath = DatabaseConnector.getDbPath();
 		if (resourcePath == null)
 			logger.error("Could not retrieve schedule database path");

@@ -134,7 +134,7 @@ public class GlobalManager {
 //			}
 			
 			// increment version
-			LocalDatabaseConnector.incrementDbVersion();
+//			LocalDatabaseConnector.incrementDbVersion();
 			
 			return true;
 		} catch (TrackerException e) {
