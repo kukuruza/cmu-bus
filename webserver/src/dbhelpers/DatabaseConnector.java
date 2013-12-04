@@ -165,10 +165,16 @@ public class DatabaseConnector {
 	
 	
 	
-	public ArrayList<BaseStop> getStopsByStreet (ArrayList<String> streets)
+	public ArrayList<BaseStop> getStopsByStreet (String street)
 	{
-		String selectQuery = DbStructure.stopsByStreetsRequestString (streets);
-		logger.info("getStopsByStreet: " + selectQuery);
+		if (street == null)
+		{
+			logger.error ("getStopsByStreet: supplied street is null");
+			return null;
+		}
+		
+		String selectQuery = DbStructure.stopsByStreetRequestString (street);
+		logger.info("getStopsByStreet with street " + street + ": " + selectQuery);
 		
 		if (!connect()) return null; 
 		

@@ -20,25 +20,36 @@
 
 <body>
 
+        <form action="chooseStop.jsp" method="get" >
+        Show only stops on this street: 
+	    <input type=text name=street>
+	    <input type=submit value="Update list">
+	</form>
+
+    <p>
     <form action="chooseBuses.jsp" method="get" >
         Please pick a bus stop and press on: 
         <input type=submit value="choose stop">
 
 
  <% 
-    // get all stops
+    // get stops
     // using bean to carry all the stops to avoid reloading
     ArrayList<BaseStop> stops;
-    if (allStopsBean.getStops() == null)
-    {
+    //if (allStopsBean.getStops() == null)
+    //{
     	// get from database
+    	String street = (String)request.getParameter("street");
         DatabaseConnector connector = new DatabaseConnector();
-        stops = connector.getAllStops();
+    	if (street == null)
+            stops = connector.getAllStops();
+    	else
+            stops = connector.getStopsByStreet(street);
         allStopsBean.setStops(stops);
-    }
-    else
+    //}
+    //else
     	// get pre-loaded
-    	stops = allStopsBean.getStops();
+    	//stops = allStopsBean.getStops();
   %>
 
 
