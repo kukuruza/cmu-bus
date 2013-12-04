@@ -119,13 +119,13 @@ public class GlobalManager {
 			// delete old database
 			boolean deleted = context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
 			
-			if(deleted){ 
+			if(deleted) { 
 				Log.i("GlobalManager", "old db deleted");
 			}
 			
 			// download new database to apps private data directory
 			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
-			newDb.downloadDb(context, databasePath + "/" + "sched.db");
+			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
 			
 			// increment version
 			LocalDatabaseConnector.incrementDbVersion();
