@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 /*
  * SelectStationAndBus.java
@@ -45,6 +46,8 @@ public class SelectStationAndBus extends Activity {
 
 	private Button findNextBusButton; 
 	private Button findStationButton; 
+	
+	private boolean _successfulUpdate = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -207,7 +210,10 @@ public class SelectStationAndBus extends Activity {
 	        		
 	        		@Override
 	        		protected void onPostExecute(Void result) {
-	        			/* empty */		
+	        			if (!_successfulUpdate)
+	        				;
+	        			    //Toast.makeText(this, "Could not update the database \n" + 
+	        			    //		"Really sorry, internal error", Toast.LENGTH_LONG).show();
 	        		}
 	        	}
 

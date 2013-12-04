@@ -97,18 +97,15 @@ public class GlobalManager {
 	}
 	
 	// updated database to be saved 
-	public void updateDatabase(Context context) { 
+	public boolean updateDatabase(Context context) { 
 		
 		try {
 			// check network
 			boolean availableNetwork = Networking.isNetworkAvailable(context);
 			if (!availableNetwork)
 			{
-				//Toast.makeText(context, "Could not update the database \n" + 
-				//		"Network is not available", Toast.LENGTH_LONG).show();
-				
 				Log.i(TAG, "network is NOT availble");
-				return;
+				return false;
 			}
 			else
 				Log.i(TAG, "network is available");
@@ -129,17 +126,18 @@ public class GlobalManager {
 			
 			String fileList[] = context.fileList(); 
 			
+			Log.i (TAG, "number of files: " + Integer.toString(fileList.length));
 			for(int i = 0; i < fileList.length; i++) { 
-				Log.i("GlobalManager", fileList[i]); 
+				Log.i(TAG, fileList[i]); 
 			}
 			
 			// increment version
 			LocalDatabaseConnector.incrementDbVersion();
 			
+			return true;
 		} catch (TrackerException e) {
 			Log.e (TAG, "Could not update the database: " + e.getMessage());
-			//Toast.makeText(context, "Could not update the database \n" + 
-			//		"Really sorry, internal error", Toast.LENGTH_LONG).show();
+			return false;
 		}
 		
 	}
