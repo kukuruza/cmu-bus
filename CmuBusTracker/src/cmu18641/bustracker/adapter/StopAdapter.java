@@ -66,7 +66,7 @@ public class StopAdapter extends ArrayAdapter<Stop> {
 					
 		viewHolder.name.setText(favoriteLabelsList.get(position) + stopList.get(position).getName());
 		viewHolder.address.setText(stopList.get(position).getAddress());
-		viewHolder.walkingDistance.setText(stopList.get(position).getWalkingTimeString() + " minutes");
+		viewHolder.walkingDistance.setText(stopList.get(position).getWalkingTimeString() + " min.");
 		viewHolder.distance.setText(stopList.get(position).getDistanceString() + " miles"); 
 		
 	    Log.d("StopAdapter - getView()", "position= " + position);

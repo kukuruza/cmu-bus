@@ -1,4 +1,4 @@
-package src.servlets;
+package servlets;
 
 
 import java.io.*; 

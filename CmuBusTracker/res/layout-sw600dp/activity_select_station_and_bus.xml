@@ -43,7 +43,7 @@
 
    <LinearLayout
        android:layout_width="fill_parent"
-       android:layout_height="50dip"
+       android:layout_height="75dip"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
        android:layout_marginLeft="3dp"

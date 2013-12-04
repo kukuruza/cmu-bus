@@ -14,16 +14,16 @@
             android:id="@+id/stopListView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="105dip"
+            android:paddingBottom="125dip"
             android:background="#ffffff"
             android:cacheColorHint="#ffffffff" >
         </ListView>
             
     </LinearLayout>
 
-    <LinearLayout
+   <LinearLayout
        android:layout_width="fill_parent"
-       android:layout_height="100dip"
+       android:layout_height="125dip"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
        android:background="#efefef"
@@ -42,7 +42,7 @@
        <Button
            android:id="@+id/searchAddressButton"
            android:layout_width="match_parent"
-           android:layout_height="50dp"
+           android:layout_height="75dp"
            android:layout_marginBottom="5dp"
 		   android:layout_marginLeft="20dp"
            android:layout_marginRight="20dp"

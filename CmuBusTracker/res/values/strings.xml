@@ -3,6 +3,10 @@
 
     <string name="server_timequery_url">http://192.168.1.7:8080/webserver/query</string>
     <string name="server_dbquery_url">http://192.168.1.7:8080/webserver/getdatabase</string>
+
+    <string name="fromADM_timequery_url">http://10.0.2.2:8080/webserver/query</string>
+    <string name="fromADM_dbquery_url">http://10.0.2.2:8080/webserver/getdatabase</string>
+    
     <string name="app_name">CmuBusTracker</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
@@ -31,7 +35,7 @@
     <string name="pref_title_favorites">favorite routes</string>
     <string name="pref_summary_favorites">You can manualy edit your favorite routes here, 
         e.g. delete them</string>
-    <string name="update_db_title">update schedule on phone</string>    
+    <string name="update_db_title">Update Schedule</string>    
     <string name="title_activity_use_favorites">UseFavoritesActivity</string>
 
 </resources>

@@ -32,6 +32,7 @@ public class LocationService extends Service implements LocationListener{
     protected LocationManager locationManager;
  
     public LocationService(Context context) {
+    	Log.i(TAG, "starting GPS");
         this.mContext = context;
         locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
         initalizeLocationService(); 
@@ -47,7 +48,7 @@ public class LocationService extends Service implements LocationListener{
             	currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             	
             	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,   
-            			MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+            			MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, LocationService.this);
             	
                 if(currentLocation != null) {
                 	latitude = currentLocation.getLatitude();
@@ -58,7 +59,7 @@ public class LocationService extends Service implements LocationListener{
             }
             if(isNetworkEnabled && currentLocation == null) { 
             	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-            			MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+            			MIN_TIME_CHANGE_FOR_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, LocationService.this);
             
             	currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             	if(currentLocation != null) {
@@ -87,6 +88,7 @@ public class LocationService extends Service implements LocationListener{
     // stop location provider updates
     public void stopUsingLocation(){
         if(locationManager != null){
+        	Log.i(TAG, "stopping GPS");
             locationManager.removeUpdates(LocationService.this);
         }       
     }

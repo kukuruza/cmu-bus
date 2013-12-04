@@ -1,4 +1,4 @@
-package src.dbhelpers;
+package dbhelpers;
 
 import java.util.ArrayList;
 
@@ -42,6 +42,42 @@ public class DbStructure {
     protected static final String SCHEDULE_DAY = "scheduleday";
     protected static final String SCHEDULE_TIME = "scheduletime";
 	
+    
+    // get all stops from the stops table
+    public static String allStopsRequestString()
+    {
+	    return  "SELECT * FROM " + TABLE_STOP;
+    }
+    
+    // get all stops from the table where one of the streets matches
+    public static String stopsByStreetRequestString (String street)
+    {
+	    return "SELECT * " + 
+               "FROM " + TABLE_STOP + " ts " + 
+               "WHERE " + 
+               "ts." + STOP_STREET1 + " = '" + street + "' OR " +
+               "ts." + STOP_STREET2 + " = '" + street + "'";
+    }
+
+
+    // get all buses for a single stop
+    public static String busesRequestString(String stopName)
+    {
+		return  "SELECT " + 
+        BUS_NAME + ", " + 
+        BUS_DIR + " " + 
+        "FROM " + 
+        TABLE_BUS + " tb, " + 
+        TABLE_STOP + " ts, " + 
+        TABLE_ROUTE + " tr " + 
+        "WHERE " + 
+        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
+        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
+        "tb." + BUS_ID + " = tr." + BUS_ID;
+    }
+    
+    
+
     public static String scheduleRequestString 
         (String stopName, String busName, String busDir, int weekDay)
     {
@@ -52,8 +88,8 @@ public class DbStructure {
 		return  "SELECT " + 
 		        BUS_NAME + ", " + 
 		        BUS_DIR + ", " + 
-		        SCHEDULE_TIME + 
-		        " FROM " + 
+		        SCHEDULE_TIME + " " +
+		        "FROM " + 
 		        TABLE_BUS + " tb, " + 
 		        TABLE_STOP + " ts, " + 
 		        TABLE_ROUTE + " tr, " + 
@@ -81,8 +117,8 @@ public class DbStructure {
 		String s = "SELECT " + 
 		        BUS_NAME + ", " + 
 		        BUS_DIR + ", " + 
-		        SCHEDULE_TIME + 
-		        " FROM " + 
+		        SCHEDULE_TIME + " " +
+		        "FROM " + 
 		        TABLE_BUS + " tb, " + 
 		        TABLE_STOP + " ts, " + 
 		        TABLE_ROUTE + " tr, " + 
@@ -105,9 +141,11 @@ public class DbStructure {
 		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
 		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 
 		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
-		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "'";
+		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "' " +
+		        "ORDER BY " + SCHEDULE_TIME;
         return s;
     }
     
+     
 
 }

@@ -11,13 +11,13 @@ import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
 import cmu18641.bustracker.helpers.LocationService;
 import cmu18641.bustracker.ws.remote.GetDatabaseQuery;
+import cmu18641.bustracker.ws.remote.Networking;
 
 /*
  * GlobalManager.java
  * 
  * The manager enforces the interface between the activities
- * and query managers, and provides connectivity to the GPS
- * and network modules. 
+ * and query managers, and provides connectivity to the GPS module. 
  */
 
 public class GlobalManager {
@@ -84,34 +84,65 @@ public class GlobalManager {
 		return userLocation; 
 	}
 	
+	public void killLocationService() { 
+		if(locationService != null) { 
+			locationService.stopUsingLocation(); 
+			locationService = null; 
+		}
+	}
+	
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) {
 		return timeQueryManager.getSchedule (context, stop, buses);
 	}
 	
 	// updated database to be saved 
-	public void updateDatabase(Context context) 
-	{ 
+	public boolean updateDatabase(Context context) { 
+		
 		try {
+//			String fileList1[] = context.fileList(); 
+//			
+//			Log.i (TAG, "number of files: " + Integer.toString(fileList1.length));
+//			for(int i = 0; i < fileList1.length; i++) { 
+//				Log.i(TAG, fileList1[i]); 
+//			}
+			
+			// check network
+			boolean availableNetwork = Networking.isNetworkAvailable(context);
+			if (!availableNetwork)
+			{
+				Log.i(TAG, "network is NOT availble");
+				return false;
+			}
+			else
+				Log.i(TAG, "network is available");
+				
 			// get path to private data directory
 			String databasePath = context.getApplicationInfo().dataDir + "/databases";
 			
 			// delete old database
-			context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
+			boolean deleted = context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
+			
+			if (deleted) 
+				Log.i("GlobalManager", "old db deleted");
 			
 			// download new database to apps private data directory
 			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
-			try {
-				newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
-			} catch (TrackerException e) {
-				e.printStackTrace();
-			}
+			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME + ".db");
+			
+//			String fileList[] = context.fileList(); 
+//	
+//			Log.i (TAG, "number of files: " + Integer.toString(fileList.length));
+//			for(int i = 0; i < fileList.length; i++) { 
+//				Log.i(TAG, fileList[i]); 
+//			}
 			
 			// increment version
 			LocalDatabaseConnector.incrementDbVersion();
 			
-		} catch (Exception e) {
-			Log.e (TAG, "Could not update the database");
-			
+			return true;
+		} catch (TrackerException e) {
+			Log.e (TAG, "Could not update the database: " + e.getMessage());
+			return false;
 		}
 		
 	}

@@ -1,6 +1,5 @@
 package cmu18641.bustracker.activities;
 
-
 import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.adapter.BusAdapter;
@@ -14,6 +13,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 /*
  * SelectStationAndBus.java
@@ -99,6 +101,13 @@ public class SelectStationAndBus extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume(); 
+	}
+	
+	@Override
+	protected void onPause() { 
+		super.onPause();
+		Log.d("SelectStationAndBusActivity", "onPause");
+		Connector.globalManager.killLocationService(); 
 	}
 	
 	// user is taken to viewSchedule activity after selecting at least
@@ -186,11 +195,46 @@ public class SelectStationAndBus extends Activity {
 				new SimpleDialogBuilderHelper(SelectStationAndBus.this, message, "Ok"); 
 	            return true;
 	        }
+	        // update database
 	        case R.id.update_db:
-	        {
-	        	ExecuteUpdate executeUpdate = new ExecuteUpdate();
-	        	executeUpdate.doInBackground();
-	        	return true;
+	        {	
+	        	// this class manages asynchronous call to update database from the server 
+	        	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
+	        		private AlertDialog dialog;
+	        		private boolean _success = false;
+	        		
+	        		@Override
+	        	    protected void onPreExecute() {
+	        			// show uncancelable dialog
+	    	        	Builder builder = new AlertDialog.Builder(SelectStationAndBus.this);
+	    	 		    builder.setMessage("Please wait. App updating.");
+	    	 		    builder.setCancelable(false); 
+	    	 		    dialog = builder.create();
+	    	 		    dialog.show();
+	        	    }
+	        		
+	        		@Override
+	        		protected Void doInBackground(Void... params) {
+	        			_success = Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
+	        			return null;
+	        		}
+	        		
+	        		@Override
+	        		protected void onPostExecute(Void result) {
+	        			if (dialog != null) 
+	        				dialog.dismiss(); 
+
+	        			if (_success)
+	        			    Toast.makeText (SelectStationAndBus.this, "Sucessfully updated the schedule", 
+	        			    		Toast.LENGTH_LONG).show();
+	        			else
+	        			    Toast.makeText (SelectStationAndBus.this, "Could not update the schedule \n" + 
+	        			    		"Really sorry", Toast.LENGTH_LONG).show();
+	        		}
+	        	}
+	        	new ExecuteUpdate().execute();
+	        	
+	        	return true; // return from menu
 	        }
 	        // edit preferences
 	        case R.id.settings:
@@ -206,22 +250,5 @@ public class SelectStationAndBus extends Activity {
 	    		return super.onOptionsItemSelected(item);
 		}
 	} 
-	
-	
-	// this class manages asynchronous call to update database from the server 
-	class ExecuteUpdate extends AsyncTask<Void, Void, Void> {
-		@Override
-		protected Void doInBackground(Void... params) {
-            Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
-            new SimpleDialogBuilderHelper(SelectStationAndBus.this, 
-            		"Please wait for database to update", "Ok"); 
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Void result) {
-			// TODO: remove the dialog			
-		}
-	}
 	
 }
