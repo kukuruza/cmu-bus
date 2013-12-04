@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 import cmu18641.bustracker.dblayout.LocalDatabaseConnector;
 import cmu18641.bustracker.entities.Bus;
 import cmu18641.bustracker.entities.Schedule;
@@ -78,8 +77,8 @@ public class GlobalManager {
             			+ locationService.getLongitude());
         }
  
-        locationService.stopUsingLocation(); 
-        locationService = null; 
+        //locationService.stopUsingLocation(); 
+        //locationService = null; 
         
         Log.d("location", userLocation.getLatitude() + " " + userLocation.getLongitude());
 		
@@ -88,8 +87,8 @@ public class GlobalManager {
 	
 	public void killLocationService() { 
 		if(locationService != null) { 
-			//locationService.stopUsingLocation(); 
-			//locationService = null; 
+			locationService.stopUsingLocation(); 
+			locationService = null; 
 		}
 	}
 	

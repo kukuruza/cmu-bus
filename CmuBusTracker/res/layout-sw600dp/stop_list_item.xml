@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/stopName"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:paddingLeft="10dp"
             android:text="@string/example_stop_name"
@@ -34,7 +34,7 @@
         	android:id="@+id/walkingdistance"
         	android:layout_width="80dp"
         	android:layout_height="75dp"
-			android:layout_marginRight="65dp"
+			android:layout_marginRight="120dp"
 			android:layout_alignParentRight="true"
 			android:gravity="center_vertical"
         	android:text="@string/example_walkingdist_string"
@@ -42,7 +42,7 @@
 
    	 <TextView
         	android:id="@+id/distance"
-        	android:layout_width="60dp"
+        	android:layout_width="80dp"
         	android:layout_height="75dp"
         	android:layout_alignParentRight="true"
         	android:gravity="center_vertical"
