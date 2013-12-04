@@ -66,9 +66,11 @@ public class GlobalManager {
 	}
 	
 	// fetch location from location service 
-	private Location fetchLocation(Context context) { 
+	private Location fetchLocation(Context context) { 		
+		if(locationService == null) { 
+			locationService = new LocationService(context); 
+		}
 		
-		locationService = new LocationService(context); 
 		Location userLocation = new Location("user"); 
 		
         if(locationService.canGetLocation() && locationService.getLocation() != null) {
@@ -76,15 +78,13 @@ public class GlobalManager {
             Log.d("Manager", "userLocation=" + locationService.getLatitude() + " " 
             			+ locationService.getLongitude());
         }
- 
-        //locationService.stopUsingLocation(); 
-        //locationService = null; 
         
         Log.d("location", userLocation.getLatitude() + " " + userLocation.getLongitude());
 		
 		return userLocation; 
 	}
 	
+	// turn of gps location updates
 	public void killLocationService() { 
 		if(locationService != null) { 
 			locationService.stopUsingLocation(); 
@@ -92,6 +92,7 @@ public class GlobalManager {
 		}
 	}
 	
+	// get a bus schedule
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) {
 		return timeQueryManager.getSchedule (context, stop, buses);
 	}
