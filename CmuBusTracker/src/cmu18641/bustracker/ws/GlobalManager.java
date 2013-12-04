@@ -127,6 +127,12 @@ public class GlobalManager {
 			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
 			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);
 			
+			String fileList[] = context.fileList(); 
+			
+			for(int i = 0; i < fileList.length; i++) { 
+				Log.i("GlobalManager", fileList[i]); 
+			}
+			
 			// increment version
 			LocalDatabaseConnector.incrementDbVersion();
 			
