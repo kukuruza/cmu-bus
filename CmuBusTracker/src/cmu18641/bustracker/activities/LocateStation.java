@@ -181,11 +181,12 @@ public class LocateStation extends Activity {
 
 	@Override
 	protected void onPause() {
+		super.onPause();
 		// unregister shake listener
 		Log.d("LocateStationActivity", "onPause");
 	    sensorManager.unregisterListener(shakeDetector); 
 	    Connector.globalManager.killLocationService(); 
-	    super.onPause();
+	    
 	}   	
 	
 	// refresh data when shaken

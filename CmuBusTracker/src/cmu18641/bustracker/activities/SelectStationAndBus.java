@@ -107,9 +107,9 @@ public class SelectStationAndBus extends Activity {
 	
 	@Override
 	protected void onPause() { 
+		super.onPause();
 		Log.d("SelectStationAndBusActivity", "onPause");
 		Connector.globalManager.killLocationService(); 
-		super.onPause();
 	}
 	
 	// user is taken to viewSchedule activity after selecting at least
