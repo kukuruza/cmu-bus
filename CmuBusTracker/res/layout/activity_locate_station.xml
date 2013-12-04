@@ -14,14 +14,14 @@
             android:id="@+id/stopListView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="125dip"
+            android:paddingBottom="105dip"
             android:background="#ffffff"
             android:cacheColorHint="#ffffffff" >
         </ListView>
             
     </LinearLayout>
 
-   <LinearLayout
+    <LinearLayout
        android:layout_width="fill_parent"
        android:layout_height="100dip"
        android:layout_alignParentBottom="true"
