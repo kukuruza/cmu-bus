@@ -102,6 +102,13 @@ public class SelectStationAndBus extends Activity {
 		super.onResume(); 
 	}
 	
+	@Override
+	protected void onPause() { 
+		Log.d("SelectStationAndBusActivity", "onPause");
+		Connector.globalManager.killLocationService(); 
+		super.onPause();
+	}
+	
 	// user is taken to viewSchedule activity after selecting at least
 	// one bus and pressing findNextBusButton
 	OnClickListener findNextBusButtonClicked = new OnClickListener() {
@@ -213,7 +220,7 @@ public class SelectStationAndBus extends Activity {
 
 	 		    // call to update db
 	        	ExecuteUpdate executeUpdate = new ExecuteUpdate();
-	        	executeUpdate.doInBackground();
+	        	executeUpdate.execute();
 	        	
 	        	// dismiss dialag
 	        	dialog.cancel();

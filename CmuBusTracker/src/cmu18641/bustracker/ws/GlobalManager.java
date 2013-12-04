@@ -78,12 +78,19 @@ public class GlobalManager {
             			+ locationService.getLongitude());
         }
  
-        //locationService.stopUsingLocation(); 
-        //locationService = null; 
+        locationService.stopUsingLocation(); 
+        locationService = null; 
         
         Log.d("location", userLocation.getLatitude() + " " + userLocation.getLongitude());
 		
 		return userLocation; 
+	}
+	
+	public void killLocationService() { 
+		if(locationService != null) { 
+			//locationService.stopUsingLocation(); 
+			//locationService = null; 
+		}
 	}
 	
 	public Schedule getSchedule (Context context, Stop stop, ArrayList<Bus> buses) {
@@ -98,13 +105,14 @@ public class GlobalManager {
 			boolean availableNetwork = Networking.isNetworkAvailable(context);
 			if (!availableNetwork)
 			{
-				Toast.makeText(context, "Could not update the database \n" + 
-						"Network is not available", Toast.LENGTH_LONG).show();
+				//Toast.makeText(context, "Could not update the database \n" + 
+				//		"Network is not available", Toast.LENGTH_LONG).show();
+				
 				Log.i(TAG, "network is NOT availble");
 				return;
 			}
 			else
-				Log.i(TAG, "network is availble");
+				Log.i(TAG, "network is available");
 				
 			// get path to private data directory
 			String databasePath = context.getApplicationInfo().dataDir + "/databases";
@@ -121,8 +129,8 @@ public class GlobalManager {
 			
 		} catch (TrackerException e) {
 			Log.e (TAG, "Could not update the database: " + e.getMessage());
-			Toast.makeText(context, "Could not update the database \n" + 
-					"Really sorry, internal error", Toast.LENGTH_LONG).show();
+			//Toast.makeText(context, "Could not update the database \n" + 
+			//		"Really sorry, internal error", Toast.LENGTH_LONG).show();
 		}
 		
 	}
