@@ -17,8 +17,7 @@ import cmu18641.bustracker.ws.remote.Networking;
  * GlobalManager.java
  * 
  * The manager enforces the interface between the activities
- * and query managers, and provides connectivity to the GPS
- * and network modules. 
+ * and query managers, and provides connectivity to the GPS module. 
  */
 
 public class GlobalManager {
@@ -100,6 +99,13 @@ public class GlobalManager {
 	public boolean updateDatabase(Context context) { 
 		
 		try {
+//			String fileList1[] = context.fileList(); 
+//			
+//			Log.i (TAG, "number of files: " + Integer.toString(fileList1.length));
+//			for(int i = 0; i < fileList1.length; i++) { 
+//				Log.i(TAG, fileList1[i]); 
+//			}
+			
 			// check network
 			boolean availableNetwork = Networking.isNetworkAvailable(context);
 			if (!availableNetwork)
@@ -116,20 +122,19 @@ public class GlobalManager {
 			// delete old database
 			boolean deleted = context.deleteFile(LocalDatabaseConnector.DATABASE_NAME);
 			
-			if(deleted) { 
+			if (deleted) 
 				Log.i("GlobalManager", "old db deleted");
-			}
 			
 			// download new database to apps private data directory
 			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
 			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME + ".db");
 			
-			String fileList[] = context.fileList(); 
-			
-			Log.i (TAG, "number of files: " + Integer.toString(fileList.length));
-			for(int i = 0; i < fileList.length; i++) { 
-				Log.i(TAG, fileList[i]); 
-			}
+//			String fileList[] = context.fileList(); 
+//	
+//			Log.i (TAG, "number of files: " + Integer.toString(fileList.length));
+//			for(int i = 0; i < fileList.length; i++) { 
+//				Log.i(TAG, fileList[i]); 
+//			}
 			
 			// increment version
 			LocalDatabaseConnector.incrementDbVersion();
