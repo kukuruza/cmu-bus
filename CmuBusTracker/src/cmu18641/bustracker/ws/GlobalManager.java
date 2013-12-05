@@ -124,7 +124,7 @@ public class GlobalManager {
 			
 			// download new database to apps private data directory
 			GetDatabaseQuery newDb = new GetDatabaseQuery(); 
-			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME + ".db");
+			newDb.downloadDb(context, databasePath + "/" + LocalDatabaseConnector.DATABASE_NAME);// + ".db");
 			
 //			String fileList[] = context.fileList(); 
 //	

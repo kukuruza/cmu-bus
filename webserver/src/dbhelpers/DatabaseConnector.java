@@ -86,9 +86,13 @@ public class DatabaseConnector {
 		String selectQuery = DbStructure.scheduleRequestString
 				(stopName, busesNames, busesDirs, weekDay);
 		logger.info(selectQuery);
+
+		BaseSchedule schedule = new BaseSchedule ();
+		schedule.setStop(stopName);
 		
 		if (!connect()) return null; 
 		
+		// rs - is the usual one, rs2 - is after midnight
     	ResultSet rs;
 		try {
 			rs = _stat.executeQuery(selectQuery);
@@ -97,29 +101,54 @@ public class DatabaseConnector {
 			return null;
 		}
 		
-		BaseSchedule schedule = new BaseSchedule ();
-		schedule.setStop(stopName);
-		
 		int currentMin = DbTime.getCurrentDbTime();
     	try {
 			while(rs.next())
 			{
 			    String timeVal = rs.getObject("scheduletime").toString();
 			    // logic is to be removed from here
-			    int minTotal = Integer.parseInt(timeVal);
-			    if (currentMin > minTotal)
+			    int minutesTotal = Integer.parseInt(timeVal);
+			    if (currentMin > minutesTotal)
 			    	continue;
 			    String busnameVal = rs.getObject("busname").toString();
 			    String busdirVal = rs.getObject("busdir").toString();
 			    BaseBus bus = new BaseBus(busnameVal, busdirVal);
-			    schedule.addItem(new BaseScheduleItem(bus, minTotal));
+			    schedule.addItem(new BaseScheduleItem(bus, minutesTotal));
 			}
+    	} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+    	/*
+		final int deepNight = 4*60;
+		String selectQueryAfterMidnight = DbStructure.scheduleRequestString
+				(stopName, busesNames, busesDirs, weekDay, 0, deepNight);
+		logger.info("after midnight: " + selectQueryAfterMidnight);
+		
+		try {
+			rs = _stat.executeQuery(selectQueryAfterMidnight);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-    	
-		// TODO: if the result is empty check that bus and stop are valid
+			
+    	try {
+			System.out.println("-");
+			while(rs.next())
+			{
+				System.out.println("+");
+			    String timeVal = rs.getObject("scheduletime").toString();
+			    int minutesTotal = Integer.parseInt(timeVal) + 24 * 60;
+			    String busnameVal = rs.getObject("busname").toString();
+			    String busdirVal = rs.getObject("busdir").toString();
+			    BaseBus bus = new BaseBus(busnameVal, busdirVal);
+			    schedule.addItem(new BaseScheduleItem(bus, minutesTotal));
+			}
+    	} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}*/
 		
     	closeConnection();
     	

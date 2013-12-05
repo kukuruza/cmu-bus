@@ -32,8 +32,10 @@ public class GetDatabaseServlet extends HttpServlet {
 	    byte[] buffer = new byte[_bufferSize];
 	    int read;
 
-	    while ((read = in.read(buffer, 0, _bufferSize)) != -1)
+	    int bytes = 0;
+	    for (bytes = 0; (read = in.read(buffer, 0, _bufferSize)) != -1; ++bytes)
 	    	out.write(buffer, 0, read);
+	    logger.info ("copied around" + Integer.toString(bytes * _bufferSize) + " bytes");
 	}
 	
 
@@ -41,7 +43,6 @@ public class GetDatabaseServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
               throws ServletException, IOException 
     {	
-		System.out.println("request to GetDatabaseServlet");
 		String resourcePath = DatabaseConnector.getDbPath();
 		if (resourcePath == null)
 			logger.error("Could not retrieve schedule database path");

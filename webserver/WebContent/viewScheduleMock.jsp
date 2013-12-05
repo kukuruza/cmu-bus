@@ -19,9 +19,8 @@
     busNames.add("61A");
     ArrayList<String> busDirs = new ArrayList<String>();
     busDirs.add("Braddock");
-    int weekDay = 0;
 	DatabaseConnector connector = new DatabaseConnector();
-    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs, weekDay);
+    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs);
   %>
  
  <% if (schedule == null) { %>

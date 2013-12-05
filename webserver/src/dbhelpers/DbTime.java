@@ -16,7 +16,7 @@ public class DbTime {
 	public void setTime (int minutesTotal)
 	{		
 		assert (minutesTotal > 0);
-		int minutesAfterThisMidnight = minutesTotal;// % (24 * 60);
+		int minutesAfterThisMidnight = minutesTotal % (24 * 60);
 	    _hours = minutesAfterThisMidnight / 60;
 	    _minutes = minutesAfterThisMidnight % 60;
 		_calendar.set (Calendar.HOUR_OF_DAY, _hours);

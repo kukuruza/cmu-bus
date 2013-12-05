@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
 
+<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dbhelpers.DatabaseConnector" %>
 <%@ page import="cmu18641.bustracker.common.entities.BaseSchedule" %>
@@ -19,16 +20,36 @@
 <jsp:setProperty name="routeBean" property="*"/>
 
 <body>
+
+    <form action="chooseStop.jsp" method="get" >
+        <input type=submit value="another query">
+    </form>
+    <p>
+
  <% // load form data
     String stopName = routeBean.getStopName();
-    ArrayList<String> busNames = routeBean.getBusNames();
-    ArrayList<String> busDirs = routeBean.getBusDirs();
+    ArrayList<String> allBusNames = routeBean.getBusNames();
+    ArrayList<String> allBusDirs = routeBean.getBusDirs();
     
-    if (stopName == null || busNames == null || busDirs == null) {
+    // get selected buses
+    String[] busIdxArr = request.getParameterValues("bus");
+    
+    if (busIdxArr == null || busIdxArr.length == 0)
+      %> No buses were chosen <%
+    else if (stopName == null || allBusNames == null || allBusDirs == null) {
       %> Sorry, internal error <%
     } else {
     
-	    // get schedule
+        ArrayList<String> busNames = new ArrayList<String>();
+        ArrayList<String> busDirs = new ArrayList<String>();
+        for (int i = 0; i != busIdxArr.length; ++i)
+        {
+        	int ind = Integer.parseInt(busIdxArr[i]) - 1;
+        	busNames.add(allBusNames.get(ind));
+        	busDirs.add (allBusDirs.get(ind));
+        }
+
+        // get schedule
 		DatabaseConnector connector = new DatabaseConnector();
 	    BaseSchedule schedule = connector.getSchedule (stopName, busNames, busDirs);
 	  %>
@@ -72,6 +93,6 @@
 	        
 	 <% } %> <!-- end of the 'if' that checks result for error -->
  <% } %> <!-- end of the 'if' that checks error for loading route -->
-
+ 
 </body>
 </html>

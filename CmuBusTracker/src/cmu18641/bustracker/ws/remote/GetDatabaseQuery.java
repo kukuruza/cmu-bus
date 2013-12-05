@@ -20,7 +20,7 @@ public class GetDatabaseQuery {
 	public void downloadDb (Context context, String pathToSave) 
 			throws TrackerException
 	{
-		String serverUrl = context.getResources().getString(R.string.server_timequery_url);
+		String serverUrl = context.getResources().getString(R.string.server_dbquery_url);
 
 		try {
 			Networking.requestFile (serverUrl, pathToSave); 

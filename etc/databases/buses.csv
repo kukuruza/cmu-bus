@@ -1,14 +1,1 @@
-busid,busname,busdir
-1,61A,Downtown
-2,61A,Braddock
-3,A Route Shuttle,
-4,B Route Shuttle,
-5,AB Route Shuttle,
-6,Bakery Square Shuttle,
-7,PTC Shuttle,
-11,61B,Downtown
-12,61B,Braddock
-13,61C,Downtown
-14,61C,McKeesport
-15,61D,Downtown
-16,61D,Waterfront
+busid,busname,busdir1,61A,Downtown2,61A,Braddock3,A Route Shuttle,4,B Route Shuttle,5,AB Route Shuttle,6,Bakery Square Shuttle,7,PTC Shuttle,11,61B,Downtown12,61B,Braddock13,61C,Downtown14,61C,McKeesport

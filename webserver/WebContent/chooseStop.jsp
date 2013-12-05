@@ -20,7 +20,7 @@
 
 <body>
 
-        <form action="chooseStop.jsp" method="get" >
+    <form action="chooseStop.jsp" method="get" >
         Show only stops on this street: 
 	    <input type=text name=street>
 	    <input type=submit value="Update list">

@@ -146,7 +146,8 @@ public class DbStructure {
         return s;
     }
     
-    public static String scheduleRequestBetweenTimesString (String stopName, 
+    
+    public static String scheduleRequestString (String stopName, 
     		ArrayList<String> busNames, ArrayList<String> busDirs, int weekDay, 
     		int minMinutes, int maxMinutes)
     {
@@ -189,6 +190,7 @@ public class DbStructure {
 		        "ORDER BY " + SCHEDULE_TIME;
         return s;
     }
+    
     
      
 

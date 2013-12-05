@@ -119,10 +119,13 @@ public class Networking {
             Log.i (TAG, "Downloading file...");
             input = response.getEntity().getContent();
             output = new FileOutputStream (fileSavePath);
+            int bytes = 0;
             for (int length; (length = input.read(buffer)) > 0;) {
                 output.write(buffer, 0, length);
+                bytes += length;
             }
-            Log.i (TAG, "File successfully downloaded!");
+            Log.i (TAG, "File successfully downloaded, copied " + 
+                         Integer.toString(bytes) + " bytes");
 
 		} catch (HttpResponseException e) {
 			Log.e (TAG, "got HttpResponseException");
