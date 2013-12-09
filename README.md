@@ -6,7 +6,7 @@ Look up the next bus for Pittsburgh Port Authority Transportation System and CMU
 What's inside
 -------------
 The system consists of 
-1) Tomcat webserver ('webserver' directory)
+1) Tomcat web server ('webserver' directory)
 2) Android app ('CmuBusTracker' directory)
 3) Additional submission documents ('documents' directory)
 
@@ -14,11 +14,13 @@ The system consists of
 Installation
 ------------
 
-App: import 'CmuBusTracker' directory as an Android project. It should compile without any issues.
+App: 
+1) import 'CmuBusTracker' directory as an Android project. It should compile without any issues.
 
-Server: you need Tomcat 7.0 to run the webserver. If you are using Eclipse JEE, import 'webserver' directory as a project. Change
-
-Possible issues.
+Server: 
+0) you need Tomcat 7.0 to run the webserver. 
+1) If you are using Eclipse JEE, import 'webserver' directory as a project. 
+2) Change the database filepath in WebContent/META-INF/context.xml to the new one. The Tomcat path could be either absolute or relative to Tomcat server, therefore, it was set to absolute.
 
 
 Usage

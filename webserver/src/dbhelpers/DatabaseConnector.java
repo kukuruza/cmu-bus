@@ -99,12 +99,14 @@ public class DatabaseConnector {
 		}
 		
 		int currentMin = DbTime.getCurrentDbTime();
+		logger.info ("current minutes: " + Integer.toString(currentMin));
     	try {
 			while(rs.next())
 			{
-			    String timeVal = rs.getObject("scheduletime").toString();
+			    String timeStr = rs.getObject("scheduletime").toString();
+			    logger.info ("min: " + timeStr);
 			    // logic is to be removed from here
-			    int minutesTotal = Integer.parseInt(timeVal);
+			    int minutesTotal = Integer.parseInt(timeStr);
 			    if (currentMin > minutesTotal)
 			    	continue;
 			    String busnameVal = rs.getObject("busname").toString();
