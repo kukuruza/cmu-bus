@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.adapter.BusAdapter;
 import cmu18641.bustracker.entities.Bus;
-import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.helpers.Connector;
 import cmu18641.bustracker.helpers.Favorites;
 import cmu18641.bustracker.helpers.SimpleDialogBuilderHelper;
 import android.os.AsyncTask;
@@ -35,7 +35,7 @@ import android.widget.Toast;
  * Primary activity to select a bus station and a bus. 
  */
 
-public class SelectStationAndBus extends Activity {
+public class SelectStationAndBusActivity extends Activity {
 	
 	public static final String BUSES_SELECTED = "buses_selected";
 	
@@ -61,15 +61,15 @@ public class SelectStationAndBus extends Activity {
 		if(data != null) { 
 			// grab selected stop if entering from LocateStation/SearchStation activity
 			Log.d("SelectStationAndBusActivity", "Getting selected stop from bundle");
-			selectedStop = data.getParcelable(LocateStation.STOP_SELECTED);
+			selectedStop = data.getParcelable(LocateStationActivity.STOP_SELECTED);
 		}
 		else { 
 			// query must be called to find default station (closest to user)
 			try { 
 				Log.d("SelectStationAndBusActivity", "Querying to find default station");
-				selectedStop = Connector.globalManager.getStopsByCurrentLocation(SelectStationAndBus.this).get(0); 
+				selectedStop = Connector.globalManager.getStopsByCurrentLocation(SelectStationAndBusActivity.this).get(0); 
 			} catch(TrackerException te) { 
-				new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Please restart the app", "Ok");	
+				new SimpleDialogBuilderHelper(SelectStationAndBusActivity.this, "Please restart the app", "Ok");	
 				Log.e("SelectStationAndBusActivity", "exception", te);
 			}
 		}
@@ -79,9 +79,9 @@ public class SelectStationAndBus extends Activity {
 		
 		// query must be called to find buses that pass thru the selected station
 		try { 
-			busList = Connector.globalManager.getBusesByStop(SelectStationAndBus.this, selectedStop); 
+			busList = Connector.globalManager.getBusesByStop(SelectStationAndBusActivity.this, selectedStop); 
 		} catch(TrackerException te) { 
-			new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Please restart the app", "Ok");	
+			new SimpleDialogBuilderHelper(SelectStationAndBusActivity.this, "Please restart the app", "Ok");	
 			Log.e("SelectStationAndBusActivity", "exception", te); 
 		}
 		
@@ -117,13 +117,13 @@ public class SelectStationAndBus extends Activity {
 		public void onClick(View v) {
 			
 			if(!busSelections.isEmpty()) { 
-				Intent showSchedule = new Intent(SelectStationAndBus.this, ViewScheduleActivity.class);
+				Intent showSchedule = new Intent(SelectStationAndBusActivity.this, ViewScheduleActivity.class);
 				showSchedule.putParcelableArrayListExtra(BUSES_SELECTED, (ArrayList<? extends Parcelable>) busSelections); 
-				showSchedule.putExtra(LocateStation.STOP_SELECTED, selectedStop);
-				SelectStationAndBus.this.startActivity(showSchedule);
+				showSchedule.putExtra(LocateStationActivity.STOP_SELECTED, selectedStop);
+				SelectStationAndBusActivity.this.startActivity(showSchedule);
 			}
 			else { 
-				new SimpleDialogBuilderHelper(SelectStationAndBus.this, "Select a bus to continue", "Ok");	
+				new SimpleDialogBuilderHelper(SelectStationAndBusActivity.this, "Select a bus to continue", "Ok");	
 			}
 			
 			Log.d("SelectStationAndBusActivity - findNextBusButtonClicked", "OnClick()");	
@@ -136,8 +136,8 @@ public class SelectStationAndBus extends Activity {
 	OnClickListener findStationButtonClicked = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent showLocateStation = new Intent(SelectStationAndBus.this, LocateStation.class);
-			SelectStationAndBus.this.startActivity(showLocateStation);
+			Intent showLocateStation = new Intent(SelectStationAndBusActivity.this, LocateStationActivity.class);
+			SelectStationAndBusActivity.this.startActivity(showLocateStation);
 			Log.d("SelectStationAndBusActivity - findStationButtonClicked", "OnClick()");
 		}					
 	};
@@ -192,7 +192,7 @@ public class SelectStationAndBus extends Activity {
 	    		String message = new String("Welcome to the bus tracker app!  You can change the selected " + 
 						"station by clicking on the station name, and select your bus by tapping on the " + 
 						"bus names.  Just hit \"find next bus\" when you're ready to get the schedule." ); 
-				new SimpleDialogBuilderHelper(SelectStationAndBus.this, message, "Ok"); 
+				new SimpleDialogBuilderHelper(SelectStationAndBusActivity.this, message, "Ok"); 
 	            return true;
 	        }
 	        // update database
@@ -206,7 +206,7 @@ public class SelectStationAndBus extends Activity {
 	        		@Override
 	        	    protected void onPreExecute() {
 	        			// show uncancelable dialog
-	    	        	Builder builder = new AlertDialog.Builder(SelectStationAndBus.this);
+	    	        	Builder builder = new AlertDialog.Builder(SelectStationAndBusActivity.this);
 	    	 		    builder.setMessage("Please wait. App updating.");
 	    	 		    builder.setCancelable(false); 
 	    	 		    dialog = builder.create();
@@ -215,7 +215,7 @@ public class SelectStationAndBus extends Activity {
 	        		
 	        		@Override
 	        		protected Void doInBackground(Void... params) {
-	        			_success = Connector.globalManager.updateDatabase(SelectStationAndBus.this); 
+	        			_success = Connector.globalManager.updateDatabase(SelectStationAndBusActivity.this); 
 	        			return null;
 	        		}
 	        		
@@ -225,10 +225,10 @@ public class SelectStationAndBus extends Activity {
 	        				dialog.dismiss(); 
 
 	        			if (_success)
-	        			    Toast.makeText (SelectStationAndBus.this, "Sucessfully updated the schedule", 
+	        			    Toast.makeText (SelectStationAndBusActivity.this, "Sucessfully updated the schedule", 
 	        			    		Toast.LENGTH_LONG).show();
 	        			else
-	        			    Toast.makeText (SelectStationAndBus.this, "Could not update the schedule \n" + 
+	        			    Toast.makeText (SelectStationAndBusActivity.this, "Could not update the schedule \n" + 
 	        			    		"Really sorry", Toast.LENGTH_LONG).show();
 	        		}
 	        	}

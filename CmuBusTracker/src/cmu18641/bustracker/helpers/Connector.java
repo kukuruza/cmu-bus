@@ -1,4 +1,4 @@
-package cmu18641.bustracker.entities;
+package cmu18641.bustracker.helpers;
 
 import cmu18641.bustracker.ws.GlobalManager;
 

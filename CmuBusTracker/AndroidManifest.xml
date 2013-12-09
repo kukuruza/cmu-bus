@@ -26,7 +26,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cmu18641.bustracker.activities.SelectStationAndBus"
+            android:name="cmu18641.bustracker.activities.SelectStationAndBusActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,11 +35,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cmu18641.bustracker.activities.LocateStation"
+            android:name="cmu18641.bustracker.activities.LocateStationActivity"
             android:label="@string/title_activity_locate_station" >
         </activity>
         <activity
-            android:name="cmu18641.bustracker.activities.SearchStation"
+            android:name="cmu18641.bustracker.activities.SearchStationActivity"
             android:label="@string/title_activity_search_station" >
         </activity>
         <activity

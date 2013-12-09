@@ -11,9 +11,9 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </interface>  
-  <class id="2" language="java" name="cmu18641.bustracker.activities.SelectStationAndBus" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/activities/SelectStationAndBus.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="cmu18641.bustracker.activities.SelectStationAndBusActivity" 
+    project="CmuBusTracker" file="/CmuBusTracker/src/cmu18641/bustracker/activities/SelectStationAndBusActivity.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="144" y="132"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -21,8 +21,9 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="cmu18641.bustracker.activities.SearchStation" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/activities/SearchStation.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="cmu18641.bustracker.activities.SearchStationActivity" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/cmu18641/bustracker/activities/SearchStationActivity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="418" y="96"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="false">      
@@ -40,8 +41,9 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="cmu18641.bustracker.activities.LocateStation" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/activities/LocateStation.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="cmu18641.bustracker.activities.LocateStationActivity" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/cmu18641/bustracker/activities/LocateStationActivity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="690" y="132"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      

@@ -3,9 +3,9 @@ package cmu18641.bustracker.activities;
 import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.adapter.StopAdapter;
-import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.helpers.Connector;
 import cmu18641.bustracker.helpers.SimpleDialogBuilderHelper;
 import cmu18641.bustracker.helpers.SwipeDetector;
 import android.os.Bundle;
@@ -33,7 +33,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * input on locateStation activity
  */
 
-public class SearchStation extends Activity {
+public class SearchStationActivity extends Activity {
 	
 	public static final String STOP_SELECTED = "stop_selected";
 	private String addressSearchQuery; 
@@ -53,7 +53,7 @@ public class SearchStation extends Activity {
 		Bundle data = getIntent().getExtras(); 
 		if(data != null) { 
 			// grab string query from locateStation activity
-			addressSearchQuery = data.getString(LocateStation.SEARCH_QUERY_ID); 
+			addressSearchQuery = data.getString(LocateStationActivity.SEARCH_QUERY_ID); 
 		}
 		else { 
 			// if bundle is null, return to previous activity
@@ -61,9 +61,9 @@ public class SearchStation extends Activity {
 		}
 		
 		try { 
-			stationList = Connector.globalManager.getStopByAddress(SearchStation.this, addressSearchQuery);
+			stationList = Connector.globalManager.getStopByAddress(SearchStationActivity.this, addressSearchQuery);
 		} catch (TrackerException te) { 
-			new SimpleDialogBuilderHelper(SearchStation.this, "Please restart the app", "Ok");	
+			new SimpleDialogBuilderHelper(SearchStationActivity.this, "Please restart the app", "Ok");	
    	  		Log.e("SearchStation", "exception", te);
 		}
 		
@@ -88,7 +88,7 @@ public class SearchStation extends Activity {
 			stationListView.setOnTouchListener(gestureListener);   
 		}
 		else { 
-			Builder builder = new AlertDialog.Builder(SearchStation.this);
+			Builder builder = new AlertDialog.Builder(SearchStationActivity.this);
 		    builder.setMessage("No buses found matching \"" + addressSearchQuery +"\"");
 		    builder.setCancelable(false); 
 		    builder.setPositiveButton(R.string.search_again,
@@ -107,9 +107,9 @@ public class SearchStation extends Activity {
 	OnItemClickListener selectStopListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View parent, int position, long id) {
-			Intent showSelectStationAndBus = new Intent(SearchStation.this, SelectStationAndBus.class);
+			Intent showSelectStationAndBus = new Intent(SearchStationActivity.this, SelectStationAndBusActivity.class);
 			showSelectStationAndBus.putExtra(STOP_SELECTED, stationList.get(position));
-			SearchStation.this.startActivity(showSelectStationAndBus);
+			SearchStationActivity.this.startActivity(showSelectStationAndBus);
 		}
 		   
 	};
@@ -130,7 +130,7 @@ public class SearchStation extends Activity {
 		String message = new String("Select a new station by tapping on one from the list, or if " + 
 				"you don't see the one you want, go back and search again"); 
 
-		new SimpleDialogBuilderHelper(SearchStation.this, message, "Ok"); 
+		new SimpleDialogBuilderHelper(SearchStationActivity.this, message, "Ok"); 
 		return super.onOptionsItemSelected(item);
 	} 	
 

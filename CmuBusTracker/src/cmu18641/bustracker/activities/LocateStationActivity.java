@@ -3,9 +3,9 @@ package cmu18641.bustracker.activities;
 import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.adapter.StopAdapter;
-import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Stop;
 import cmu18641.bustracker.exceptions.TrackerException;
+import cmu18641.bustracker.helpers.Connector;
 import cmu18641.bustracker.helpers.Favorites;
 import cmu18641.bustracker.helpers.ShakeDetector;
 import cmu18641.bustracker.helpers.SimpleDialogBuilderHelper;
@@ -44,7 +44,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * or type an address to execute a search for a bus station.
  */
 
-public class LocateStation extends Activity {
+public class LocateStationActivity extends Activity {
 	private static final String TAG = "LocateStation";
 	
 	public static final String STOP_SELECTED = "stop_selected";
@@ -118,10 +118,10 @@ public class LocateStation extends Activity {
 		
 		// get all stops
 		try {
-   		 	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+   		 	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStationActivity.this);
    			addFavoritesList();
    	  	} catch (TrackerException e) {
-   	  		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
+   	  		new SimpleDialogBuilderHelper(LocateStationActivity.this, "Please restart the app", "Ok");	
    	  		Log.e("LocateStation", "exception", e);
    	  	}
 
@@ -162,10 +162,10 @@ public class LocateStation extends Activity {
 		sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
 			
 		try {
-	   	  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+	   	  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStationActivity.this);
 	   	    addFavoritesList();
 	   	} catch (TrackerException e) {
-	   		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
+	   		new SimpleDialogBuilderHelper(LocateStationActivity.this, "Please restart the app", "Ok");	
    	  		Log.e("LocateStation", "exception", e);
 	    }
 		
@@ -195,10 +195,10 @@ public class LocateStation extends Activity {
         public void onShake() {
 
 			try {
-	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStation.this);
+	   		  	stationList = Connector.globalManager.getStopsByCurrentLocation(LocateStationActivity.this);
 	   		    addFavoritesList();
 	   	  	} catch (TrackerException e) {
-	   	  		new SimpleDialogBuilderHelper(LocateStation.this, "Please restart the app", "Ok");	
+	   	  		new SimpleDialogBuilderHelper(LocateStationActivity.this, "Please restart the app", "Ok");	
 	   	  		Log.e("LocateStation", "exception", e);
 	   	  	}
 			
@@ -209,7 +209,7 @@ public class LocateStation extends Activity {
 				stopAdapter.notifyDataSetChanged();
 			}
 			
-			Toast refresh = Toast.makeText(LocateStation.this, "Refreshing List", Toast.LENGTH_SHORT);
+			Toast refresh = Toast.makeText(LocateStationActivity.this, "Refreshing List", Toast.LENGTH_SHORT);
 			refresh.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 200);
 			refresh.show();
         }
@@ -225,12 +225,12 @@ public class LocateStation extends Activity {
 			String searchAddressQuery = searchAddressEditText.getText().toString();
 			
 			if(!searchAddressQuery.equals("")) { 
-				Intent showSearchStation = new Intent(LocateStation.this, SearchStation.class);
+				Intent showSearchStation = new Intent(LocateStationActivity.this, SearchStationActivity.class);
 				showSearchStation.putExtra(SEARCH_QUERY_ID, searchAddressQuery);
-				LocateStation.this.startActivity(showSearchStation);
+				LocateStationActivity.this.startActivity(showSearchStation);
 			}
 			else { 
-				Builder builder = new AlertDialog.Builder(LocateStation.this);
+				Builder builder = new AlertDialog.Builder(LocateStationActivity.this);
 			    builder.setMessage("Enter an address to search for a stop, or " +
 			    						"select a nearby stop from the list");
 			    builder.setCancelable(true); 
@@ -252,9 +252,9 @@ public class LocateStation extends Activity {
 	OnItemClickListener selectStopListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View parent, int position, long id) {
-			Intent showSelectStationAndBus = new Intent(LocateStation.this, SelectStationAndBus.class);
+			Intent showSelectStationAndBus = new Intent(LocateStationActivity.this, SelectStationAndBusActivity.class);
 			showSelectStationAndBus.putExtra(STOP_SELECTED, stationList.get(position)); 
-			LocateStation.this.startActivity(showSelectStationAndBus);
+			LocateStationActivity.this.startActivity(showSelectStationAndBus);
 		}
 	};
 
@@ -279,7 +279,7 @@ public class LocateStation extends Activity {
 				"you don't see the one you want, enter a street name below to look up the one you had " + 
 				"in mind"); 
 
-		new SimpleDialogBuilderHelper(LocateStation.this, message, "Ok"); 
+		new SimpleDialogBuilderHelper(LocateStationActivity.this, message, "Ok"); 
 		return super.onOptionsItemSelected(item);
 	} 	
 	

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import cmu18641.bustracker.R;
 import cmu18641.bustracker.adapter.ScheduleAdapter;
 import cmu18641.bustracker.entities.Bus;
-import cmu18641.bustracker.entities.Connector;
 import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.ScheduleItem;
 import cmu18641.bustracker.entities.Stop;
+import cmu18641.bustracker.helpers.Connector;
 import cmu18641.bustracker.helpers.ShakeDetector;
 import cmu18641.bustracker.helpers.SimpleDialogBuilderHelper;
 import cmu18641.bustracker.helpers.SwipeDetector;
@@ -65,8 +65,8 @@ public class ViewScheduleActivity extends Activity {
 		Bundle data = getIntent().getExtras(); 
 		if(data != null) { 
 			// grab station and selected buses from selectStationAndBus
-			_selectedStop = data.getParcelable(LocateStation.STOP_SELECTED); 
-			_selectedBuses = data.getParcelableArrayList(SelectStationAndBus.BUSES_SELECTED);
+			_selectedStop = data.getParcelable(LocateStationActivity.STOP_SELECTED); 
+			_selectedBuses = data.getParcelableArrayList(SelectStationAndBusActivity.BUSES_SELECTED);
 		}
 		else { 
 			// if bundle is null, return to previous activity
