@@ -27,7 +27,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 
 		// query for all buses with a particular stop string in ROUTE table
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
-		ArrayList<Bus> busList = db.selectAllBusesByStop(stop);
+		ArrayList<Bus> busList = db.getBusesForStop(stop);
 		db = null; 
 		return busList; 
 		
@@ -63,7 +63,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 		
 		// retrieves all stops from database
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
-		ArrayList<Stop> stops = db.selectAllStops(); 
+		ArrayList<Stop> stops = db.getAllStops(); 
 		db = null; 
 		return stops; 
 	}
@@ -86,7 +86,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 
 		//retrieves all stops from the database that have a matching street
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
-		ArrayList<Stop> stopList = db.selectAllStopsByStreet(street);
+		ArrayList<Stop> stopList = db.getStopsByStreet(street);
 		db = null;
 		
 		// set the distance for each stop to the distance from user to stop

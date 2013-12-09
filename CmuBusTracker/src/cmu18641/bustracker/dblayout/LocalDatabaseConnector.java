@@ -6,7 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
+import cmu18641.bustracker.common.dblayout.DbConnectorInterface;
+import cmu18641.bustracker.common.dblayout.DbStructure;
+import cmu18641.bustracker.common.dblayout.DbTime;
 import cmu18641.bustracker.entities.Bus;
+import cmu18641.bustracker.entities.Schedule;
 import cmu18641.bustracker.entities.Stop;
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,7 +28,7 @@ import android.util.Log;
  * Provides implementation to query local SQLite database
  */
 
-public class LocalDatabaseConnector extends SQLiteAssetHelper {
+public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConnectorInterface {
 	
     private static final String LOG = LocalDatabaseConnector.class.getName();
     
@@ -31,35 +36,6 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
     private static int DATABASE_VERSION = 5;
 	private SQLiteDatabase database;
 	
-	// table names
-    private static final String TABLE_BUS = "buses";
-    private static final String TABLE_STOP = "stops";
-    private static final String TABLE_ROUTE = "routes";
-    private static final String TABLE_SCHEDULE = "schedules";
-    
-    // common column names
-    private static final String TIME_STAMP = "timestamp";
-    
-    // BUS table column names
-    private static final String BUS_ID = "busid";
-    private static final String BUS_NAME = "busname";
-    private static final String BUS_DIR = "busdir";
-    
-    // STOP table column names
-    private static final String STOP_ID = "stopid";
-    private static final String STOP_NAME = "stopname";
-    private static final String STOP_STREET1 = "stopstreet1";
-    private static final String STOP_STREET2 = "stopstreet2";
-    private static final String STOP_GPSLAT = "stopgpslat";
-    private static final String STOP_GPSLONG = "stopgpslong";
-    
-    // ROUTE table column names
-    private static final String ROUTE_ID = "routeid";
-    
-    // SCHEDULE table column names
-    private static final String SCHEDULE_ID = "scheduleid";
-    private static final String SCHEDULE_DAY = "scheduleday";
-    private static final String SCHEDULE_TIME = "scheduletime";
 	
 
 	// constructor
@@ -88,12 +64,12 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// inserts a new bus in BUS table
 	public long insertBus(Bus bus, long[] stopIds) { 
 		ContentValues newBus = new ContentValues();
-		newBus.put(BUS_NAME, bus.getName()); 
-		newBus.put(BUS_DIR, bus.getDirection()); 
-		newBus.put(TIME_STAMP, getDateTime()); 
+		newBus.put(DbStructure.BUS_NAME, bus.getName()); 
+		newBus.put(DbStructure.BUS_DIR, bus.getDirection()); 
+		newBus.put(DbStructure.TIME_STAMP, getDateTime()); 
 		
 		open(); 
-		long busId = database.insert(TABLE_BUS, null, newBus); 
+		long busId = database.insert(DbStructure.TABLE_BUS, null, newBus); 
 		
 		for (long stopId : stopIds) {
             insertRoute(busId, stopId);
@@ -106,7 +82,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// selects a bus from BUS table
 	public Bus selectBus(Long busId) { 
 		
-		String selectQuery = "SELECT  * FROM " + TABLE_BUS + " WHERE " + BUS_ID + " = " + busId;
+		String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_BUS + " WHERE " + DbStructure.BUS_ID + " = " + busId;
 		
 		Log.i(LOG, selectQuery);
 	 
@@ -117,8 +93,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	        busCursor.moveToFirst();
 	    
 		//extract the bus information from the database query
-	    String busName = busCursor.getString(busCursor.getColumnIndex(BUS_NAME)); 
-	    String busDir = busCursor.getString(busCursor.getColumnIndex(BUS_DIR));
+	    String busName = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_NAME)); 
+	    String busDir = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_DIR));
 	    Bus bus = new Bus(busName, busDir); 
 	    
 	    //close the cursor
@@ -133,7 +109,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// selects all buses from BUS table
 	public ArrayList<Bus> selectAllBuses() { 
 		ArrayList<Bus> allBuses = new ArrayList<Bus>();
-	    String selectQuery = "SELECT  * FROM " + TABLE_BUS;
+	    String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_BUS;
 	    
 	    Log.i(LOG, selectQuery);
 	    
@@ -143,8 +119,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	    // looping through all rows and adding to list
 	    if (busCursor.moveToFirst()) {
 	        do {
-	        	String busName = busCursor.getString(busCursor.getColumnIndex(BUS_NAME)); 
-	    	    String busDir = busCursor.getString(busCursor.getColumnIndex(BUS_DIR));
+	        	String busName = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_NAME)); 
+	    	    String busDir = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_DIR));
 	    	    Bus bus = new Bus(busName, busDir);
 	            
 	    	    // Adding bus to list
@@ -161,13 +137,11 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	}
 	
 	// selects all buses associated with a specific stop
-	public ArrayList<Bus> selectAllBusesByStop(Stop stop) { 
+	@Override
+	public ArrayList<Bus> getBusesForStop (Stop stop) { 
 		ArrayList<Bus> allBusesByStop = new ArrayList<Bus>();
-		String stopName = stop.getName(); 
 			
-		String selectQuery = "SELECT  * FROM " + TABLE_BUS + " tb, " + TABLE_STOP + " ts, " + 
-				TABLE_ROUTE + " tr WHERE ts." + STOP_NAME + " = '" + stopName + "' AND ts." + STOP_ID + 
-				" = tr." + STOP_ID + " AND tb." + BUS_ID + " = tr." + BUS_ID;
+		String selectQuery = DbStructure.busesRequestString(stop.getName());
 		 
 		Log.i(LOG, selectQuery);
 		 
@@ -177,8 +151,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 		// looping through all rows and adding to list
 		if (busCursor.moveToFirst()) {
 		     do {
-		        String busName = busCursor.getString(busCursor.getColumnIndex(BUS_NAME)); 
-		    	String busDir = busCursor.getString(busCursor.getColumnIndex(BUS_DIR));
+		        String busName = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_NAME)); 
+		    	String busDir = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_DIR));
 		    	Bus bus = new Bus(busName, busDir);
 		            
 		    	// Adding bus to list
@@ -197,11 +171,12 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// updates a bus in BUS table
 	public int updateBus(Bus bus, Long busId) { 
 		ContentValues updateBus = new ContentValues();
-		updateBus.put(BUS_NAME, bus.getName()); 
-		updateBus.put(BUS_DIR, bus.getDirection());
+		updateBus.put(DbStructure.BUS_NAME, bus.getName()); 
+		updateBus.put(DbStructure.BUS_DIR, bus.getDirection());
 		
 		open(); 
-		int updateId = database.update(TABLE_BUS, updateBus, BUS_ID + " = ?",  new String[] { String.valueOf(busId) });
+		int updateId = database.update(DbStructure.TABLE_BUS, updateBus, DbStructure.BUS_ID + " = ?",  new String[] 
+				{ String.valueOf(busId) });
 		close();
 		return updateId; 
 	}
@@ -209,7 +184,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// deletes a bus in BUS table
 	public int deleteBus(Long busId) { 
 		open(); 
-		int deleteId = database.delete(TABLE_BUS, BUS_ID + " = ?",  new String[] { String.valueOf(busId) });
+		int deleteId = database.delete(DbStructure.TABLE_BUS, DbStructure.BUS_ID + " = ?",  new String[] 
+				{ String.valueOf(busId) });
 		close();
 		return deleteId; 
 	}
@@ -217,15 +193,15 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// inserts a new stop in STOP table
 	public long insertStop(Stop stop, long[] busIds) { 
 		ContentValues newStop = new ContentValues();
-		newStop.put(STOP_NAME, stop.getName()); 
-		newStop.put(STOP_STREET1, stop.getStreet1()); 
-		newStop.put(STOP_STREET2, stop.getStreet2());
-		newStop.put(STOP_GPSLAT, stop.getLocation().getLatitude());
-		newStop.put(STOP_GPSLONG, stop.getLocation().getLongitude());
-		newStop.put(TIME_STAMP, getDateTime());
+		newStop.put(DbStructure.STOP_NAME, stop.getName()); 
+		newStop.put(DbStructure.STOP_STREET1, stop.getStreet1()); 
+		newStop.put(DbStructure.STOP_STREET2, stop.getStreet2());
+		newStop.put(DbStructure.STOP_GPSLAT, stop.getLocation().getLatitude());
+		newStop.put(DbStructure.STOP_GPSLONG, stop.getLocation().getLongitude());
+		newStop.put(DbStructure.TIME_STAMP, getDateTime());
 			
 		open(); 
-		long stopId = database.insert(TABLE_STOP, null, newStop); 
+		long stopId = database.insert(DbStructure.TABLE_STOP, null, newStop); 
 			
 		for(long busId : busIds) {
 	        insertRoute(stopId, busId);
@@ -238,7 +214,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	public Stop selectStop(Long stopId) { 
 
 		//sql command to select an item given an id
-		String selectQuery = "SELECT  * FROM " + TABLE_STOP + " WHERE " + STOP_ID + " = " + stopId;
+		String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_STOP + " WHERE " + DbStructure.STOP_ID + " = " + stopId;
 
 		Log.i(LOG, selectQuery);
 
@@ -249,11 +225,11 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 			stopCursor.moveToFirst();
 
 		//extract the stop information from the database query
-		String stopName = stopCursor.getString(stopCursor.getColumnIndex(STOP_NAME)); 
-		String stopStreet1 = stopCursor.getString(stopCursor.getColumnIndex(STOP_STREET1));
-		String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(STOP_STREET2));
-		double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(STOP_GPSLAT));
-		double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(STOP_GPSLONG));
+		String stopName = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_NAME)); 
+		String stopStreet1 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET1));
+		String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET2));
+		double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLAT));
+		double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLONG));
 		Location stopLocation = new Location(stopName);
 		stopLocation.setLatitude(stopGpsLat);
 		stopLocation.setLongitude(stopGpsLong);
@@ -269,11 +245,12 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	}
 
 	// selects all stops from STOP table
-	public ArrayList<Stop> selectAllStops() { 
+	@Override
+	public ArrayList<Stop> getAllStops() { 
 		ArrayList<Stop> allStops = new ArrayList<Stop>();
 
 		// sql commad to select all
-		String selectQuery = "SELECT * FROM " + TABLE_STOP;
+		String selectQuery = DbStructure.allStopsRequestString();
 
 		Log.i(LOG, selectQuery);
 
@@ -283,11 +260,11 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 		// looping through all rows and adding to list
 		if (stopCursor.moveToFirst()) {
 			do {
-				String stopName = stopCursor.getString(stopCursor.getColumnIndex(STOP_NAME)); 
-				String stopStreet1 = stopCursor.getString(stopCursor.getColumnIndex(STOP_STREET1));
-				String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(STOP_STREET2));
-				double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(STOP_GPSLAT));
-				double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(STOP_GPSLONG));
+				String stopName = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_NAME)); 
+				String stopStreet1 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET1));
+				String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET2));
+				double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLAT));
+				double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLONG));
 				Location stopLocation = new Location(stopName);
 				stopLocation.setLatitude(stopGpsLat);
 				stopLocation.setLongitude(stopGpsLong);
@@ -307,11 +284,11 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	}
 
 	// selects all buses associated with a specific stop
-	public ArrayList<Stop> selectAllStopsByStreet(String street) { 
+	@Override
+	public ArrayList<Stop> getStopsByStreet (String street) { 
 		ArrayList<Stop> allStopsByStreet = new ArrayList<Stop>();
 
-		String selectQuery = "SELECT  * FROM " + TABLE_STOP + " ts WHERE ts." + STOP_STREET1 + " = '" 
-				+ street + "' OR ts." + STOP_STREET2 + " = '" + street + "'";
+		String selectQuery = DbStructure.stopsByStreetRequestString(street);
 
 		Log.i(LOG, selectQuery);
 
@@ -321,11 +298,11 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 		// looping through all rows and adding to list
 		if (stopCursor.moveToFirst()) {
 			do {
-				String stopName = stopCursor.getString(stopCursor.getColumnIndex(STOP_NAME)); 
-				String stopStreet1 = stopCursor.getString(stopCursor.getColumnIndex(STOP_STREET1));
-				String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(STOP_STREET2));
-				double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(STOP_GPSLAT));
-				double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(STOP_GPSLONG));
+				String stopName = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_NAME)); 
+				String stopStreet1 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET1));
+				String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET2));
+				double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLAT));
+				double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLONG));
 				Location stopLocation = new Location(stopName);
 				stopLocation.setLatitude(stopGpsLat);
 				stopLocation.setLongitude(stopGpsLong);
@@ -347,14 +324,15 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// updates a stop in STOP table
 	public int updateStop(Stop stop, Long stopId) { 
 		ContentValues updateStop = new ContentValues();
-		updateStop.put(STOP_NAME, stop.getName()); 
-		updateStop.put(STOP_STREET1, stop.getStreet1()); 
-		updateStop.put(STOP_STREET2, stop.getStreet2());
-		updateStop.put(STOP_GPSLAT, stop.getLocation().getLatitude());
-		updateStop.put(STOP_GPSLONG, stop.getLocation().getLongitude());
+		updateStop.put(DbStructure.STOP_NAME, stop.getName()); 
+		updateStop.put(DbStructure.STOP_STREET1, stop.getStreet1()); 
+		updateStop.put(DbStructure.STOP_STREET2, stop.getStreet2());
+		updateStop.put(DbStructure.STOP_GPSLAT, stop.getLocation().getLatitude());
+		updateStop.put(DbStructure.STOP_GPSLONG, stop.getLocation().getLongitude());
 
 		open(); 
-		int updateId = database.update(TABLE_STOP, updateStop, STOP_ID + " = ?",  new String[] { String.valueOf(stopId) });
+		int updateId = database.update(DbStructure.TABLE_STOP, updateStop, DbStructure.STOP_ID + " = ?",  new String[] 
+				{ String.valueOf(stopId) });
 		close();
 		return updateId; 
 	}
@@ -362,7 +340,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// deletes a stop in STOP table
 	public int deleteStop(Long stopId) { 
 		open(); 
-		int deleteId = database.delete(TABLE_STOP, STOP_ID + " = ?",  new String[] { String.valueOf(stopId) });
+		int deleteId = database.delete(DbStructure.TABLE_STOP, DbStructure.STOP_ID + " = ?",  new String[] 
+				{ String.valueOf(stopId) });
 		close();
 		return deleteId; 
 	}
@@ -370,12 +349,12 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// inserts a new route in ROUTE table
 	public long insertRoute(Long busId, Long stopId) { 
 		ContentValues newRoute = new ContentValues();
-		newRoute.put(BUS_ID, busId); 
-		newRoute.put(STOP_ID, stopId); 
-		newRoute.put(TIME_STAMP, getDateTime());
+		newRoute.put(DbStructure.BUS_ID, busId); 
+		newRoute.put(DbStructure.STOP_ID, stopId); 
+		newRoute.put(DbStructure.TIME_STAMP, getDateTime());
 
 		open(); 
-		long insertId = database.insert(TABLE_ROUTE, null, newRoute); 
+		long insertId = database.insert(DbStructure.TABLE_ROUTE, null, newRoute); 
 		close();
 		return insertId;
 	}
@@ -383,11 +362,12 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// updates a route in ROUTE table
 	public int updateRoute(Long busId, Long stopId, Long routeId) { 
 		ContentValues updateRoute = new ContentValues();
-		updateRoute.put(BUS_ID, busId); 
-		updateRoute.put(STOP_ID, stopId);
+		updateRoute.put(DbStructure.BUS_ID, busId); 
+		updateRoute.put(DbStructure.STOP_ID, stopId);
 
 		open(); 
-		int updateId = database.update(TABLE_ROUTE, updateRoute, ROUTE_ID + " = ?",  new String[] { String.valueOf(routeId) });
+		int updateId = database.update(DbStructure.TABLE_ROUTE, updateRoute, DbStructure.ROUTE_ID + " = ?",  new String[] 
+				{ String.valueOf(routeId) });
 		close();
 		return updateId; 
 	}
@@ -395,7 +375,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// deletes a route in ROUTE table
 	public int deleteRoute(Long routeId) { 
 		open(); 
-		int deleteId = database.delete(TABLE_ROUTE, ROUTE_ID + " = ?",  new String[] { String.valueOf(routeId) });
+		int deleteId = database.delete(DbStructure.TABLE_ROUTE, DbStructure.ROUTE_ID + " = ?",  new String[] 
+				{ String.valueOf(routeId) });
 		close();
 		return deleteId; 
 	}
@@ -403,35 +384,32 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// inserts a new schedule in SCHEDULE table
 	public long insertSchedule(Long routeId, Long scheduleDay, Long scheduleTime) { 
 		ContentValues newSchedule = new ContentValues();
-		newSchedule.put(ROUTE_ID, routeId); 
-		newSchedule.put(SCHEDULE_DAY, scheduleDay); 
-		newSchedule.put(SCHEDULE_TIME, scheduleTime); 
-		newSchedule.put(TIME_STAMP, getDateTime());
+		newSchedule.put (DbStructure.ROUTE_ID, routeId); 
+		newSchedule.put (DbStructure.SCHEDULE_DAY, scheduleDay); 
+		newSchedule.put (DbStructure.SCHEDULE_TIME, scheduleTime); 
+		newSchedule.put (DbStructure.TIME_STAMP, getDateTime());
 
 		open(); 
-		long insertId = database.insert(TABLE_SCHEDULE, null, newSchedule); 
+		long insertId = database.insert (DbStructure.TABLE_SCHEDULE, null, newSchedule); 
 		close();
 		return insertId;
 	}
 
 	//given a stop, bus, and the current day of the week, return all the associated times from schedule table
-	public ArrayList<Time> selectScheduleTimes(Stop stop, Bus bus, int currentDay) {
+	public ArrayList<Time> selectScheduleTimes(Stop stop, Bus bus) {
 		ArrayList<Time> times = new ArrayList<Time>();
 
 		String stopName = stop.getName(); 
 		String busName = bus.getName(); 
+		String busDir = bus.getDirection();
 
-		currentDay = 0;
+		int currentDay = DbTime.getWeekDay();
 		
 		// 1. get stopId from stop table
 		// 2. get busid from bus table
 		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
 		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
-		String selectQuery = "SELECT  * FROM " + TABLE_BUS + " tb, " + TABLE_STOP + " ts, " + TABLE_ROUTE + 
-				" tr, " + TABLE_SCHEDULE + " tsc WHERE tb." + BUS_NAME + " = '" + busName + "' AND ts." + 
-				STOP_NAME + " = '" + stopName + "' AND ts." + STOP_ID + " = tr." + STOP_ID + " AND tb." + 
-				BUS_ID + " = tr." + BUS_ID + " AND tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND tsc." + 
-				SCHEDULE_DAY + " = '" + currentDay + "'";
+		String selectQuery = DbStructure.scheduleRequestString(stopName, busName, busDir, currentDay);
 
 		Log.i(LOG, selectQuery);
 
@@ -443,7 +421,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 			do {
 				// convert time db format to time object
 				Time time = new Time();
-				int numMinutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(SCHEDULE_TIME));
+				int numMinutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(DbStructure.SCHEDULE_TIME));
 				
 				int minutes = numMinutesSinceMidnight % 60; 
 				int hours = numMinutesSinceMidnight / 60; 
@@ -464,12 +442,12 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// updates a schedule in SCHEDULE table
 	public int updateschedule(Long routeId, Long scheduleDay, Long scheduleTime, Long scheduleId) { 
 		ContentValues updateSchedule = new ContentValues();
-		updateSchedule.put(ROUTE_ID, routeId); 
-		updateSchedule.put(SCHEDULE_DAY, scheduleDay);
-		updateSchedule.put(SCHEDULE_TIME, scheduleTime);
+		updateSchedule.put(DbStructure.ROUTE_ID, routeId); 
+		updateSchedule.put(DbStructure.SCHEDULE_DAY, scheduleDay);
+		updateSchedule.put(DbStructure.SCHEDULE_TIME, scheduleTime);
 
 		open(); 
-		int updateId = database.update(TABLE_SCHEDULE, updateSchedule, SCHEDULE_ID + " = ?",  new String[] { String.valueOf(scheduleId) });
+		int updateId = database.update(DbStructure.TABLE_SCHEDULE, updateSchedule, DbStructure.SCHEDULE_ID + " = ?",  new String[] { String.valueOf(scheduleId) });
 		close(); 
 
 		return updateId; 
@@ -478,7 +456,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 	// deletes a schedule in SCHEDULE table
 	public int deleteSchedule(Long scheduleId) { 
 		open(); 
-		int deleteId = database.delete(TABLE_SCHEDULE, SCHEDULE_ID + " = ?",  new String[] { String.valueOf(scheduleId) });
+		int deleteId = database.delete(DbStructure.TABLE_SCHEDULE, DbStructure.SCHEDULE_ID + " = ?",  new String[] 
+				{ String.valueOf(scheduleId) });
 		close(); 
 
 		return deleteId; 
@@ -494,6 +473,19 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper {
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
+
+	
+	
+	
+	
+	
+	@Override
+	public Schedule getSchedule(String stopName, ArrayList<String> busesNames,
+			ArrayList<String> busesDirs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 } // end LocalDatabaseConnector
 	
