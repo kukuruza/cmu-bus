@@ -215,11 +215,9 @@ public class ViewScheduleActivity extends Activity {
 
 	// handle choice from options menu
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		String message = new String("Here you go! A list of the arrival times for the buses you " + 
-				"selected.  Wrong bus?  Swipe back and search again."); 
-
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		String message = getString(R.string.viewScheduleActivityHelp); 
 		new SimpleDialogBuilderHelper(ViewScheduleActivity.this, message, "Ok"); 
 		return super.onOptionsItemSelected(item);
 	} 	

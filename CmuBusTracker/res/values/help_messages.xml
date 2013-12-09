@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="locateStationActivityHelp">Select a new station by tapping on one from the list, or if you do not see the one you want, enter a street name below to look up the one you had in mind</string>
+    <string name="searchStationActivityHelp">Select a new station by tapping on one from the list, or if you do not see the one you want, go back and search again</string>
+    <string name="selectStationAndBusActivityHelp">Welcome to the bus tracker app! You can change the selected station by clicking on the station name, and select your bus by tapping on the bus names. Just hit \"find next bus\" when you are ready to get the schedule.</string>
+    <string name="viewScheduleActivityHelp">Here you go! A list of the arrival times for the buses you selected. Wrong bus? Swipe back and search again.</string>
+</resources>

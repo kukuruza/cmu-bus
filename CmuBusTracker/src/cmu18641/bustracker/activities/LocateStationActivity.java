@@ -273,12 +273,9 @@ public class LocateStationActivity extends Activity {
 
 	// handle choice from options menu
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		String message = new String("Select a new station by tapping on one from the list, or if " + 
-				"you don't see the one you want, enter a street name below to look up the one you had " + 
-				"in mind"); 
-
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		String message = getString (R.string.locateStationActivityHelp);
 		new SimpleDialogBuilderHelper(LocateStationActivity.this, message, "Ok"); 
 		return super.onOptionsItemSelected(item);
 	} 	

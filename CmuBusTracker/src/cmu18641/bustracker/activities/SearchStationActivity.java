@@ -125,11 +125,9 @@ public class SearchStationActivity extends Activity {
 
 	// handle choice from options menu
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		String message = new String("Select a new station by tapping on one from the list, or if " + 
-				"you don't see the one you want, go back and search again"); 
-
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		String message = getString (R.string.searchStationActivityHelp); 
 		new SimpleDialogBuilderHelper(SearchStationActivity.this, message, "Ok"); 
 		return super.onOptionsItemSelected(item);
 	} 	

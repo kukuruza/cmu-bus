@@ -189,9 +189,7 @@ public class SelectStationAndBusActivity extends Activity {
 		    // get help
 	        case R.id.help1:
 	        {
-	    		String message = new String("Welcome to the bus tracker app!  You can change the selected " + 
-						"station by clicking on the station name, and select your bus by tapping on the " + 
-						"bus names.  Just hit \"find next bus\" when you're ready to get the schedule." ); 
+	    		String message = getString (R.string.selectStationAndBusActivityHelp); 
 				new SimpleDialogBuilderHelper(SelectStationAndBusActivity.this, message, "Ok"); 
 	            return true;
 	        }
