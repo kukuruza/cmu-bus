@@ -104,7 +104,6 @@ public class DatabaseConnector {
 			while(rs.next())
 			{
 			    String timeStr = rs.getObject("scheduletime").toString();
-			    logger.info ("min: " + timeStr);
 			    // logic is to be removed from here
 			    int minutesTotal = Integer.parseInt(timeStr);
 			    if (currentMin > minutesTotal)
@@ -119,10 +118,8 @@ public class DatabaseConnector {
 			return null;
 		}
 
-    	/*
-		final int deepNight = 4*60;
 		String selectQueryAfterMidnight = DbStructure.scheduleRequestString
-				(stopName, busesNames, busesDirs, weekDay, 0, deepNight);
+				(stopName, busesNames, busesDirs, weekDay, 0, DbTime.DeepNight);
 		logger.info("after midnight: " + selectQueryAfterMidnight);
 		
 		try {
@@ -136,7 +133,6 @@ public class DatabaseConnector {
 			System.out.println("-");
 			while(rs.next())
 			{
-				System.out.println("+");
 			    String timeVal = rs.getObject("scheduletime").toString();
 			    int minutesTotal = Integer.parseInt(timeVal) + 24 * 60;
 			    String busnameVal = rs.getObject("busname").toString();
@@ -147,7 +143,7 @@ public class DatabaseConnector {
     	} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-		}*/
+		}
 		
     	closeConnection();
     	

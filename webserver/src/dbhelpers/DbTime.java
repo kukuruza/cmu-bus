@@ -6,6 +6,8 @@ import java.util.Calendar;
 // time in format of the DB - minutes since midnight
 public class DbTime {
 	
+	public final static int DeepNight = 10*60;
+	
 	private int _hours = -1, _minutes = -1;
 	private SimpleDateFormat _sdf = new SimpleDateFormat("HH:mm a");
 	Calendar _calendar = Calendar.getInstance();
