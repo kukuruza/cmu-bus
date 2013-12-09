@@ -45,7 +45,7 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 
 public class LocateStation extends Activity {
-	public static final String TAG = "LocateStation";
+	private static final String TAG = "LocateStation";
 	
 	public static final String STOP_SELECTED = "stop_selected";
 	public static final String SEARCH_QUERY_ID = "address_id";

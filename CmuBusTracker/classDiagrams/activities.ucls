@@ -1,396 +1,287 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
-  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+<class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="false" realizations="false" associations="false" dependencies="false" nesting-relationships="false">  
   <interface id="1" language="java" name="cmu18641.bustracker.helpers.ShakeDetector.OnShakeListener" 
     project="CmuBusTracker" file="/CmuBusTracker/src/cmu18641/bustracker/helpers/ShakeDetector.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="80" width="152" x="1107" y="853"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="924" y="547"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </interface>  
   <class id="2" language="java" name="cmu18641.bustracker.activities.SelectStationAndBus" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/activities/SelectStationAndBus.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="260" width="263" x="394" y="445"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="144" y="132"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="3" language="java" name="cmu18641.bustracker.activities.SearchStation" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/activities/SearchStation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="224" width="263" x="312" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    <position height="-1" width="-1" x="418" y="96"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
+      visibility="false">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="4" language="java" name="cmu18641.bustracker.activities.ViewScheduleActivity" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/activities/ViewScheduleActivity.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="278" width="263" x="1067" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="154" width="259" x="838" y="21"/>    
+    <display autosize="false" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="5" language="java" name="cmu18641.bustracker.activities.LocateStation" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/activities/LocateStation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="368" width="263" x="644" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="690" y="132"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="6" language="java" name="cmu18641.bustracker.helpers.ShakeDetector" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/helpers/ShakeDetector.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="368" width="255" x="1107" y="445"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="710" y="548"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="7" language="java" name="cmu18641.bustracker.adapter.BusAdapter" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/adapter/BusAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="152" width="242" x="576" y="853"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="145" y="446"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="8" language="java" name="cmu18641.bustracker.adapter.BusAdapter.ViewHolder" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/adapter/BusAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="134" width="149" x="576" y="1369"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="147" y="671"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="9" language="java" name="cmu18641.bustracker.adapter.StopAdapter.ViewHolder" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/adapter/StopAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="152" width="172" x="41" y="853"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="361" y="678"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="10" language="java" name="cmu18641.bustracker.adapter.ScheduleAdapter" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/adapter/ScheduleAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="116" width="327" x="1423" y="445"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="1185" y="455"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="11" language="java" name="cmu18641.bustracker.adapter.ScheduleAdapter.ViewHolder" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/adapter/ScheduleAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="134" width="149" x="1423" y="853"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="1185" y="671"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="12" language="java" name="cmu18641.bustracker.adapter.StopAdapter" project="CmuBusTracker" 
     file="/CmuBusTracker/src/cmu18641/bustracker/adapter/StopAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="116" width="250" x="41" y="445"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="-1" width="-1" x="360" y="437"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="cmu18641.bustracker.activities.SettingsActivity" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/cmu18641/bustracker/activities/SettingsActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1197" y="81"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="cmu18641.bustracker.entities.Stop" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/entities/Stop.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="476" width="211" x="325" y="853"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="14" language="java" name="cmu18641.bustracker.entities.ScheduleItem" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/entities/ScheduleItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="170" width="146" x="900" y="853"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="15" language="java" name="cmu18641.bustracker.entities.Schedule" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/entities/Schedule.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="260" width="307" x="697" y="445"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="16" language="java" name="cmu18641.bustracker.entities.Bus" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/entities/Bus.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="242" width="186" x="860" y="1369"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <nesting id="17">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="11"/>  
-  </nesting>  
-  <association id="18">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="19" name="selectedStop"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="21">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="22" name="_scheduleAdapter"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="24">    
-    <bendpoint x="1034" y="445"/>    
+  <association id="14">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="25" name="shakeListener"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
+      <attribute id="15" name="shakeListener">        
+        <position height="18" width="88" x="678" y="663"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="16" width="25" x="730" y="662"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="27">    
-    <bendpoint x="363" y="445"/>    
+  <association id="17">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="28" name="_selectedStop"/>      
-      <multiplicity id="29" minimum="0" maximum="1"/>    
+      <attribute id="18" name="shakeListener">        
+        <position height="18" width="88" x="682" y="665"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="16" width="25" x="725" y="658"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="30">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="31" name="_shakeDetector"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
+  <association id="20">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="21" name="shakeDetector">        
+        <position height="18" width="87" x="701" y="680"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="16" width="25" x="758" y="671"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="33">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="34" name="bus"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
+  <nesting id="23">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="9"/>  
+  </nesting>  
+  <association id="24">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="25" name="stopAdapter">        
+        <position height="18" width="74" x="674" y="688"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1">        
+        <position height="16" width="25" x="699" y="699"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
+    <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="36">    
+  <nesting id="27">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="1"/>  
+  </nesting>  
+  <association id="28">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="37" name="viewHolder"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
+      <attribute id="29" name="viewHolder">        
+        <position height="18" width="73" x="748" y="669"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="16" width="25" x="751" y="685"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="39">    
-    <bendpoint x="321" y="445"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="40" name="stationList"/>      
-      <multiplicity id="41" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="42">    
-    <bendpoint x="1076" y="445"/>    
-    <bendpoint x="1076" y="853"/>    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="43" name="_selectedBuses"/>      
-      <multiplicity id="44" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="46" name="_schedule"/>      
-      <multiplicity id="47" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="48">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="49" name="stopAdapter"/>      
-      <multiplicity id="50" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="51">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="52" name="busList"/>      
-      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="54">    
+  <association id="31">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="55" name="busAdapter"/>      
-      <multiplicity id="56" minimum="0" maximum="1"/>    
+      <attribute id="32" name="busAdapter">        
+        <position height="18" width="71" x="699" y="692"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="16" width="25" x="741" y="689"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="57">    
-    <bendpoint x="869" y="853"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="58" name="busList"/>      
-      <multiplicity id="59" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="60">    
-    <bendpoint x="342" y="445"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="61" name="stationList"/>      
-      <multiplicity id="62" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="63">    
-    <bendpoint x="1392" y="445"/>    
+  <association id="34">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="64" name="shakeListener"/>      
-      <multiplicity id="65" minimum="0" maximum="1"/>    
+      <attribute id="35" name="_scheduleAdapter">        
+        <position height="18" width="108" x="716" y="660"/>      
+      </attribute>      
+      <multiplicity id="36" minimum="0" maximum="1">        
+        <position height="16" width="25" x="748" y="689"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="66">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="67" name="_stop"/>      
-      <multiplicity id="68" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="69">    
-    <bendpoint x="1055" y="445"/>    
+  <association id="37">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="70" name="_scheduleItemList"/>      
-      <multiplicity id="71" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="72">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="73" name="stopAdapter"/>      
-      <multiplicity id="74" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="75">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="76" name="viewHolder"/>      
-      <multiplicity id="77" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="78">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="9"/>  
-  </nesting>  
-  <association id="79">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="80" name="_scheduleItemList"/>      
-      <multiplicity id="81" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="82">    
-    <bendpoint x="848" y="853"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="83" name="busSelections"/>      
-      <multiplicity id="84" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="85">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="86" name="mShakeListener"/>      
-      <multiplicity id="87" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="88">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="89" name="viewHolder"/>      
-      <multiplicity id="90" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="91">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="92" name="scheduleItemList"/>      
-      <multiplicity id="93" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="94">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="95" name="stopList"/>      
-      <multiplicity id="96" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="97">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="8"/>  
-  </nesting>  
-  <association id="98">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="99" name="shakeDetector"/>      
-      <multiplicity id="100" minimum="0" maximum="1"/>    
+      <attribute id="38" name="_shakeDetector">        
+        <position height="18" width="94" x="677" y="671"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+        <position height="16" width="25" x="744" y="663"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="101">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="1"/>  
+  <association id="40">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="41" name="viewHolder">        
+        <position height="18" width="70" x="681" y="676"/>      
+      </attribute>      
+      <multiplicity id="42" minimum="0" maximum="1">        
+        <position height="16" width="25" x="714" y="679"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="43">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="11"/>  
   </nesting>  
-  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <association id="44">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="45" name="mShakeListener">        
+        <position height="18" width="97" x="693" y="658"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="16" width="25" x="722" y="663"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="47">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="48" name="viewHolder">        
+        <position height="18" width="70" x="700" y="686"/>      
+      </attribute>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="16" width="25" x="716" y="684"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="50">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </nesting>  
+  <association id="51">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="52" name="stopAdapter">        
+        <position height="18" width="74" x="657" y="693"/>      
+      </attribute>      
+      <multiplicity id="53" minimum="0" maximum="1">        
+        <position height="16" width="25" x="705" y="701"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
     <operations public="true" package="true" protected="true" private="true" static="true"/>  

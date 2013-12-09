@@ -1,6 +1,6 @@
-FIXME:
-update db is not implemented
-times after midnight will not be shown at e.g. 11.45 pm
-
 TODO:
-webserver: put relative path to db resource
+fix tablet resolutions
+update UI-flow
+put help strings in resources
+re-structure packages in server
+add webserver packages to the design document
