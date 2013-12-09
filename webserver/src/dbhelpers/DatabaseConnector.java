@@ -79,10 +79,11 @@ public class DatabaseConnector {
 	       (String stopName, ArrayList<String> busesNames, ArrayList<String> busesDirs)
 	{
 	    int weekDay = DbTime.getWeekDay();
+		int currentMin = DbTime.getCurrentDbTime();
 		
-		String selectQuery = DbStructure.scheduleRequestString
-				(stopName, busesNames, busesDirs, weekDay);
-		logger.info(selectQuery);
+		String selectQueryMain = DbStructure.scheduleRequestString
+				(stopName, busesNames, busesDirs, weekDay, currentMin, 24*60);
+		logger.info(selectQueryMain);
 
 		BaseSchedule schedule = new BaseSchedule ();
 		schedule.setStop(stopName);
@@ -92,22 +93,18 @@ public class DatabaseConnector {
 		// rs - is the usual one, rs2 - is after midnight
     	ResultSet rs;
 		try {
-			rs = _stat.executeQuery(selectQuery);
+			rs = _stat.executeQuery(selectQueryMain);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 		
-		int currentMin = DbTime.getCurrentDbTime();
 		logger.info ("current minutes: " + Integer.toString(currentMin));
     	try {
 			while(rs.next())
 			{
 			    String timeStr = rs.getObject("scheduletime").toString();
-			    // logic is to be removed from here
 			    int minutesTotal = Integer.parseInt(timeStr);
-			    if (currentMin > minutesTotal)
-			    	continue;
 			    String busnameVal = rs.getObject("busname").toString();
 			    String busdirVal = rs.getObject("busdir").toString();
 			    BaseBus bus = new BaseBus(busnameVal, busdirVal);
