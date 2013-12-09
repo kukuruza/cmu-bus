@@ -42,9 +42,6 @@ public class DatabaseConnector {
 			int firstSlash = dbUrl.indexOf ('/');
 			String path = dbUrl.substring(firstSlash + 1);
 			
-			// involes knowledge that database zip file is needed
-			//path = path + ".zip";
-			
 			return path;
 		} catch (NamingException e) {
 			e.printStackTrace();

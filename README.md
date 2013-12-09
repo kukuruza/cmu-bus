@@ -13,8 +13,12 @@ The system consists of
 
 Installation
 ------------
-Server: you need Tomcat 7.0 to run the webserver. If you are using Eclipse JEE, import 'webserver' directory as a project.
-App: If you are using Android Eclipse, import 'CmuBusTracker' directory as an Android project.
+
+App: import 'CmuBusTracker' directory as an Android project. It should compile without any issues.
+
+Server: you need Tomcat 7.0 to run the webserver. If you are using Eclipse JEE, import 'webserver' directory as a project. Change
+
+Possible issues.
 
 
 Usage
