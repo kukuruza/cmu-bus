@@ -1,75 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="bustracker.app.dblayout.LocalDatabaseConnector" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/bustracker/app/dblayout/LocalDatabaseConnector.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="548" y="472"/>    
+  <class id="1" language="java" name="bustracker.server.servlets.GetDatabaseServlet" project="webserver" 
+    file="/webserver/src/bustracker/server/servlets/GetDatabaseServlet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="137" y="95"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="bustracker.app.dblayout.LocalDatabaseOpenHelper" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/bustracker/app/dblayout/LocalDatabaseOpenHelper.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="278" y="290"/>    
+  <class id="2" language="java" name="bustracker.server.servlets.QueryServlet" project="webserver" 
+    file="/webserver/src/bustracker/server/servlets/QueryServlet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="594" y="134"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="bustracker.app.ws.local.LocalQuery" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/bustracker/app/ws/local/LocalQuery.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="420" y="60"/>    
+  <class id="3" language="java" name="bustracker.server.dbhelpers.DatabaseConnector" project="webserver" 
+    file="/webserver/src/bustracker/server/dbhelpers/DatabaseConnector.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="139" y="276"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="bustracker.app.ws.RouteQueryManager" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/bustracker/app/ws/RouteQueryManager.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="646" y="88"/>    
+  <class id="4" language="java" name="bustracker.server.dbhelpers.DbTime" project="webserver" 
+    file="/webserver/src/bustracker/server/dbhelpers/DbTime.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="375" y="386"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="bustracker.app.ws.GlobalManager" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/bustracker/app/ws/GlobalManager.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="992" y="132"/>    
+  <class id="5" language="java" name="bustracker.server.dbhelpers.DbStructure" project="webserver" 
+    file="/webserver/src/bustracker/server/dbhelpers/DbStructure.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="142" y="538"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
   <dependency id="6">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <association id="7">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="8" name="routeQueryManager"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="10">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <dependency id="11">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="1"/>  
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="7">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="false" static="true"/>    
     <operations public="true" package="true" protected="true" private="false" static="true"/>  
   </classifier-display>  
-  <association-display labels="true" multiplicity="true"/>
+  <association-display labels="false" multiplicity="true"/>
 </class-diagram>

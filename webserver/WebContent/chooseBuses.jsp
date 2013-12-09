@@ -2,11 +2,11 @@
     pageEncoding="US-ASCII"%>
 
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dbhelpers.DatabaseConnector" %>
-<%@ page import="cmu18641.bustracker.common.entities.BaseStop" %>
-<%@ page import="cmu18641.bustracker.common.entities.BaseBus" %>
+<%@ page import="bustracker.server.dbhelpers.DatabaseConnector" %>
+<%@ page import="bustracker.common.entities.BaseStop" %>
+<%@ page import="bustracker.common.entities.BaseBus" %>
 <%@ page import="com.google.gson.Gson" %>
-<%@ page import="dbhelpers.DbTime" %>
+<%@ page import="bustracker.server.dbhelpers.DbTime" %>
 
 
 
@@ -17,10 +17,10 @@
 <title>CMU Bus | choose bus</title>
 </head>
 
-<jsp:useBean id="routeBean" class="beans.RouteBean" scope="session"/>
+<jsp:useBean id="routeBean" class="bustracker.server.beans.RouteBean" scope="session"/>
 <jsp:setProperty name="routeBean" property="*"/>
 
-<jsp:useBean id="allStopsBean" class="beans.AllStopsBean" scope="session"/>
+<jsp:useBean id="allStopsBean" class="bustracker.server.beans.AllStopsBean" scope="session"/>
 <jsp:setProperty name="allStopsBean" property="*"/>
 
 

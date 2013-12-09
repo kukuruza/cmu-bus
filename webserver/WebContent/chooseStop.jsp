@@ -2,9 +2,9 @@
     pageEncoding="US-ASCII"%>
 
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dbhelpers.DatabaseConnector" %>
-<%@ page import="cmu18641.bustracker.common.entities.BaseStop" %>
-<%@ page import="dbhelpers.DbTime" %>
+<%@ page import="bustracker.server.dbhelpers.DatabaseConnector" %>
+<%@ page import="bustracker.common.entities.BaseStop" %>
+<%@ page import="bustracker.server.dbhelpers.DbTime" %>
 
 
 
@@ -15,7 +15,7 @@
 <title>CMU Bus | choose stop</title>
 </head>
 
-<jsp:useBean id="allStopsBean" class="beans.AllStopsBean" scope="session"/>
+<jsp:useBean id="allStopsBean" class="bustracker.server.beans.AllStopsBean" scope="session"/>
 <jsp:setProperty name="allStopsBean" property="*"/>
 
 <body>

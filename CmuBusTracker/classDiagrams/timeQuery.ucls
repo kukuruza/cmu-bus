@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
-  <interface id="1" language="java" name="cmu18641.bustracker.ws.TimeQueryInterface" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/TimeQueryInterface.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="1" language="java" name="bustracker.app.ws.TimeQueryInterface" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/TimeQueryInterface.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="364" y="450"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </interface>  
-  <class id="2" language="java" name="cmu18641.bustracker.ws.TimeQueryManager" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/TimeQueryManager.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="bustracker.app.ws.TimeQueryManager" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/TimeQueryManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="368" y="298"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="cmu18641.bustracker.ws.local.LocalQuery" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/local/LocalQuery.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="bustracker.app.ws.local.LocalQuery" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/local/LocalQuery.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="149" y="451"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="cmu18641.bustracker.ws.remote.RemoteQuery" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/remote/RemoteQuery.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="bustracker.app.ws.remote.RemoteQuery" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/remote/RemoteQuery.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="585" y="443"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="cmu18641.bustracker.ws.remote.Networking" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/remote/Networking.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="bustracker.app.ws.remote.Networking" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/remote/Networking.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="810" y="440"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="cmu18641.bustracker.ws.GlobalManager" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/GlobalManager.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="bustracker.app.ws.GlobalManager" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/GlobalManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="365" y="95"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
