@@ -1,9 +1,6 @@
 package bustracker.app.ws;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 
 import bustracker.app.activities.SettingsActivity;
 import bustracker.app.entities.Bus;
@@ -18,7 +15,6 @@ import bustracker.app.ws.remote.RemoteQuery;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.format.Time;
 import android.util.Log;
 
 
@@ -39,34 +35,6 @@ public class TimeQueryManager {
 	{
 		ArrayList<ScheduleItem> scheduleItems = schedule.getScheduleItemList();
 		
-		// get current time
-		Time currentTime = new Time();
-		currentTime.setToNow();
-		
-		currentTime.second = 0; 
-		currentTime.monthDay = 1; 
-		currentTime.month = 1;
-		
-		// remove buses that have already passed stop
-		Iterator<ScheduleItem> it = scheduleItems.iterator();
-		while (it.hasNext()) {
-			ScheduleItem item = it.next(); 
-			
-			int diff = Time.compare(item.getTime(), currentTime); 
-			Log.v(TAG, String.format("%d", item.getTime().hour ));
-			
-		    if(diff <= 0) {
-		        it.remove();
-		    }
-		}
-		
-		// sort remaining buses by time
-		Collections.sort(scheduleItems, new Comparator<ScheduleItem>() {
-		       @Override public int compare(ScheduleItem s1, ScheduleItem s2) {
-		           return Time.compare(s1.getTime(), s2.getTime());
-		       }
-		});
-
 		// return only top numOut results
 		ArrayList<ScheduleItem> subScheduleItem; 
 		if(scheduleItems.size() > numOut) { 

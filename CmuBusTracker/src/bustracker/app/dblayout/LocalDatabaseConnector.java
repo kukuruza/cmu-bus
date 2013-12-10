@@ -32,7 +32,7 @@ import android.util.Log;
 
 public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConnectorInterface {
 	
-    private static final String LOG = LocalDatabaseConnector.class.getName();
+    private static final String TAG = LocalDatabaseConnector.class.getName();
     
     public static final String DATABASE_NAME = "busTracker";
     private static int DATABASE_VERSION = 5;
@@ -86,7 +86,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		
 		String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_BUS + " WHERE " + DbStructure.BUS_ID + " = " + busId;
 		
-		Log.i(LOG, selectQuery);
+		Log.i(TAG, selectQuery);
 	 
 		open();
 	    Cursor busCursor = database.rawQuery(selectQuery, null);
@@ -113,7 +113,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		ArrayList<Bus> allBuses = new ArrayList<Bus>();
 	    String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_BUS;
 	    
-	    Log.i(LOG, selectQuery);
+	    Log.i(TAG, selectQuery);
 	    
 	    open();
 	    Cursor busCursor = database.rawQuery(selectQuery, null);
@@ -145,7 +145,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 			
 		String selectQuery = DbStructure.busesRequestString(stop.getName());
 		 
-		Log.i(LOG, selectQuery);
+		Log.i(TAG, selectQuery);
 		 
 		open();
 		Cursor busCursor = database.rawQuery(selectQuery, null);
@@ -218,7 +218,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		//sql command to select an item given an id
 		String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_STOP + " WHERE " + DbStructure.STOP_ID + " = " + stopId;
 
-		Log.i(LOG, selectQuery);
+		Log.i(TAG, selectQuery);
 
 		open();
 		Cursor stopCursor = database.rawQuery(selectQuery, null);
@@ -254,7 +254,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		// sql commad to select all
 		String selectQuery = DbStructure.allStopsRequestString();
 
-		Log.i(LOG, selectQuery);
+		Log.i(TAG, selectQuery);
 
 		open();
 		Cursor stopCursor = database.rawQuery(selectQuery, null);
@@ -289,7 +289,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 
 		String selectQuery = DbStructure.stopsByStreetRequestString(street);
 
-		Log.i(LOG, selectQuery);
+		Log.i(TAG, selectQuery);
 
 		open();
 		Cursor stopCursor = database.rawQuery(selectQuery, null);
@@ -396,11 +396,12 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 	public BaseSchedule getSchedule (String stopName, ArrayList<String> busNames, ArrayList<String> busDirs) 
 	{
 		int currentDay = DbTime.getWeekDay();
-		//int currentMinutes = DbTime.getCurrentDbTime();
+		int currentMinutes = DbTime.getCurrentDbTime();
 		
-		String selectQuery = DbStructure.scheduleRequestString(stopName, busNames, busDirs, currentDay);
+		String selectQuery = DbStructure.scheduleRequestString(stopName, busNames, busDirs, currentDay,
+				currentMinutes, 24*60);
 
-		Log.i(LOG, selectQuery);
+		Log.i(TAG, selectQuery);
 
 		open();
 		Cursor timesCursor = database.rawQuery(selectQuery, null);
