@@ -13,7 +13,7 @@ public interface DbConnectorInterface {
 	
 	public ArrayList<BaseStop> getStopsByStreet (String street);
 	
-	public BaseSchedule getSchedule (String stopName, ArrayList<String> busesNames, ArrayList<String> busesDirs);
+	public BaseSchedule getSchedule (String stopName, ArrayList<String> busNames, ArrayList<String> busDirs);
 	
 	public ArrayList<BaseBus> getBusesForStop (BaseStop stop);
 	

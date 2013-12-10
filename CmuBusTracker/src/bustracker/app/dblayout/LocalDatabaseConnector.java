@@ -2,7 +2,6 @@ package bustracker.app.dblayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -13,6 +12,7 @@ import bustracker.common.dblayout.DbStructure;
 import bustracker.common.dblayout.DbTime;
 import bustracker.common.entities.BaseBus;
 import bustracker.common.entities.BaseSchedule;
+import bustracker.common.entities.BaseScheduleItem;
 import bustracker.common.entities.BaseStop;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
-import android.text.format.Time;
 import android.util.Log;
 
 /*
@@ -392,47 +391,41 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		return insertId;
 	}
 
-	//given a stop, bus, and the current day of the week, return all the associated times from schedule table
-	public ArrayList<Time> selectScheduleTimes(Stop stop, Bus bus) {
-		ArrayList<Time> times = new ArrayList<Time>();
-
-		String stopName = stop.getName(); 
-		String busName = bus.getName(); 
-		String busDir = bus.getDirection();
-
+	
+	@Override
+	public BaseSchedule getSchedule (String stopName, ArrayList<String> busNames, ArrayList<String> busDirs) 
+	{
 		int currentDay = DbTime.getWeekDay();
+		//int currentMinutes = DbTime.getCurrentDbTime();
 		
-		// 1. get stopId from stop table
-		// 2. get busid from bus table
-		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
-		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
-		String selectQuery = DbStructure.scheduleRequestString(stopName, busName, busDir, currentDay);
+		String selectQuery = DbStructure.scheduleRequestString(stopName, busNames, busDirs, currentDay);
 
 		Log.i(LOG, selectQuery);
 
 		open();
 		Cursor timesCursor = database.rawQuery(selectQuery, null);
 
+		BaseSchedule baseSchedule = new BaseSchedule();
+		baseSchedule.setStop(stopName);
+		
 		// looping through all rows and adding to list
 		if (timesCursor.moveToFirst()) {
 			do {
-				// convert time db format to time object
-				Time time = new Time();
-				int numMinutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(DbStructure.SCHEDULE_TIME));
-				
-				int minutes = numMinutesSinceMidnight % 60; 
-				int hours = numMinutesSinceMidnight / 60; 
-				time.set(0, minutes, hours, 1, 1, Calendar.getInstance().get(Calendar.YEAR));
+				int minutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(DbStructure.SCHEDULE_TIME));
+				String busName = timesCursor.getString(timesCursor.getColumnIndex(DbStructure.BUS_NAME));
+				String busDir = timesCursor.getString(timesCursor.getColumnIndex(DbStructure.BUS_DIR));
 
-				// Adding times to list
-				times.add(time);
+				baseSchedule.getScheduleItemList().add (new BaseScheduleItem
+						                         (new BaseBus(busName, busDir), minutesSinceMidnight));
+				
 			} while (timesCursor.moveToNext());
 		}
 
 		//close the cursor
 		timesCursor.close();
 		close();
-		return times; 
+		
+		return baseSchedule; 
 	}
 
 
@@ -470,19 +463,6 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
-
-	
-	
-	
-	
-	
-	@Override
-	public BaseSchedule getSchedule(String stopName, ArrayList<String> busesNames,
-			ArrayList<String> busesDirs) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 } // end LocalDatabaseConnector
 	
