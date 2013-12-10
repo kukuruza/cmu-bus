@@ -35,39 +35,39 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/cmu18641/bustracker/common/entities</name>
+			<name>src/bustracker/common/entities</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>src/cmu18641/bustracker/common/protocols</name>
+			<name>src/bustracker/common/protocols</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>src/cmu18641/bustracker/common/entities/BaseBus.java</name>
+			<name>src/bustracker/common/entities/BaseBus.java</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseBus.java</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/entities/BaseBus.java</locationURI>
 		</link>
 		<link>
-			<name>src/cmu18641/bustracker/common/entities/BaseSchedule.java</name>
+			<name>src/bustracker/common/entities/BaseSchedule.java</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseSchedule.java</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/entities/BaseSchedule.java</locationURI>
 		</link>
 		<link>
-			<name>src/cmu18641/bustracker/common/entities/BaseScheduleItem.java</name>
+			<name>src/bustracker/common/entities/BaseScheduleItem.java</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseScheduleItem.java</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/entities/BaseScheduleItem.java</locationURI>
 		</link>
 		<link>
-			<name>src/cmu18641/bustracker/common/entities/BaseStop.java</name>
+			<name>src/bustracker/common/entities/BaseStop.java</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/entities/BaseStop.java</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/entities/BaseStop.java</locationURI>
 		</link>
 		<link>
-			<name>src/cmu18641/bustracker/common/protocols/NetProtocol.java</name>
+			<name>src/bustracker/common/protocols/NetProtocol.java</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/cmu18641/bustracker/common/protocols/NetProtocol.java</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/protocols/NetProtocol.java</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

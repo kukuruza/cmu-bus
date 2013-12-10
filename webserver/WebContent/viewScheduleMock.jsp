@@ -2,8 +2,8 @@
     pageEncoding="US-ASCII"%>
 
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dbhelpers.DatabaseConnector" %>
-<%@ page import="cmu18641.bustracker.common.entities.BaseSchedule" %>
+<%@ page import="bustracker.server.dbhelpers.DatabaseConnector" %>
+<%@ page import="bustracker.common.entities.BaseSchedule" %>
 <%@ page import="com.google.gson.Gson" %>
     
     

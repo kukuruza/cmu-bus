@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="cmu18641.bustracker.dblayout.LocalDatabaseConnector" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/dblayout/LocalDatabaseConnector.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="bustracker.app.dblayout.LocalDatabaseConnector" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/dblayout/LocalDatabaseConnector.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="548" y="472"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -11,9 +10,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="cmu18641.bustracker.dblayout.LocalDatabaseOpenHelper" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/dblayout/LocalDatabaseOpenHelper.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="bustracker.app.dblayout.LocalDatabaseOpenHelper" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/dblayout/LocalDatabaseOpenHelper.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="278" y="290"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -21,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="cmu18641.bustracker.ws.local.LocalQuery" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/local/LocalQuery.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="bustracker.app.ws.local.LocalQuery" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/local/LocalQuery.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="420" y="60"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -30,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="cmu18641.bustracker.ws.RouteQueryManager" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/RouteQueryManager.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="bustracker.app.ws.RouteQueryManager" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/RouteQueryManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="646" y="88"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -39,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="cmu18641.bustracker.ws.GlobalManager" project="CmuBusTracker" 
-    file="/CmuBusTracker/src/cmu18641/bustracker/ws/GlobalManager.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="bustracker.app.ws.GlobalManager" project="CmuBusTracker" 
+    file="/CmuBusTracker/src/bustracker/app/ws/GlobalManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="992" y="132"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
