@@ -29,10 +29,10 @@ public class Networking {
 	
 	// Set the timeout in milliseconds until a connection is established.
 	// The default value is zero, that means the timeout is not used. 
-	private final static int TimeoutConnection = 1000;
+	private final static int TimeoutConnection = 500;
 	// Set the default socket timeout (SO_TIMEOUT) 
 	// in milliseconds which is the timeout for waiting for data.
-	private final static int TimeoutSocket = 2000;
+	private final static int TimeoutSocket = 1000;
 
 
 	public static boolean isNetworkAvailable (Context context) {
@@ -48,6 +48,7 @@ public class Networking {
 	
 	public static String askServer (String serverUrlString) throws TrackerException
 	{
+		Log.i (TAG, "serverUrlString: " + serverUrlString);
     	HttpGet get = new HttpGet (serverUrlString);
     	HttpParams httpParameters = new BasicHttpParams();
     	HttpConnectionParams.setConnectionTimeout(httpParameters, TimeoutConnection);

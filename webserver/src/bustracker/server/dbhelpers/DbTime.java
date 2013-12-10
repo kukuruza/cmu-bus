@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 public class DbTime {
 	
-	public final static int   DeepNight = 4*60;
+	public final static int   DeepNight = 2*60;
 	
 	private int               _hours = -1, _minutes = -1;
 	private SimpleDateFormat  _sdf = new SimpleDateFormat("HH:mm a");

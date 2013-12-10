@@ -1,5 +1,0 @@
-TODO:
-fix tablet resolutions
-update UI-flow
-re-structure packages in server
-add webserver packages to the design document
