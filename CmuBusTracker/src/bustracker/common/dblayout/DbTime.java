@@ -1,4 +1,4 @@
-package cmu18641.bustracker.common.dblayout;
+package bustracker.common.dblayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

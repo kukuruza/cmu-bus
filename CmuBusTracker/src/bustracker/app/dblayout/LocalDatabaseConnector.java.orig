@@ -8,14 +8,18 @@ import java.util.Locale;
 
 import bustracker.app.entities.Bus;
 import bustracker.app.entities.Stop;
-import bustracker.common.dblayout.DbConnectorInterface;
-import bustracker.common.dblayout.DbStructure;
-import bustracker.common.dblayout.DbTime;
-import bustracker.common.entities.BaseBus;
-import bustracker.common.entities.BaseSchedule;
-import bustracker.common.entities.BaseStop;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+<<<<<<< HEAD:CmuBusTracker/src/cmu18641/bustracker/dblayout/LocalDatabaseConnector.java
+
+import cmu18641.bustracker.common.dblayout.DbConnectorInterface;
+import cmu18641.bustracker.common.dblayout.DbStructure;
+import cmu18641.bustracker.common.dblayout.DbTime;
+import cmu18641.bustracker.entities.Bus;
+import cmu18641.bustracker.entities.Schedule;
+import cmu18641.bustracker.entities.Stop;
+=======
+>>>>>>> master:CmuBusTracker/src/bustracker/app/dblayout/LocalDatabaseConnector.java
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -141,8 +145,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 	
 	// selects all buses associated with a specific stop
 	@Override
-	public ArrayList<BaseBus> getBusesForStop (BaseStop stop) { 
-		ArrayList<BaseBus> allBusesByStop = new ArrayList<BaseBus>();
+	public ArrayList<Bus> getBusesForStop (Stop stop) { 
+		ArrayList<Bus> allBusesByStop = new ArrayList<Bus>();
 			
 		String selectQuery = DbStructure.busesRequestString(stop.getName());
 		 
@@ -156,7 +160,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		     do {
 		        String busName = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_NAME)); 
 		    	String busDir = busCursor.getString(busCursor.getColumnIndex(DbStructure.BUS_DIR));
-		    	BaseBus bus = new BaseBus(busName, busDir);
+		    	Bus bus = new Bus(busName, busDir);
 		            
 		    	// Adding bus to list
 		        allBusesByStop.add(bus);
@@ -249,8 +253,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 
 	// selects all stops from STOP table
 	@Override
-	public ArrayList<BaseStop> getAllStops() { 
-		ArrayList<BaseStop> allStops = new ArrayList<BaseStop>();
+	public ArrayList<Stop> getAllStops() { 
+		ArrayList<Stop> allStops = new ArrayList<Stop>();
 
 		// sql commad to select all
 		String selectQuery = DbStructure.allStopsRequestString();
@@ -268,7 +272,10 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 				String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET2));
 				double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLAT));
 				double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLONG));
-				BaseStop stop = new BaseStop(stopName, stopStreet1, stopStreet2, stopGpsLat, stopGpsLong);
+				Location stopLocation = new Location(stopName);
+				stopLocation.setLatitude(stopGpsLat);
+				stopLocation.setLongitude(stopGpsLong);
+				Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation);
 
 				// Adding stops to list
 				allStops.add(stop);
@@ -285,8 +292,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 
 	// selects all buses associated with a specific stop
 	@Override
-	public ArrayList<BaseStop> getStopsByStreet (String street) { 
-		ArrayList<BaseStop> allStopsByStreet = new ArrayList<BaseStop>();
+	public ArrayList<Stop> getStopsByStreet (String street) { 
+		ArrayList<Stop> allStopsByStreet = new ArrayList<Stop>();
 
 		String selectQuery = DbStructure.stopsByStreetRequestString(street);
 
@@ -303,7 +310,10 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 				String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET2));
 				double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLAT));
 				double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLONG));
-				BaseStop stop = new BaseStop(stopName, stopStreet1, stopStreet2, stopGpsLat, stopGpsLong);
+				Location stopLocation = new Location(stopName);
+				stopLocation.setLatitude(stopGpsLat);
+				stopLocation.setLongitude(stopGpsLong);
+				Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation);
 
 				// Adding stops to list
 				allStopsByStreet.add(stop);
@@ -477,7 +487,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 	
 	
 	@Override
-	public BaseSchedule getSchedule(String stopName, ArrayList<String> busesNames,
+	public Schedule getSchedule(String stopName, ArrayList<String> busesNames,
 			ArrayList<String> busesDirs) {
 		// TODO Auto-generated method stub
 		return null;

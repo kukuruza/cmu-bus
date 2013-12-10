@@ -9,6 +9,8 @@ import bustracker.app.dblayout.LocalDatabaseConnector;
 import bustracker.app.entities.Bus;
 import bustracker.app.entities.Stop;
 import bustracker.app.exceptions.TrackerException;
+import bustracker.common.entities.BaseBus;
+import bustracker.common.entities.BaseStop;
 
 import android.content.Context;
 import android.location.Location;
@@ -28,7 +30,19 @@ public class RouteQueryManager implements RouteQueryInterface {
 
 		// query for all buses with a particular stop string in ROUTE table
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
-		ArrayList<Bus> busList = db.getBusesForStop(stop);
+		
+		BaseStop baseStop = new BaseStop(stop.getName(), stop.getStreet1(), stop.getStreet2(),
+				                         stop.getLocation().getLatitude(), stop.getLocation().getLongitude());
+		
+		ArrayList<BaseBus> baseBusList = db.getBusesForStop(baseStop);
+		
+		ArrayList<Bus> busList = new ArrayList<Bus>();
+		for(int i = 0; i < baseBusList.size(); i++) 
+		{
+			BaseBus baseBus = baseBusList.get(i);
+			busList.add (new Bus(baseBus.getName(), baseBus.getDirection()));
+		}		
+		
 		db = null; 
 		return busList; 
 		
@@ -64,9 +78,21 @@ public class RouteQueryManager implements RouteQueryInterface {
 		
 		// retrieves all stops from database
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
-		ArrayList<Stop> stops = db.getAllStops(); 
+		ArrayList<BaseStop> baseStopList = db.getAllStops();
+
+		// BaseStops to Stops
+		ArrayList<Stop> stopList = new ArrayList<Stop>();
+		for(int i = 0; i < baseStopList.size(); i++) 
+		{
+			BaseStop baseSt = baseStopList.get(i);
+			Location stopLocation = new Location(baseSt.getName());
+			stopLocation.setLatitude(baseSt.latitude);
+			stopLocation.setLongitude(baseSt.longitude);
+			stopList.add (new Stop(baseSt.getName(), baseSt.street1, baseSt.street2, stopLocation));
+		}
+		
 		db = null; 
-		return stops; 
+		return stopList; 
 	}
 
 	@Override
@@ -87,8 +113,19 @@ public class RouteQueryManager implements RouteQueryInterface {
 
 		//retrieves all stops from the database that have a matching street
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
-		ArrayList<Stop> stopList = db.getStopsByStreet(street);
+		ArrayList<BaseStop> baseStopList = db.getStopsByStreet(street);
 		db = null;
+		
+		// BaseStops to Stops
+		ArrayList<Stop> stopList = new ArrayList<Stop>();
+		for(int i = 0; i < baseStopList.size(); i++) 
+		{
+			BaseStop baseSt = baseStopList.get(i);
+			Location stopLocation = new Location(baseSt.getName());
+			stopLocation.setLatitude(baseSt.latitude);
+			stopLocation.setLongitude(baseSt.longitude);
+			stopList.add (new Stop(baseSt.getName(), baseSt.street1, baseSt.street2, stopLocation));
+		}
 		
 		// set the distance for each stop to the distance from user to stop
 		for(int i = 0; i < stopList.size(); i++) {
