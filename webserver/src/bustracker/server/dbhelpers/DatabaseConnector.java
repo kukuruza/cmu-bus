@@ -13,13 +13,16 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import bustracker.common.dblayout.DbConnectorInterface;
+import bustracker.common.dblayout.DbStructure;
+import bustracker.common.dblayout.DbTime;
 import bustracker.common.entities.BaseBus;
 import bustracker.common.entities.BaseSchedule;
 import bustracker.common.entities.BaseScheduleItem;
 import bustracker.common.entities.BaseStop;
 
 
-public class DatabaseConnector {
+public class DatabaseConnector implements DbConnectorInterface {
 
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseConnector.class);
 

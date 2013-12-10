@@ -7,6 +7,7 @@ import bustracker.app.dblayout.LocalDatabaseConnector;
 import bustracker.app.entities.*;
 import bustracker.app.exceptions.TrackerException;
 import bustracker.app.ws.TimeQueryInterface;
+import bustracker.common.dblayout.DbConnectorInterface;
 import bustracker.common.dblayout.DbTime;
 import bustracker.common.entities.BaseSchedule;
 import bustracker.common.entities.BaseScheduleItem;
@@ -32,7 +33,7 @@ public class LocalQuery implements TimeQueryInterface {
 		}
 		
 		// request
-		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
+		DbConnectorInterface db = new LocalDatabaseConnector(context);
 		BaseSchedule baseSchedule = db.getSchedule (stop.getName(), busNames, busDirs);
 		
         // from BaseSchedule to Schedule

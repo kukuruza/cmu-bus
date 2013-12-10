@@ -35,6 +35,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src/bustracker/common/dblayout</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>src/bustracker/common/entities</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -43,6 +48,21 @@
 			<name>src/bustracker/common/protocols</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>src/bustracker/common/dblayout/DbConnectorInterface.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/dblayout/DbConnectorInterface.java</locationURI>
+		</link>
+		<link>
+			<name>src/bustracker/common/dblayout/DbStructure.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/dblayout/DbStructure.java</locationURI>
+		</link>
+		<link>
+			<name>src/bustracker/common/dblayout/DbTime.java</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CmuBusTracker/src/bustracker/common/dblayout/DbTime.java</locationURI>
 		</link>
 		<link>
 			<name>src/bustracker/common/entities/BaseBus.java</name>
