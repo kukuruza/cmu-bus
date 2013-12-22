@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>  
+  <Resource name="jdbc/sched" 
+            auth="Container" 
+            type="javax.sql.DataSource" 
+            driverClassName="org.sqlite.JDBC"
+            url="jdbc:sqlite://Users/evg/projects/cmu-bus/server/dbs/sched.db"
+            factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory">
+  </Resource>
+</Context>
