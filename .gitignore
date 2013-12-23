@@ -1,14 +1,14 @@
 # ignore eclipse bin files
-CmuBusTracker/bin/*
-CmuBusTracker/gen/*
+client/bin/*
+client/gen/*
+
+JEE-Eclipse-alias
+Android-Eclipse-alias
 
 # ignore all the videos, etc.
 data
 results
 build
-
-# ignore Eclipse aliases
-*alias
 
 # temporary from gedit
 ##################
