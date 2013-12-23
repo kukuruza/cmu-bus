@@ -398,23 +398,49 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		int currentDay = DbTime.getWeekDay();
 		int currentMinutes = DbTime.getCurrentDbTime();
 		
-		String selectQuery = DbStructure.scheduleRequestString(stopName, busNames, busDirs, currentDay,
-				currentMinutes, 24*60);
-
-		Log.i(TAG, selectQuery);
-
 		open();
-		Cursor timesCursor = database.rawQuery(selectQuery, null);
-
+		Cursor timesCursor = null;
+		
 		BaseSchedule baseSchedule = new BaseSchedule();
 		baseSchedule.setStop(stopName);
 		
+		
+		// before midnight
+		
+		String selectQuery = DbStructure.scheduleRequestString(stopName, busNames, busDirs, currentDay,
+				currentMinutes, 24*60);
+		Log.i(TAG, selectQuery);
+
+		timesCursor = database.rawQuery(selectQuery, null);
+
 		// looping through all rows and adding to list
 		if (timesCursor.moveToFirst()) {
 			do {
-				int minutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(DbStructure.SCHEDULE_TIME));
 				String busName = timesCursor.getString(timesCursor.getColumnIndex(DbStructure.BUS_NAME));
 				String busDir = timesCursor.getString(timesCursor.getColumnIndex(DbStructure.BUS_DIR));
+				int minutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(DbStructure.SCHEDULE_TIME));
+
+				baseSchedule.getScheduleItemList().add (new BaseScheduleItem
+						                         (new BaseBus(busName, busDir), minutesSinceMidnight));
+				
+			} while (timesCursor.moveToNext());
+		}
+
+		// after midnight
+		
+		String selectAfterMidnight = DbStructure.scheduleRequestString(stopName, busNames, busDirs, currentDay,
+				0, DbTime.DeepNight);
+		Log.i(TAG, selectAfterMidnight);
+
+		timesCursor = database.rawQuery(selectAfterMidnight, null);
+
+		// looping through all rows and adding to list
+		if (timesCursor.moveToFirst()) {
+			do {
+				String busName = timesCursor.getString(timesCursor.getColumnIndex(DbStructure.BUS_NAME));
+				String busDir = timesCursor.getString(timesCursor.getColumnIndex(DbStructure.BUS_DIR));
+				int minutesSinceMidnight = timesCursor.getInt(timesCursor.getColumnIndex(DbStructure.SCHEDULE_TIME))
+		                 + 24 * 60;
 
 				baseSchedule.getScheduleItemList().add (new BaseScheduleItem
 						                         (new BaseBus(busName, busDir), minutesSinceMidnight));
