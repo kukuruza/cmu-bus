@@ -50,7 +50,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 
 	@Override
 	// returns list of stops sorted by distance from user
-	public ArrayList<Stop> getStopsByCurrentLocation(Context context, Location here)
+	public ArrayList<Stop> getStopsByCurrentLocation (Context context, Location here)
 			throws TrackerException {
 		
 		// retrieve all the stops from the database
@@ -86,8 +86,8 @@ public class RouteQueryManager implements RouteQueryInterface {
 
 		// BaseStops to Stops
 		ArrayList<Stop> stopList = new ArrayList<Stop>();
-		for(int i = 0; i < baseStopList.size(); i++) 
-			stopList.add (new Stop( baseStopList.get(i) ));
+		for (BaseStop baseStop : baseStopList) 
+			stopList.add (new Stop(baseStop));
 		
 		db = null; 
 		return stopList; 
@@ -116,8 +116,8 @@ public class RouteQueryManager implements RouteQueryInterface {
 		
 		// BaseStops to Stops
 		ArrayList<Stop> stopList = new ArrayList<Stop>();
-		for(int i = 0; i < baseStopList.size(); i++) 
-			stopList.add ( new Stop( baseStopList.get(i) ));
+		for (BaseStop baseStop : baseStopList) 
+			stopList.add (new Stop(baseStop));
 		
 		// set the distance for each stop to the distance from user to stop
 		for (Stop stop : stopList) 

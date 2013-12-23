@@ -28,24 +28,20 @@ public class TimeQueryManager {
 	private final String TAG = "TimeQueryManager"; 
 
 	// number of schedule results to display
-	public final int numOut = 1000;//15;  set to 1000 to test results fter midnight
+	public final int numOut = 15;
 	
 	
 	// logic on filtering buses based on current time
-	private void filterByTime (Schedule schedule)
+	private void keepSomeItems (Schedule schedule)
 	{
 		ArrayList<ScheduleItem> scheduleItems = schedule.getScheduleItemList();
 		
-		// return only top numOut results
 		ArrayList<ScheduleItem> subScheduleItem; 
-		if(scheduleItems.size() > numOut) { 
+		if(scheduleItems.size() > numOut)
 			subScheduleItem = new ArrayList<ScheduleItem>(scheduleItems.subList(0, numOut)); 
-		}
-		else { 
-			subScheduleItem = scheduleItems; 
-		}
+		else
+			subScheduleItem = scheduleItems;
 		
-		// build a schedule
 		schedule.setScheduleItemList(subScheduleItem);
 	}
 	
@@ -92,7 +88,7 @@ public class TimeQueryManager {
 		}
 
 		// keep only several relevant buses
-		filterByTime (schedule);
+		keepSomeItems (schedule);
 		
 		return schedule;
 	}

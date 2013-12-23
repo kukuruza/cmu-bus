@@ -69,8 +69,8 @@
                 <input type=radio name=stop value="<%= i+1 %>" />
             </td>
             <td style="padding-right:30px"><%= stop.getName() %></td>
-            <td style="padding-right:30px"><%= stop.street1 %></td>
-            <td style="padding-right:30px"><%= stop.street2 %></td>
+            <td style="padding-right:30px"><%= stop.getStreet1() %></td>
+            <td style="padding-right:30px"><%= stop.getStreet2() %></td>
             </tr>
  <%         ++i;
         } 
