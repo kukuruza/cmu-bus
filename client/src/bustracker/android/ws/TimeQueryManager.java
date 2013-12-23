@@ -27,7 +27,7 @@ import android.util.Log;
 public class TimeQueryManager {
 	private final String TAG = "TimeQueryManager"; 
 
-	public final int numOut = 15; // number of schedule results to display 
+	public final int numOut = 1000;//15; // number of schedule results to display 
 	
 	
 	// logic on filtering buses based on current time

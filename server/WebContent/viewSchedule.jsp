@@ -80,8 +80,8 @@
 	        DbTime left = new DbTime();
 	        for (BaseScheduleItem scheduleItem : scheduleItemList) 
 		    {
-	        	dbTime.setTime((int)(scheduleItem.getTime()));
-	        	left.setTime (dbTime.getMinutesTotal() - now.getMinutesTotal());
+	        	dbTime.setTime(scheduleItem.getTime());
+	        	left.setTime (scheduleItem.getTime() - now.getMinutesTotal());
 	 %>         <tr>
 	            <td style="padding-right:30px"><%= scheduleItem.getBus().getName() %></td>
 	            <td style="padding-right:30px"><%= scheduleItem.getBus().getDirection() %></td>

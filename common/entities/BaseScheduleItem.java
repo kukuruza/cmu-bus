@@ -18,7 +18,7 @@ public class BaseScheduleItem {
 		return _bus; 
 	}
 	
-	public long getTime() { 
+	public int getTime() { 
 		return _time; 
 	}
 }

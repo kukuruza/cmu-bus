@@ -133,6 +133,7 @@ public class DatabaseConnector implements DbConnectorInterface {
 			{
 			    String timeVal = rs.getObject("scheduletime").toString();
 			    int minutesTotal = Integer.parseInt(timeVal) + 24 * 60;
+			    System.out.println("minutesTotal: " + minutesTotal);
 			    String busnameVal = rs.getObject("busname").toString();
 			    String busdirVal = rs.getObject("busdir").toString();
 			    BaseBus bus = new BaseBus(busnameVal, busdirVal);

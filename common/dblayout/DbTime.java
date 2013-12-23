@@ -7,7 +7,7 @@ import java.util.Calendar;
 // time in format of the DB - minutes since midnight
 public class DbTime {
 	
-	public final static int DeepNight = 10*60;
+	public final static int DeepNight = 4*60;
 	
 	private int _hours = -1, _minutes = -1;
 	private static final SimpleDateFormat _sdf = new SimpleDateFormat("HH:mm a");
@@ -23,7 +23,7 @@ public class DbTime {
 	public void setTime (int minutesTotal)
 	{		
 		assert (minutesTotal > 0);
-		int minutesAfterThisMidnight = minutesTotal % (24 * 60);
+		int minutesAfterThisMidnight = (minutesTotal + 24 * 60) % (24 * 60);
 	    _hours = minutesAfterThisMidnight / 60;
 	    _minutes = minutesAfterThisMidnight % 60;
 		_calendar.set (Calendar.HOUR_OF_DAY, _hours);

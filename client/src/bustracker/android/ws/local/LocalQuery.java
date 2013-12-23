@@ -14,10 +14,12 @@ import bustracker.common.entities.BaseScheduleItem;
 
 import android.content.Context;
 import android.text.format.Time;
+import android.util.Log;
 
 
 
 public class LocalQuery implements TimeQueryInterface {
+	private final String TAG = "LocalQuery"; 
 
 	@Override
 	public Schedule getSchedule(Context context, Stop stop, ArrayList<Bus> buses) 
@@ -40,6 +42,9 @@ public class LocalQuery implements TimeQueryInterface {
 		Schedule schedule = new Schedule (stop);
 		ArrayList<ScheduleItem> scheduleItems = schedule.getScheduleItemList();
 		ArrayList<BaseScheduleItem> baseScheduleItems = baseSchedule.getScheduleItemList();
+		
+		Log.i (TAG, Integer.toString(baseScheduleItems.size()));
+		
 		for (BaseScheduleItem baseItem : baseScheduleItems) 
 		{
 			// make Bus
