@@ -3,6 +3,7 @@ package bustracker.android.adapter;
 import java.util.ArrayList;
 
 import bustracker.android.entities.ScheduleItem;
+import bustracker.common.dblayout.DbTime;
 import cmu18641.bustracker.R;
 import android.content.Context;
 import android.util.Log;
@@ -54,21 +55,10 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleItem> {
 		viewHolder.direction.setText(scheduleItemList.get(position).getBus().getDirection()); 
 		
 		// prepare arrival time string
-		int arrivalMinutes = scheduleItemList.get(position).getTime().minute; 
-		int arrivalHours = scheduleItemList.get(position).getTime().hour; 
-		String stamp = "AM";
-		
-		if(arrivalHours >= 12) { 
-			stamp = "PM"; 
-		}
-		
-		if(arrivalHours > 12) { 
-			arrivalHours = arrivalHours - 12; 
-		}
-		
-		
-		
-		viewHolder.arrivalTime.setText(String.format(arrivalHours + ":%02d " + stamp, arrivalMinutes));
+		int minutesTotal = scheduleItemList.get(position).getMinutes();		
+		DbTime dbTime = new DbTime();
+		dbTime.setTime(minutesTotal);
+		viewHolder.arrivalTime.setText( dbTime.toString() );
 		
 		Log.d("ScheduleAdapter - getView()", "position= " + position);
 			

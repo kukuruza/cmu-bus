@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import bustracker.common.entities.BaseSchedule;
 import bustracker.common.entities.BaseScheduleItem;
 
-import android.location.Location;
 import android.util.Log;
 
 public class Schedule {
@@ -41,12 +40,9 @@ public class Schedule {
 		for (BaseScheduleItem baseItem : baseSchedule.getScheduleItemList())
 			_scheduleItemList.add( new ScheduleItem (baseItem) );
 		
-		Location loc = new Location ((String)null);
-		loc.setLatitude(0);
-		loc.setLongitude(0);
 		String stopName = baseSchedule.getStop();
 		assert (stopName != null);
-		_stop = new Stop (stopName, "", "", loc );
+		_stop = new Stop (stopName, "", "", 0, 0);
 	}
 
 	public void     setStop( Stop stop )          { _stop = stop; }
@@ -69,6 +65,6 @@ public class Schedule {
 		Log.i (TAG, "Schedule: \n" + _stop.getName() + "\n");
 		for (ScheduleItem item : _scheduleItemList)
 			Log.i (TAG, "bus " + item.getBus().getName() +
-					    ", minutes " + item.getTime() + "\n");
+					    ", minutes " + item.getMinutes() + "\n");
 	}
 }

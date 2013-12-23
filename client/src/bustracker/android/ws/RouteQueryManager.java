@@ -32,7 +32,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
 		
 		BaseStop baseStop = new BaseStop(stop.getName(), stop.getStreet1(), stop.getStreet2(),
-				                         stop.getLocation().getLatitude(), stop.getLocation().getLongitude());
+				                         stop.getLatitude(), stop.getLongitude());
 		
 		ArrayList<BaseBus> baseBusList = db.getBusesForStop(baseStop);
 		
@@ -57,8 +57,12 @@ public class RouteQueryManager implements RouteQueryInterface {
 		ArrayList<Stop> stopList = getAllStops(context);
 
 		// set the distance for each stop to the distance from user to stop
-		for(int i = 0; i < stopList.size(); i++) {
-			stopList.get(i).setDistance(here.distanceTo(stopList.get(i).getLocation()));
+		for (Stop stop : stopList) 
+		{
+			Location stopLocation = new Location(stop.getName());
+			stopLocation.setLatitude( stop.getLatitude() );
+			stopLocation.setLongitude( stop.getLongitude() );
+			stop.setDistance(here.distanceTo(stopLocation));
 		}
 		
 		// sort the stops by distance
@@ -116,8 +120,12 @@ public class RouteQueryManager implements RouteQueryInterface {
 			stopList.add ( new Stop( baseStopList.get(i) ));
 		
 		// set the distance for each stop to the distance from user to stop
-		for(int i = 0; i < stopList.size(); i++) {
-			stopList.get(i).setDistance(here.distanceTo(stopList.get(i).getLocation()));
+		for (Stop stop : stopList) 
+		{
+			Location stopLocation = new Location(stop.getName());
+			stopLocation.setLatitude( stop.getLatitude() );
+			stopLocation.setLongitude( stop.getLongitude() );
+			stop.setDistance(here.distanceTo(stopLocation));
 		}
 				
 		// sort the stops by distance

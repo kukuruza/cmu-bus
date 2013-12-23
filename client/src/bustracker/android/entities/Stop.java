@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import bustracker.common.entities.BaseStop;
 
-import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -12,45 +11,33 @@ import android.util.Log;
 public class Stop extends BaseStop implements Parcelable {
 
 	final static private double MetersToMiles = 0.0006213727;  // 1609.34 meters per mile
-	final static private double AvgSpeedMilesPerMin = 0.05; // 3 miles per hour
+	final static private double AvgSpeedMilesPerMin = 0.05;    // 3 miles per hour
 	final static private String StringFormat = "%.1f";
 	
-	private Location   _location;
-	private double	   _distance; 
+	private double	            _distance; 
 	
-	// getters
 	public String   getAddress()  { return new String (getStreet1() + " & " + getStreet2()); }
-	public Location getLocation() { return new Location(_location); }
 	public double   getDistance() { return _distance; }
 	
-	// constructor sets it all
-    public Stop (String name, String street1, String street2, Location location)
+    public Stop (String name, String street1, String street2, double latitude, double longitude)
     {
-        super( name, street1, street2, location.getLatitude(), location.getLongitude() );
-        _location = new Location (location);
+        super( name, street1, street2, latitude, longitude );
         _distance = 0.0;
     }
     
 	public Stop( Stop another ) 
 	{
 		super(another);
-        _location = another.getLocation();
         _distance = another.getDistance();
-        // location of baseStop
-		setLatitude(_location.getLatitude());
-		setLongitude(_location.getLongitude());
 	}
 	
 	public Stop( BaseStop baseStop )
 	{
 		super(baseStop);
-		_location = new Location( (String)null );
-		_location.setLatitude( baseStop.getLatitude() );
-		_location.setLongitude( baseStop.getLongitude() );
-		_distance = 0;
+		_distance = 0.0;
 	}
 	
-	public void setDistance(double distance) { 
+	public void setDistance( double distance ) { 
 		_distance = distance; 
 	}
 	
@@ -78,7 +65,6 @@ public class Stop extends BaseStop implements Parcelable {
 	    dest.writeString( getName() );
 	    dest.writeString( getStreet1() );
 	    dest.writeString( getStreet2() );
-	    dest.writeParcelable( _location, flags ); 
 	    dest.writeDouble( _distance );
 		
 	}
@@ -99,7 +85,6 @@ public class Stop extends BaseStop implements Parcelable {
         setName( source.readString() ); 
         setStreet1( source.readString() ); 
         setStreet2( source.readString() );
-        _location = source.readParcelable(Location.class.getClassLoader()); 
         _distance = source.readDouble(); 
     }
 	

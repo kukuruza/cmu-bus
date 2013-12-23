@@ -21,7 +21,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Location;
 import android.util.Log;
 
 /*
@@ -198,8 +197,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		newStop.put(DbStructure.STOP_NAME, stop.getName()); 
 		newStop.put(DbStructure.STOP_STREET1, stop.getStreet1()); 
 		newStop.put(DbStructure.STOP_STREET2, stop.getStreet2());
-		newStop.put(DbStructure.STOP_GPSLAT, stop.getLocation().getLatitude());
-		newStop.put(DbStructure.STOP_GPSLONG, stop.getLocation().getLongitude());
+		newStop.put(DbStructure.STOP_GPSLAT, stop.getLatitude());
+		newStop.put(DbStructure.STOP_GPSLONG, stop.getLongitude());
 		newStop.put(DbStructure.TIME_STAMP, getDateTime());
 			
 		open(); 
@@ -232,10 +231,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		String stopStreet2 = stopCursor.getString(stopCursor.getColumnIndex(DbStructure.STOP_STREET2));
 		double stopGpsLat = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLAT));
 		double stopGpsLong = stopCursor.getDouble(stopCursor.getColumnIndex(DbStructure.STOP_GPSLONG));
-		Location stopLocation = new Location(stopName);
-		stopLocation.setLatitude(stopGpsLat);
-		stopLocation.setLongitude(stopGpsLong);
-		Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopLocation); 
+		Stop stop = new Stop(stopName, stopStreet1, stopStreet2, stopGpsLat, stopGpsLong); 
 
 		//close the cursor
 		stopCursor.close();
@@ -323,8 +319,8 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 		updateStop.put(DbStructure.STOP_NAME, stop.getName()); 
 		updateStop.put(DbStructure.STOP_STREET1, stop.getStreet1()); 
 		updateStop.put(DbStructure.STOP_STREET2, stop.getStreet2());
-		updateStop.put(DbStructure.STOP_GPSLAT, stop.getLocation().getLatitude());
-		updateStop.put(DbStructure.STOP_GPSLONG, stop.getLocation().getLongitude());
+		updateStop.put(DbStructure.STOP_GPSLAT, stop.getLatitude());
+		updateStop.put(DbStructure.STOP_GPSLONG, stop.getLongitude());
 
 		open(); 
 		int updateId = database.update(DbStructure.TABLE_STOP, updateStop, DbStructure.STOP_ID + " = ?",  new String[] 
