@@ -2,57 +2,66 @@ package bustracker.android.entities;
 
 import java.util.ArrayList;
 
+import bustracker.common.entities.BaseSchedule;
+import bustracker.common.entities.BaseScheduleItem;
+
+import android.location.Location;
 import android.util.Log;
 
 public class Schedule {
 
-	private Stop _stop; 
-	private ArrayList<ScheduleItem> _scheduleItemList;
+	private Stop                     _stop; 
+	private ArrayList<ScheduleItem>  _scheduleItemList;
 	
 	// contains "server real-time", "server schedule", "local schedule" 
-	private String _infoSrc = null;
+	private String                   _infoSrc = null;
 	
 	public Schedule() { 
 		_stop = null; 
 		_scheduleItemList = new ArrayList<ScheduleItem>(); 
 	}
 	
-	public Schedule (Stop stop)
+	public Schedule( Stop stop )
 	{
-		this._stop = stop; 
-		this._scheduleItemList = new ArrayList<ScheduleItem>();
+		_stop = stop; 
+		_scheduleItemList = new ArrayList<ScheduleItem>();
 	}
 	
-	public Schedule(Stop stop, ArrayList<ScheduleItem> scheduleItemList, String infoSrc) { 
-		this._stop = stop; 
-		this._scheduleItemList = scheduleItemList; 
-		this._infoSrc = infoSrc;
-	}
-	
-	public void setStop(Stop stop) { 
-		this._stop = stop; 
-	}
-	
-	public void setScheduleItemList(ArrayList<ScheduleItem> scheduleItemList) { 
-		this._scheduleItemList = scheduleItemList;
-	}
-	
-	public Stop getStop() { 
-		return _stop; 
-	}
-	
-	public ArrayList<ScheduleItem> getScheduleItemList() { 
-		return _scheduleItemList;
-	}
-	
-	public void setInfoSrc (String infoSrc)
-	{
+	public Schedule( Stop stop, ArrayList<ScheduleItem> scheduleItemList, String infoSrc ) 
+	{ 
+		_stop = stop; 
+		_scheduleItemList = scheduleItemList; 
 		_infoSrc = infoSrc;
 	}
-	
-	public String getInfoSrc ()
+
+	public Schedule( BaseSchedule baseSchedule )
 	{
-		return _infoSrc;
+		_scheduleItemList = new ArrayList<ScheduleItem>();
+		assert (baseSchedule.getScheduleItemList() != null);
+		for (BaseScheduleItem baseItem : baseSchedule.getScheduleItemList())
+			_scheduleItemList.add( new ScheduleItem (baseItem) );
+		
+		Location loc = new Location ((String)null);
+		loc.setLatitude(0);
+		loc.setLongitude(0);
+		String stopName = baseSchedule.getStop();
+		assert (stopName != null);
+		_stop = new Stop (stopName, "", "", loc );
+	}
+
+	public void     setStop( Stop stop )          { _stop = stop; }
+	public Stop     getStop()                     { return _stop; }
+	
+	public void     setInfoSrc (String infoSrc)   { _infoSrc = infoSrc; }
+	public String   getInfoSrc ()                 { return _infoSrc; }
+	
+	public void     setScheduleItemList( ArrayList<ScheduleItem> scheduleItemList ) 
+	{ 
+		_scheduleItemList = scheduleItemList;
+	}
+	public ArrayList<ScheduleItem> getScheduleItemList() 
+	{ 
+		return _scheduleItemList;
 	}
 	
 	public void log (String TAG)

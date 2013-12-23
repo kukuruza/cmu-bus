@@ -40,7 +40,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 		for(int i = 0; i < baseBusList.size(); i++) 
 		{
 			BaseBus baseBus = baseBusList.get(i);
-			busList.add (new Bus(baseBus.getName(), baseBus.getDirection()));
+			busList.add (new Bus(baseBus));
 		}		
 		
 		db = null; 
@@ -83,13 +83,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 		// BaseStops to Stops
 		ArrayList<Stop> stopList = new ArrayList<Stop>();
 		for(int i = 0; i < baseStopList.size(); i++) 
-		{
-			BaseStop baseSt = baseStopList.get(i);
-			Location stopLocation = new Location(baseSt.getName());
-			stopLocation.setLatitude(baseSt.latitude);
-			stopLocation.setLongitude(baseSt.longitude);
-			stopList.add (new Stop(baseSt.getName(), baseSt.street1, baseSt.street2, stopLocation));
-		}
+			stopList.add (new Stop( baseStopList.get(i) ));
 		
 		db = null; 
 		return stopList; 
@@ -119,13 +113,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 		// BaseStops to Stops
 		ArrayList<Stop> stopList = new ArrayList<Stop>();
 		for(int i = 0; i < baseStopList.size(); i++) 
-		{
-			BaseStop baseSt = baseStopList.get(i);
-			Location stopLocation = new Location(baseSt.getName());
-			stopLocation.setLatitude(baseSt.latitude);
-			stopLocation.setLongitude(baseSt.longitude);
-			stopList.add (new Stop(baseSt.getName(), baseSt.street1, baseSt.street2, stopLocation));
-		}
+			stopList.add ( new Stop( baseStopList.get(i) ));
 		
 		// set the distance for each stop to the distance from user to stop
 		for(int i = 0; i < stopList.size(); i++) {

@@ -76,14 +76,8 @@ public class RemoteQuery implements TimeQueryInterface {
 			throw new TrackerException (0, "RuntimeException in parsing to Gson", TAG);
 		}
 		
-		Schedule schedule;
-		try {
-			schedule = FromBaseHelper.fromBase(baseSchedule);
-		} catch (RuntimeException e) {
-			Log.e (TAG, "RuntimeException in FromBaseHelper");
-			throw new TrackerException (0, "RuntimeException in FromBaseHelper", TAG);
-		}
-		
+		Schedule schedule = new Schedule(baseSchedule);
+
 		schedule.setInfoSrc("info from server");
 		return schedule;
 	}

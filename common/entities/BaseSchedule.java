@@ -13,11 +13,11 @@ public class BaseSchedule {
 		_scheduleItem = new ArrayList<BaseScheduleItem>(); 
 	}
 	
-	public void setStop (String stopName) { 
+	public void setStop( String stopName ) { 
 		_stopName = stopName; 
 	}
 	
-	public BaseSchedule(String stopName, ArrayList<BaseScheduleItem> scheduleItem) { 
+	public BaseSchedule( String stopName, ArrayList<BaseScheduleItem> scheduleItem ) { 
 		_stopName = stopName; 
 		_scheduleItem = scheduleItem; 
 	}

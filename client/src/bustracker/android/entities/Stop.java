@@ -2,49 +2,52 @@ package bustracker.android.entities;
 
 import java.util.Locale;
 
+import bustracker.common.entities.BaseStop;
+
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-public class Stop implements Parcelable {
+public class Stop extends BaseStop implements Parcelable {
 
 	final static private double MetersToMiles = 0.0006213727;  // 1609.34 meters per mile
 	final static private double AvgSpeedMilesPerMin = 0.05; // 3 miles per hour
 	final static private String StringFormat = "%.1f";
 	
-	private String     _name;
-	private String     _street1;
-	private String     _street2;
 	private Location   _location;
 	private double	   _distance; 
 	
 	// getters
-	public String   getName()     { return new String(_name); }
-	public String   getStreet1()  { return new String(_street1); }
-	public String   getStreet2()  { return new String(_street2); }
-	public String   getAddress()  { return new String (getStreet1() + 
-											" & " + getStreet2()); }
+	public String   getAddress()  { return new String (getStreet1() + " & " + getStreet2()); }
 	public Location getLocation() { return new Location(_location); }
 	public double   getDistance() { return _distance; }
 	
 	// constructor sets it all
     public Stop (String name, String street1, String street2, Location location)
     {
-        _name = new String (name);
-        _street1 = new String (street1);
-        _street2 = new String (street2);
+        super( name, street1, street2, location.getLatitude(), location.getLongitude() );
         _location = new Location (location);
         _distance = 0.0;
     }
     
-	public Stop (Stop stop) 
+	public Stop( Stop another ) 
 	{
-        _name = stop.getName();
-        _street1 = stop.getStreet1();
-        _street2 = stop.getStreet2();
-        _location = stop.getLocation();
-        _distance = stop.getDistance(); 
+		super(another);
+        _location = another.getLocation();
+        _distance = another.getDistance();
+        // location of baseStop
+		setLatitude(_location.getLatitude());
+		setLongitude(_location.getLongitude());
+	}
+	
+	public Stop( BaseStop baseStop )
+	{
+		super(baseStop);
+		_location = new Location( (String)null );
+		_location.setLatitude( baseStop.getLatitude() );
+		_location.setLongitude( baseStop.getLongitude() );
+		_distance = 0;
 	}
 	
 	public void setDistance(double distance) { 
@@ -54,11 +57,13 @@ public class Stop implements Parcelable {
 	
 	// utility methods to extract and convert stop distance
 	// returns distance in miles
-	public String getDistanceString() { 
+	public String getDistanceString() 
+	{ 
 		return String.format(Locale.US, StringFormat, _distance*MetersToMiles);
 	}
 		
-	public String getWalkingTimeString() { 
+	public String getWalkingTimeString() 
+	{ 
 		return String.format (Locale.US, StringFormat, _distance*MetersToMiles / AvgSpeedMilesPerMin);
 	}
 	
@@ -70,16 +75,16 @@ public class Stop implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		Log.i("StopParcel", "writeToParcel");
-	    dest.writeString(_name);
-	    dest.writeString(_street1);
-	    dest.writeString(_street2);
-	    dest.writeParcelable(_location, flags); 
-	    dest.writeDouble(_distance);
+	    dest.writeString( getName() );
+	    dest.writeString( getStreet1() );
+	    dest.writeString( getStreet2() );
+	    dest.writeParcelable( _location, flags ); 
+	    dest.writeDouble( _distance );
 		
 	}
 	
-	public static final Parcelable.Creator<Stop> CREATOR
-    		= new Parcelable.Creator<Stop>() {
+	public static final Parcelable.Creator<Stop> CREATOR = new Parcelable.Creator<Stop>() 
+	{
 		public Stop createFromParcel(Parcel in) {
 			return new Stop(in);
 		}
@@ -91,9 +96,9 @@ public class Stop implements Parcelable {
 	
 	public Stop(Parcel source) {
 		Log.i("StopParcel", "Assemble stop parcel data");
-        _name = source.readString(); 
-        _street1 = source.readString(); 
-        _street2 = source.readString();
+        setName( source.readString() ); 
+        setStreet1( source.readString() ); 
+        setStreet2( source.readString() );
         _location = source.readParcelable(Location.class.getClassLoader()); 
         _distance = source.readDouble(); 
     }
