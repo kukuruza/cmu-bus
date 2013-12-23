@@ -28,7 +28,8 @@ public class GlobalManager {
 	TimeQueryManager timeQueryManager; 
 	LocationService locationService; 
 	
-	public GlobalManager() { 
+	public GlobalManager() 
+	{ 
 		routeQueryManager = new RouteQueryManager(); 
 		timeQueryManager = new TimeQueryManager(); 
 	}

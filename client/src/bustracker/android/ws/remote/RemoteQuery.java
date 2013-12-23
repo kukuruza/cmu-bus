@@ -42,7 +42,7 @@ public class RemoteQuery implements TimeQueryInterface {
 	    String paramString = URLEncodedUtils.format(params, "utf-8");	    
 	    url += paramString;
 	    
-	    Log.i(TAG, "url=" + url);
+	    Log.i (TAG, "url=" + url);
 	    return url;
 	}
 
@@ -77,8 +77,14 @@ public class RemoteQuery implements TimeQueryInterface {
 		}
 		
 		Schedule schedule = new Schedule(baseSchedule);
-
 		schedule.setInfoSrc("info from server");
+
+		// add missing info about bus stop (for completeness) to schedule
+		if ( !schedule.getStop().getName().equals( stop.getName() ))
+			throw new TrackerException(TrackerException.BAD_REMOTE_RESULT, TAG, 
+					                   "sent and received stop names differ"); 
+		schedule.setStop(stop);
+
 		return schedule;
 	}
 }

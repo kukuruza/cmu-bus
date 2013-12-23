@@ -42,7 +42,7 @@ public class Schedule {
 		
 		String stopName = baseSchedule.getStop();
 		assert (stopName != null);
-		_stop = new Stop (stopName, "", "", 0, 0);
+		_stop = new Stop (stopName, "not set", "not set", 0, 0);
 	}
 
 	public void     setStop( Stop stop )          { _stop = stop; }

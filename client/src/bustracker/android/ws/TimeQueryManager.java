@@ -27,7 +27,8 @@ import android.util.Log;
 public class TimeQueryManager {
 	private final String TAG = "TimeQueryManager"; 
 
-	public final int numOut = 1000;//15; // number of schedule results to display 
+	// number of schedule results to display
+	public final int numOut = 1000;//15;  set to 1000 to test results fter midnight
 	
 	
 	// logic on filtering buses based on current time
@@ -88,13 +89,6 @@ public class TimeQueryManager {
 		    	Log.e (TAG, "local query failed");
 		    	return null;
 			}
-		}
-
-		// check consistency of returned object
-		if ( !schedule.getStop().getName().equals(stop.getName()))
-		{
-			Log.wtf (TAG, "sent and received stop names differ");
-			return null;
 		}
 
 		// keep only several relevant buses
