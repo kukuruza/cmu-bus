@@ -19,9 +19,8 @@ public class RouteQueryManager implements RouteQueryInterface {
 	
 	//LocalDatabaseConnector db; 
 	
-	public RouteQueryManager() { 
-		/* empty */
-	}
+	public RouteQueryManager() { }
+	
 	
 	@Override
 	// returns list of buses associated with input stop 
@@ -31,21 +30,20 @@ public class RouteQueryManager implements RouteQueryInterface {
 		// query for all buses with a particular stop string in ROUTE table
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
 		
+		// from Stop to BaseStop
 		BaseStop baseStop = new BaseStop(stop.getName(), stop.getStreet1(), stop.getStreet2(),
 				                         stop.getLatitude(), stop.getLongitude());
 		
+		// make request
 		ArrayList<BaseBus> baseBusList = db.getBusesForStop(baseStop);
 		
+		// from BaseBus to Bus
 		ArrayList<Bus> busList = new ArrayList<Bus>();
-		for(int i = 0; i < baseBusList.size(); i++) 
-		{
-			BaseBus baseBus = baseBusList.get(i);
+		for (BaseBus baseBus : baseBusList) 
 			busList.add (new Bus(baseBus));
-		}		
 		
 		db = null; 
 		return busList; 
-		
 	}
 
 	@Override

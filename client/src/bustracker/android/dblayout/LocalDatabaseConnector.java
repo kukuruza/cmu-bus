@@ -83,7 +83,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 	// selects a bus from BUS table
 	public Bus selectBus(Long busId) { 
 		
-		String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_BUS + " WHERE " + DbStructure.BUS_ID + " = " + busId;
+		String selectQuery = "SELECT * FROM " + DbStructure.TABLE_BUS + " WHERE " + DbStructure.BUS_ID + " = " + busId;
 		
 		Log.i(TAG, selectQuery);
 	 
@@ -110,7 +110,7 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 	// selects all buses from BUS table
 	public ArrayList<Bus> selectAllBuses() { 
 		ArrayList<Bus> allBuses = new ArrayList<Bus>();
-	    String selectQuery = "SELECT  * FROM " + DbStructure.TABLE_BUS;
+	    String selectQuery = "SELECT * FROM " + DbStructure.TABLE_BUS;
 	    
 	    Log.i(TAG, selectQuery);
 	    
