@@ -48,7 +48,7 @@ public class LocalQuery implements TimeQueryInterface {
 		for (BaseScheduleItem baseItem : baseScheduleItems) 
 		{
 			// make Bus
-			Bus bus = new Bus (baseItem.getBus().getName(), baseItem.getBus().getDirection());
+			Bus bus = new Bus (baseItem.getBus());
 			
 			// make Time
 			DbTime dbTime = new DbTime ();

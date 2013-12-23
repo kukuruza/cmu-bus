@@ -7,7 +7,7 @@ public class ScheduleItem {
 	private Time time; 
 	
 	public ScheduleItem() { 
-		bus = new Bus(null, null); 
+		bus = new Bus(); 
 		time = new Time(); 
 	}
 	
