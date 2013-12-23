@@ -3,19 +3,21 @@ package bustracker.android.ws;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 import bustracker.android.dblayout.LocalDatabaseConnector;
 import bustracker.android.entities.Bus;
 import bustracker.android.entities.Stop;
 import bustracker.android.exceptions.TrackerException;
+import bustracker.common.dblayout.DbStructure;
 import bustracker.common.entities.BaseBus;
 import bustracker.common.entities.BaseStop;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 public class RouteQueryManager implements RouteQueryInterface {
+	private final static String TAG = "RouteQueryManager";
 	
 	//LocalDatabaseConnector db; 
 	
@@ -96,17 +98,9 @@ public class RouteQueryManager implements RouteQueryInterface {
 	public ArrayList<Stop> getStopByAddress(Context context, Location here, String street)
 			throws TrackerException {
 		
-		//cleanup user street query entry
-		street = street.toLowerCase(Locale.US); 
-		street = street.replace("and", ""); 
-		street = street.replace("street", "");
-		street = street.replace("avenue", ""); 
-		street = street.replace("road", ""); 
-		street = street.trim(); 
+		DbStructure.cleanupStreetQuery(street);
+		Log.i(TAG, "clean street name: " + street);
 		
-		// capitilize first letter
-		street = street.substring(0, 1).toUpperCase(Locale.US) + street.substring(1);
-
 		//retrieves all stops from the database that have a matching street
 		LocalDatabaseConnector db = new LocalDatabaseConnector(context);
 		ArrayList<BaseStop> baseStopList = db.getStopsByStreet(street);

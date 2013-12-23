@@ -1,6 +1,7 @@
 package bustracker.common.dblayout;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class DbStructure {
@@ -78,42 +79,11 @@ public class DbStructure {
     
     
 
-    public static String scheduleRequestString 
-        (String stopName, String busName, String busDir, int weekDay)
-    {
-		// 1. get stopId from stop table
-		// 2. get busid from bus table
-		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
-		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
-		return  "SELECT " + 
-		        BUS_NAME + ", " + 
-		        BUS_DIR + ", " + 
-		        SCHEDULE_TIME + " " +
-		        "FROM " + 
-		        TABLE_BUS + " tb, " + 
-		        TABLE_STOP + " ts, " + 
-		        TABLE_ROUTE + " tr, " + 
-		        TABLE_SCHEDULE + " tsc " + 
-		        "WHERE " + 
-		        "tb." + BUS_NAME + " = '" + busName + "' AND " + 
-		        "tb." + BUS_DIR + " = '" + busDir + "' AND " + 
-		        "ts." + STOP_NAME + " = '" + stopName + "' AND " + 
-		        "ts." + STOP_ID + " = tr." + STOP_ID + " AND " + 
-		        "tb." + BUS_ID + " = tr." + BUS_ID + " AND " + 
-		        "tr." + ROUTE_ID + " = tsc." + ROUTE_ID + " AND " + 
-		        "tsc." + SCHEDULE_DAY + " = '" + weekDay + "'";
-    }
-
-    
     public static String scheduleRequestString (String stopName, 
     		ArrayList<String> busNames, ArrayList<String> busDirs, int weekDay)
     {
     	assert (busNames.size() == busDirs.size());
     	
-		// 1. get stopId from stop table
-		// 2. get busid from bus table
-		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
-		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
 		String s = "SELECT " + 
 		        BUS_NAME + ", " + 
 		        BUS_DIR + ", " + 
@@ -153,10 +123,6 @@ public class DbStructure {
     {
     	assert (busNames.size() == busDirs.size());
     	
-		// 1. get stopId from stop table
-		// 2. get busid from bus table
-		// 3. select a route id from route table where route_busid = busid and route_stopId = stopid
-		// 4. select times from schedule table where schedule route_id = route_id, and day = current day
 		String s = "SELECT " + 
 		        BUS_NAME + ", " + 
 		        BUS_DIR + ", " + 
@@ -192,6 +158,18 @@ public class DbStructure {
     }
     
     
-     
+    public static void cleanupStreetQuery( String street )
+    {
+		// capitilize first letter
+		street = street.substring(0, 1).toUpperCase(Locale.US) + street.substring(1);
+
+		//cleanup user street query entry
+		street = street.toLowerCase(Locale.US); 
+		street = street.replace("and", ""); 
+		street = street.replace("street", "");
+		street = street.replace("avenue", ""); 
+		street = street.replace("road", ""); 
+		street = street.trim(); 
+    }
 
 }

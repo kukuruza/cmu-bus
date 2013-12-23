@@ -196,6 +196,10 @@ public class DatabaseConnector implements DbConnectorInterface {
 			return null;
 		}
 		
+		// clean up street name
+		DbStructure.cleanupStreetQuery(street);
+		
+		
 		String selectQuery = DbStructure.stopsByStreetRequestString (street);
 		logger.info("getStopsByStreet with street " + street + ": " + selectQuery);
 		
