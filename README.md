@@ -9,9 +9,7 @@ What's inside
 The system consists of 
 
 1) Tomcat web server ('webserver' directory)
-
-2) Android app ('CmuBusTracker' directory)
-
+2) Android app ('client' directory)
 3) Additional submission documents ('documents' directory)
 
 
@@ -20,8 +18,7 @@ Installation
 ------------
 
 App: 
-
-1) import 'CmuBusTracker' directory as an Android project. It should compile without any issues.
+1) import 'client' directory as an Android project. It should compile without any issues.
 
 
 Server: 
