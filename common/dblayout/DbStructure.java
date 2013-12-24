@@ -158,18 +158,23 @@ public class DbStructure {
     }
     
     
-    public static void cleanupStreetQuery( String street )
+    public static String cleanupStreetQuery( String street )
     {
-		// capitilize first letter
-		street = street.substring(0, 1).toUpperCase(Locale.US) + street.substring(1);
-
 		//cleanup user street query entry
 		street = street.toLowerCase(Locale.US); 
-		street = street.replace("and", ""); 
+		street = street.replace(".", ""); 
+		street = street.replace("str", "");
+		street = street.replace("ave", ""); 
+		street = street.replace("rd", ""); 
 		street = street.replace("street", "");
 		street = street.replace("avenue", ""); 
 		street = street.replace("road", ""); 
 		street = street.trim(); 
+
+		// capitilize first letter
+		street = street.substring(0, 1).toUpperCase(Locale.US) + street.substring(1);
+
+		return street;
     }
 
 }
