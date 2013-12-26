@@ -1,54 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    	android:id="@+id/locatestationlayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        	android:layout_alignParentTop="true"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
+<LinearLayout
+	android:id="@+id/locatestationlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ListView 
-            android:id="@+id/stopListView"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="105dip"
-            android:background="#ffffff"
-            android:cacheColorHint="#ffffffff" >
-        </ListView>
+    <ListView 
+        android:id="@+id/stopListView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="1" 
+        android:background="#ffffff"
+        android:cacheColorHint="#ffffffff" />
             
-    </LinearLayout>
-
-    <LinearLayout
-       android:layout_width="fill_parent"
-       android:layout_height="100dip"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:background="#efefef"
-       android:orientation="vertical" >
-
-       <EditText 
-           	android:id="@+id/enterAddressEditText" 
-      	    android:layout_width="match_parent" 
-         	android:layout_height="wrap_content"
-		    android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-			android:inputType="text"
-         	android:hint="@string/enterAddress">
-      	</EditText>
+    <EditText 
+        android:id="@+id/enterAddressEditText" 
+   	    android:layout_width="match_parent" 
+      	android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:inputType="text"
+        android:textAppearance="@android:style/TextAppearance.Medium" 
+      	android:hint="@string/enterAddress" />
        
-       <Button
-           android:id="@+id/searchAddressButton"
-           android:layout_width="match_parent"
-           android:layout_height="50dp"
-           android:layout_marginBottom="5dp"
-		   android:layout_marginLeft="20dp"
-           android:layout_marginRight="20dp"
-           android:textAppearance="@android:style/TextAppearance.Large" 
-           android:text="@string/search" />
+    <Button
+        android:id="@+id/searchAddressButton"
+      	android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAppearance="@android:style/TextAppearance.Large" 
+        android:text="@string/search" />
        
-   </LinearLayout>
-    
-</RelativeLayout>
+</LinearLayout>

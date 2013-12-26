@@ -13,8 +13,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>CMU Bus | choose bus</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+  <title>CMU Bus | choose bus</title>
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <jsp:useBean id="routeBean" class="bustracker.server.beans.RouteBean" scope="session"/>
@@ -29,7 +30,9 @@
     <!-- Go and choose stop -->
     
     <form name="chooseStopForm" action="chooseStop.jsp" method="get" >
-        <input type="submit" value="choose another bus stop">
+		<div class=input-line>
+            <input type="submit" value="change bus stop" class=styled-button>
+		</div>
     </form>
 
 
@@ -93,7 +96,10 @@
 		        routeBean.setBusDirs(busDirs);
 	         %> </table>
         
-		    <p><input type="submit" value="get schedule">
+		    <p>
+		    <div class=input-line>
+		        <input type="submit" value="get schedule" class=styled-button>
+		    </div>
 	    </form>
 	 
 	 <% } %> <!-- check for error in buses -->

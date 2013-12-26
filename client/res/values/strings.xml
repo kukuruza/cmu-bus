@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="server_timequery_url">http://192.168.1.7:8080/server/query</string>
-    <string name="server_dbquery_url">http://192.168.1.7:8080/server/getdatabase</string>
+    <string name="server_timequery_url">http://192.168.1.7:8080/webserver/query</string>
+    <string name="server_dbquery_url">http://192.168.1.7:8080/webserver/getdatabase</string>
 
-    <string name="fromDevice_timequery_url">http://192.168.1.7:8080/server/query</string>
-    <string name="fromDevice_dbquery_url">http://192.168.1.7:8080/server/getdatabase</string>
-    <string name="fromADM_timequery_url">http://10.0.2.2:8080/server/query</string>
-    <string name="fromADM_dbquery_url">http://10.0.2.2:8080/server/getdatabase</string>
+    <string name="fromDevice_timequery_url">http://192.168.1.7:8080/webserver/query</string>
+    <string name="fromDevice_dbquery_url">http://192.168.1.7:8080/webserver/getdatabase</string>
+    <string name="fromADM_timequery_url">http://10.0.2.2:8080/webserver/query</string>
+    <string name="fromADM_dbquery_url">http://10.0.2.2:8080/webserver/getdatabase</string>
     
     
     <string name="app_name">CmuBusTracker</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="search_again">Search Again</string>
     <string name="title_activity_select_station_and_bus">Select Station and Bus</string>
     <string name="title_activity_locate_station">Locate Station</string>
@@ -22,9 +21,9 @@
     <string name="Find_Station">Find Station</string>
     <string name="enterAddress">Enter an address to search for a stop</string>
     <string name="search">Search</string>
-    <string name="example_stop_name">ExampleStopName</string>
+    <string name="example_stop_name">A Very-Very Long Stop Name</string>
     <string name="example_mile_string">xx miles</string>
-    <string name="example_walkingdist_string">xx minutes</string>
+    <string name="example_walkingdist_string">xx min.</string>
     <string name="example_bus_name">ExampleBus</string>
     <string name="example_bus_direction">ExampleDirection</string>
     <string name="example_stop_address">ExampleStopAddress</string>

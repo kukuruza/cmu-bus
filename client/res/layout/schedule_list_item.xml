@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="65dp"
+    android:padding="10dp"
     android:descendantFocusability="blocksDescendants">
      
     <TextView
         android:id="@+id/scheduleitem_busname"
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
-        android:layout_marginLeft="15dp"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:text="@string/example_bus_name"
         android:textAppearance="@android:style/TextAppearance.Large" />
@@ -16,23 +16,18 @@
     <TextView
         android:id="@+id/scheduleitem_busdirection"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/scheduleitem_busname"
-        android:layout_alignBottom="@+id/scheduleitem_busname"
+        android:layout_height="match_parent"
+        android:layout_alignBaseline="@id/scheduleitem_busname"
         android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/scheduleitem_busname"
-        android:paddingLeft="10dp"
+        android:layout_toRightOf="@id/scheduleitem_busname"
         android:text="@string/example_bus_direction"/>
     
     <TextView
         android:id="@+id/scheduleitem_busarrivaltime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/scheduleitem_busdirection"
-        android:layout_alignBottom="@+id/scheduleitem_busdirection"
-        android:layout_marginRight="8dp"
+        android:layout_height="match_parent"
+        android:layout_alignBaseline="@id/scheduleitem_busdirection"
         android:layout_alignParentRight="true"
-		android:paddingLeft="10dp"
         android:text="@string/example_bus_direction"/>
      
 </RelativeLayout>

@@ -11,8 +11,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>CMU Bus | choose stop</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+  <title>CMU Bus | choose stop</title>
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <jsp:useBean id="allStopsBean" class="bustracker.server.beans.AllStopsBean" scope="session"/>
@@ -20,16 +21,18 @@
 
 <body>
 
-    <form action="chooseStop.jsp" method="get" >
+    <form action="chooseStop.jsp" method="get" class=input-line>
         Show only stops on this street: 
-	    <input type=text name=street>
-	    <input type=submit value="Update list">
+    	<input type=text name=street>
+	    <input type=submit value="update list" class=styled-button >
 	</form>
 
     <p>
     <form action="chooseBuses.jsp" method="get" >
-        Please pick a bus stop and press on: 
-        <input type=submit value="choose stop">
+        <div  class=input-line>
+            Please pick a bus stop and press on: 
+            <input type=submit value="choose stop" class=styled-button>
+        </div>
 
 
  <% 
@@ -80,7 +83,6 @@
 
      </form>
   
-
 
 </body>
 </html>

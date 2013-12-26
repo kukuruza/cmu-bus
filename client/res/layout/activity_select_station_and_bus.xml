@@ -1,65 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@android:color/black"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical"
+    android:background="#efefef"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        
+    <Button
+        android:id="@+id/findStationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_normal"
+        android:textAppearance="@android:style/TextAppearance.Large" 
+        android:text="@string/Find_Station" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
+    <ListView
+        android:id="@+id/busListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" 
+        android:background="#ffffff"
+        android:cacheColorHint="#ffffffff" >
+    </ListView>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="75dip"
-            android:background="#efefef"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/findStationButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:textAppearance="@android:style/TextAppearance.Large" 
-                android:text="@string/Find_Station" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/busListView"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:paddingBottom="78dip"
-            android:cacheColorHint="#ffffffff" >
-
-        </ListView>
-
-    </LinearLayout>
-
-   <LinearLayout
-       android:layout_width="fill_parent"
-       android:layout_height="50dip"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_marginLeft="3dp"
-       android:layout_marginRight="3dp"
-       android:background="#efefef"
-       android:orientation="horizontal" >
-
-       <Button
-           android:id="@+id/findNextBusButton"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:textAppearance="@android:style/TextAppearance.Large" 
-		   android:layout_marginLeft="20dp"
-           android:layout_marginRight="20dp"
-           android:text="@string/Find_Next_Bus" />
-       
-   </LinearLayout>
+   <Button
+       android:id="@+id/findNextBusButton"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:textAppearance="@android:style/TextAppearance.Large" 
+       android:layout_marginLeft="20dp"
+       android:layout_marginRight="20dp"
+       android:text="@string/Find_Next_Bus" />
     
-</RelativeLayout>
+</LinearLayout>
+    

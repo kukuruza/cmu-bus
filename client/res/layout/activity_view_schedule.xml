@@ -1,73 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
   
-         	<LinearLayout 
-            	android:background="#efefef"
-            	android:layout_width="fill_parent"
-            	android:layout_height="75dip"
-            	android:orientation="vertical">
-            	
-         	    <TextView android:id="@+id/viewschedule_stopNameTextView" 
-         			android:layout_width="wrap_content" 
-         			android:layout_height="wrap_content"
-         			android:textAppearance="@android:style/TextAppearance.Large" 
-         			android:textStyle="bold"
-         			android:text="@string/example_stop_name"
-         			android:gravity="right" 
-         			android:paddingLeft="20dp"
-         	    	android:paddingTop="5dp"/>
-         	    
-        		<LinearLayout
-            		android:background="#efefef"
-            		android:layout_width="fill_parent"
-            		android:layout_height="fill_parent"
-            		android:orientation="horizontal">
-            		
-        		    <TextView android:id="@+id/viewschedule_distanceTextView" 
-         				android:layout_width="wrap_content" 
-         				android:layout_height="wrap_content" 
-         				android:textAppearance="@android:style/TextAppearance.Medium" 
-         				android:textStyle="normal"
-         				android:text="@string/example_mile_string"
-         				android:gravity="right" 
-         				android:paddingLeft="20dp"
-         				android:paddingTop="5dp"/>
-        		    
-        		     <TextView android:id="@+id/viewschedule_walkingDistanceTextView" 
-         				android:layout_width="wrap_content" 
-         				android:layout_height="wrap_content" 
-         				android:textAppearance="@android:style/TextAppearance.Medium" 
-         				android:textStyle="normal"
-         				android:text="@string/example_walkingdist_string"
-         				android:gravity="right" 
-         				android:paddingLeft="20dp"
-         				android:paddingTop="5dp"/>
+    <!-- header -->
+   	<RelativeLayout 
+      	android:background="#efefef"
+      	android:padding="10dp"
+      	android:layout_width="match_parent"
+      	android:layout_height="75dip" >
 
-        		     <TextView android:id="@+id/viewschedule_infoSrcTextView"
-         				android:layout_width="wrap_content" 
-         				android:layout_height="wrap_content" 
-         				android:textAppearance="@android:style/TextAppearance.Small" 
-         				android:textStyle="normal"
-         				android:text="@string/example_srcinfo_string"
-         				android:gravity="right" 
-         				android:paddingLeft="20dp"
-         				android:paddingTop="5dp"/>
+        <TextView
+            android:id="@+id/viewschedule_stopNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/example_stop_name"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/viewschedule_distanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/viewschedule_stopNameTextView"
+            android:layout_below="@id/viewschedule_stopNameTextView"
+            android:text="@string/example_mile_string"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/viewschedule_walkingDistanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewschedule_stopNameTextView"
+            android:layout_toRightOf="@+id/viewschedule_distanceTextView"
+            android:layout_marginLeft="10dp"
+            android:text="@string/example_walkingdist_string"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/viewschedule_infoSrcTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/viewschedule_walkingDistanceTextView"
+            android:gravity="right"
+            android:text="@string/example_srcinfo_string"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textStyle="normal" />
         		    
-        		</LinearLayout>
-       		 	
-        	</LinearLayout>
+    </RelativeLayout>
            
-       		<ListView
-        	    android:id="@+id/scheduleListView"
-                android:background="#ffffff"
-                android:cacheColorHint="#ffffffff"
-                android:layout_height="fill_parent"
-                android:layout_width="fill_parent">
-
-             </ListView>
+	<ListView
+        android:id="@+id/scheduleListView"
+        android:background="#ffffff"
+        android:cacheColorHint="#ffffffff"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" >
+    </ListView>
             
 </LinearLayout>

@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_height="75dp"
+    android:padding="5dp"
+    android:baselineAligned="false" >
 
+    <!-- minutes and miles - take some width -->
     <LinearLayout
+        android:id="@+id/layoutMinutesMiles"
         android:layout_width="wrap_content"
-        android:layout_height="75dp"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+	   	<TextView
+	       	android:id="@+id/walkingdistance"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+	       	android:text="@string/example_walkingdist_string"
+	       	android:textAppearance="@android:style/TextAppearance.Small" />
+	
+	   	<TextView
+	    	android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+	    	android:text="@string/example_mile_string"
+	    	android:textAppearance="@android:style/TextAppearance.Small"  />
+    </LinearLayout>
+    
+    <!-- name and address - take free space to the left of mins&miles -->
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_toLeftOf="@id/layoutMinutesMiles"
+        android:gravity="center_vertical|left"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/stopName"
-            android:layout_width="240dp"
-            android:layout_height="30dp"
-            android:paddingLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/example_stop_name"
             android:textAppearance="@android:style/TextAppearance.Large"  />
 
         <TextView
             android:id="@+id/stopAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/example_stop_address" />
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="75dp" >
-        
-    	<TextView
-        	android:id="@+id/walkingdistance"
-        	android:layout_width="35dp"
-        	android:layout_height="75dp"
-			android:layout_marginRight="40dp"
-			android:layout_alignParentRight="true"
-			android:gravity="center_vertical"
-        	android:text="@string/example_walkingdist_string"
-        	android:textAppearance="@android:style/TextAppearance.Small" />
-
-   	    <TextView
-        	android:id="@+id/distance"
-        	android:layout_width="35dp"
-        	android:layout_height="75dp"
-        	android:layout_alignParentRight="true"
-        	android:gravity="center_vertical"
-        	android:layout_marginRight="5dp"
-        	android:text="@string/example_mile_string"
-        	android:textAppearance="@android:style/TextAppearance.Small"  />
-   	 
-    </RelativeLayout>
-
-</LinearLayout>
+	   	
+</RelativeLayout>
