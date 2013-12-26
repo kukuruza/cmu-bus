@@ -21,7 +21,7 @@
 
 <body>
 
-    <form action="chooseStop.jsp" method="get" class=input-line>
+    <form action="chooseStop.jsp" method="get" class="input-line w-text">
         Show only stops on this street: 
     	<input type=text name=street>
 	    <input type=submit value="update list" class=styled-button >
@@ -29,7 +29,7 @@
 
     <p>
     <form action="chooseBuses.jsp" method="get" >
-        <div  class=input-line>
+        <div  class="input-line w-text">
             Please pick a bus stop and press on: 
             <input type=submit value="choose stop" class=styled-button>
         </div>

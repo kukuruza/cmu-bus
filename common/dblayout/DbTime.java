@@ -10,7 +10,9 @@ public class DbTime {
 	public final static int DeepNight = 4*60;
 	
 	private int _hours = -1, _minutes = -1;
-	private static final SimpleDateFormat _sdf = new SimpleDateFormat("HH:mm a");
+	private static final SimpleDateFormat _sdf = new SimpleDateFormat("hh:mm a");
+	private static final SimpleDateFormat _hhf = new SimpleDateFormat("H");
+	private static final SimpleDateFormat _mmf = new SimpleDateFormat("mm");
 	Calendar _calendar = Calendar.getInstance();
 	
 	public DbTime () { }
@@ -40,6 +42,15 @@ public class DbTime {
 	{
 		assert (_hours >= 0 && _minutes >= 0);
 		return _sdf.format(_calendar.getTime());
+	}
+	public String toLeftTimeString()
+	{
+		assert (_hours >= 0 && _minutes >= 0);
+		if (_hours == 0)
+			return _mmf.format(_calendar.getTime()) + " min";
+		else
+    		return _hhf.format(_calendar.getTime()) + " h " + 
+		           _mmf.format(_calendar.getTime()) + " min";		
 	}
 	
 	public static int getCurrentDbTime ()

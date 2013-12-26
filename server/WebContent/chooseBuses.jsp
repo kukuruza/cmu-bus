@@ -63,7 +63,7 @@
 		    ArrayList<String> busNames = new ArrayList<String>();
 		    ArrayList<String> busDirs = new ArrayList<String>();
 	
-		 %> <b><%= stopName %></b>
+		 %> <h3 class="output-big-line"><%= stopName %></h3>
 		 
 		 <% if (buses == null) { %>
 			   <p>Sorry, internal error

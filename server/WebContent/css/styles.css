@@ -5,11 +5,23 @@ body {
     margin: 0px auto;
 }
 
+.output-big-line
+{
+	text-align: center;
+	font-weight: bold;
+	overflow: visible;
+}
+
 .input-line {
-	background-color: #D8D8D8;
 	margin: 10px 0;
 	display: block;
 	text-align: right;
+}
+.input-line.w-text {
+	background-color: #D8D8D8;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 
 table {

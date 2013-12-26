@@ -23,7 +23,9 @@
 <body>
 
     <form action="chooseStop.jsp" method="get" >
-        <input type=submit value="another query" class=styled-button>
+        <div class=input-line>
+            <input type=submit value="another query" class=styled-button>
+        </div>
     </form>
     <p>
 
@@ -77,17 +79,17 @@
 		    </tr>
 		    
 		    <!-- Schedule itself -->
-	 <%     DbTime dbTime = new DbTime();
+	 <%     DbTime time = new DbTime();
 	        DbTime left = new DbTime();
 	        for (BaseScheduleItem scheduleItem : scheduleItemList) 
 		    {
-	        	dbTime.setTime(scheduleItem.getTime());
+	        	time.setTime(scheduleItem.getTime());
 	        	left.setTime (scheduleItem.getTime() - now.getMinutesTotal());
 	 %>         <tr>
 	            <td style="padding-right:30px"><%= scheduleItem.getBus().getName() %></td>
 	            <td style="padding-right:30px"><%= scheduleItem.getBus().getDirection() %></td>
-	            <td style="padding-right:30px"><%= dbTime.toString() %></td>
-	            <td>                           <%= left.getMinutesTotal() + " " %> min. </td>
+	            <td style="padding-right:30px"><%= time.toString() %></td>
+	            <td>                           <%= left.toLeftTimeString() %></td>
 	            </tr>
 	 <%     } %>
 	        </table>
