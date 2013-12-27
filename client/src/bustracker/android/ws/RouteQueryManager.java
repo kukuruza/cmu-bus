@@ -37,7 +37,7 @@ public class RouteQueryManager implements RouteQueryInterface {
 				                         stop.getLatitude(), stop.getLongitude());
 		
 		// make request
-		ArrayList<BaseBus> baseBusList = db.getBusesForStop(baseStop);
+		ArrayList<BaseBus> baseBusList = db.getBusesForStop(baseStop.getName());
 		
 		// from BaseBus to Bus
 		ArrayList<Bus> busList = new ArrayList<Bus>();

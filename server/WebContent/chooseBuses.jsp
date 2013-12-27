@@ -21,9 +21,6 @@
 <jsp:useBean id="routeBean" class="bustracker.server.beans.RouteBean" scope="session"/>
 <jsp:setProperty name="routeBean" property="*"/>
 
-<jsp:useBean id="allStopsBean" class="bustracker.server.beans.AllStopsBean" scope="session"/>
-<jsp:setProperty name="allStopsBean" property="*"/>
-
 
 <body>
 
@@ -35,76 +32,59 @@
 		</div>
     </form>
 
-
-
-    
- <% // load what chooseStop.jsp was supposed to write
-    String stopNum = (String)request.getParameter("stop");
-    ArrayList<BaseStop> stops = allStopsBean.getStops();
-    
-    if (stops == null || stopNum == null) { %>
-        Error: first go and choose a stop using the form
- <% } else if (Integer.parseInt(stopNum)-1 >= stops.size()) { %>
-        Error: incorrect stop number. First go and choose a stop usng the form
- <% } else { %>
-
-	    <!-- When everything is ready list buses  -->
 	
-		<form action="viewSchedule.jsp" method="get" >
-		
-		 <% BaseStop stop = stops.get(Integer.parseInt(stopNum)-1);
-			String stopName = stop.getName();
+	<form action="viewSchedule.jsp" method="get" >
 	
-		    DatabaseConnector connector = new DatabaseConnector();
-		    ArrayList<BaseBus> buses = connector.getBusesForStop(stop);
-		    
-		    // start filling in routeBean
-		    routeBean.setStopName(stopName);
-		    ArrayList<String> busNames = new ArrayList<String>();
-		    ArrayList<String> busDirs = new ArrayList<String>();
-	
-		 %> <h3 class="output-big-line"><%= stopName %></h3>
-		 
-		 <% if (buses == null) { %>
-			   <p>Sorry, internal error
-	     <% } else { %>
-			 
-				<!-- Table header -->
-			    <table border="0">
-			    <tr>
-			        <td style="padding-right:30px"></td>
-			        <td style="padding-right:30px"><b> bus </b></td>
-			        <td>                           <b> direction </b></td>
-			    </tr>
-			    
-			    <!-- Buses itself -->
-	         <% int i = 0;
-		        for (BaseBus bus : buses) 
-			    {
-		        	busNames.add(bus.getName());
-		        	busDirs.add(bus.getDirection());
-	             %> <tr>
-		            <td style="padding-right:10px">
-		                <input type=checkbox name=bus value="<%= i+1 %>" />
-		            </td>
-		            <td style="padding-right:30px"><%= bus.getName() %></td>
-		            <td style="padding-right:30px"><%= bus.getDirection() %></td>
-		            </tr>
-	             <% ++i;
-		        }
-		        routeBean.setBusNames(busNames);
-		        routeBean.setBusDirs(busDirs);
-	         %> </table>
-        
-		    <p>
-		    <div class=input-line>
-		        <input type="submit" value="get schedule" class=styled-button>
-		    </div>
-	    </form>
-	 
-	 <% } %> <!-- check for error in buses -->
+	 <% String stopName = (String)request.getParameter("stop");
+
+	    DatabaseConnector connector = new DatabaseConnector();
+	    ArrayList<BaseBus> buses = connector.getBusesForStop(stopName);
 	    
- <% } %> <!-- check for data consistency -->
+	    // start filling in routeBean
+	    routeBean.setStopName(stopName);
+	    ArrayList<String> busNames = new ArrayList<String>();
+	    ArrayList<String> busDirs = new ArrayList<String>();
+
+	 %> <h3 class="output-big-line"><%= stopName %></h3>
+	 
+	 <% if (buses == null) { %>
+		   <p>Sorry, internal error
+     <% } else { %>
+		 
+			<!-- Table header -->
+		    <table border="0">
+		    <tr>
+		        <td style="padding-right:30px"></td>
+		        <td style="padding-right:30px"><b> bus </b></td>
+		        <td>                           <b> direction </b></td>
+		    </tr>
+		    
+		    <!-- Buses itself -->
+         <% int i = 0;
+	        for (BaseBus bus : buses) 
+		    {
+	        	busNames.add(bus.getName());
+	        	busDirs.add(bus.getDirection());
+             %> <tr>
+	            <td style="padding-right:10px">
+	                <input type=checkbox name=bus value="<%= i+1 %>" />
+	            </td>
+	            <td style="padding-right:30px"><%= bus.getName() %></td>
+	            <td style="padding-right:30px"><%= bus.getDirection() %></td>
+	            </tr>
+             <% ++i;
+	        }
+	        routeBean.setBusNames(busNames);
+	        routeBean.setBusDirs(busDirs);
+         %> </table>
+       
+	    <p>
+	    <div class=input-line>
+	        <input type="submit" value="get schedule" class=styled-button>
+	    </div>
+    </form>
+ 
+ <% } %> <!-- check for error in buses -->
 
 </body>
 </html>

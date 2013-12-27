@@ -236,9 +236,9 @@ public class DatabaseConnector implements DbConnectorInterface {
 
 
 	
-	public ArrayList<BaseBus> getBusesForStop (BaseStop stop)
+	public ArrayList<BaseBus> getBusesForStop (String stopName)
 	{
-		String selectQuery = DbStructure.busesRequestString(stop.getName());
+		String selectQuery = DbStructure.busesRequestString(stopName);
 		logger.info("getBusesForStop: " + selectQuery);
 		
 		if (!connect()) return null; 

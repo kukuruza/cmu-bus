@@ -62,7 +62,7 @@
 			    {
 		 %>         <tr>
 		            <td style="padding-right:10px">
-		                <input type=radio name=stop value="<%= i+1 %>" />
+		                <input type=radio name=stop value="<%= stop.getName() %>" />
 		            </td>
 		            <td style="padding-right:30px"><%= stop.getName() %></td>
 		            <td style="padding-right:30px"><%= stop.getStreet1() %></td>

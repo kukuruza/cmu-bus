@@ -139,10 +139,10 @@ public class LocalDatabaseConnector extends SQLiteAssetHelper implements DbConne
 	
 	// selects all buses associated with a specific stop
 	@Override
-	public ArrayList<BaseBus> getBusesForStop (BaseStop stop) { 
+	public ArrayList<BaseBus> getBusesForStop (String stopName) { 
 		ArrayList<BaseBus> allBusesByStop = new ArrayList<BaseBus>();
 			
-		String selectQuery = DbStructure.busesRequestString(stop.getName());
+		String selectQuery = DbStructure.busesRequestString(stopName);
 		 
 		Log.i(TAG, selectQuery);
 		 

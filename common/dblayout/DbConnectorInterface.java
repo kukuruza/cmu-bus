@@ -15,6 +15,6 @@ public interface DbConnectorInterface {
 	
 	public BaseSchedule getSchedule (String stopName, ArrayList<String> busNames, ArrayList<String> busDirs);
 	
-	public ArrayList<BaseBus> getBusesForStop (BaseStop stop);
+	public ArrayList<BaseBus> getBusesForStop (String stopName);
 	
 }
